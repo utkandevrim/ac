@@ -101,3 +101,75 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: "Apply readdy.link design to entire site, implement username.surname login format, enforce password policy, enable password change, add admin photo upload for all users/management, provide full CRUD admin control, and add 107 new members across 4 teams"
+
+backend:
+  - task: "Fix login authentication to use username instead of email"
+    implemented: false
+    working: false
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: false
+        - agent: "main"
+        - comment: "Login function still uses email field, needs to be changed to username"
+        
+  - task: "Update admin user creation with username format"
+    implemented: false
+    working: false
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: false
+        - agent: "main"
+        - comment: "Admin users need username field in isim.soyisim format"
+
+  - task: "Add 107 new members to database across 4 teams"
+    implemented: false
+    working: false
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: false
+        - agent: "main"
+        - comment: "Need to add all members from TUĞBA ÇAKI (28), DUYGU ASKER AKSOY (28), SEDA ATEŞ (22), UTKAN DEVRİM ZEYREK (29) teams"
+
+frontend:
+  - task: "Update login form to use username field instead of email"
+    implemented: false
+    working: false
+    file: "Login.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: false
+        - agent: "main"
+        - comment: "Login component needs to send username instead of email"
+
+metadata:
+  created_by: "main_agent"
+  version: "1.0"
+  test_sequence: 1
+  run_ui: false
+
+test_plan:
+  current_focus:
+    - "Fix login authentication to use username instead of email"
+    - "Update admin user creation with username format"
+    - "Add 107 new members to database across 4 teams"
+    - "Update login form to use username field instead of email"
+  stuck_tasks: []
+  test_all: true
+  test_priority: "high_first"
+
+agent_communication:
+    - agent: "main"
+    - message: "Starting implementation to fix authentication system and add new members. Need to update backend login logic and frontend form."
