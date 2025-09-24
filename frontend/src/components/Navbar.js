@@ -26,7 +26,7 @@ const Navbar = ({ user, onLogout }) => {
   const navigate = useNavigate();
 
   const navigationItems = [
-    { name: 'Anasayfa', href: '/dashboard', icon: Home },
+    { name: 'Anasayfa', href: '/', icon: Home },
     { name: 'Üyelerimiz', href: '/members', icon: Users },
     { name: 'Etkinlikler', href: '/events', icon: Calendar },
     { name: 'Hakkımızda', href: '/about', icon: Info },
