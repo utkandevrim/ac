@@ -34,17 +34,17 @@ h1, h2, h3, h4, h5, h6 {
   background-clip: text;
 }
 
-/* Colors - Elegant theater theme */
+/* Colors - Fresh blue and cream theme */
 :root {
-  --primary: #8b2635; /* Deep burgundy */
-  --secondary: #d4af37; /* Rich gold */
-  --accent: #c9302c; /* Theater red */
-  --background: #fafafa;
+  --primary: #3b82f6; /* Soft blue */
+  --secondary: #f5f2e8; /* Cream */
+  --accent: #60a5fa; /* Light blue */
+  --background: #fefefe; /* Pure white */
   --surface: #ffffff;
-  --text: #1a1a1a;
+  --text: #1e293b;
   --text-muted: #64748b;
-  --border: #e2e8f0;
-  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --border: #e1f5fe;
+  --shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.1);
 }
 
 /* Buttons */
