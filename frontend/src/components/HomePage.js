@@ -298,35 +298,6 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="section">
-        <div className="container">
-          <div className="card text-center" style={{background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white', border: 'none', padding: '80px 40px'}}>
-            <h2 className="text-4xl font-bold mb-6">Hemen Başlayın</h2>
-            <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto leading-relaxed">
-              Actor Club ailesine katılın ve oyunculuk yolculuğunuza bugün başlayın.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                onClick={() => navigate('/login')}
-                className="btn-secondary text-lg"
-                data-testid="cta-join-btn"
-              >
-                Üyelik Başvurusu Yap
-              </Button>
-              <Button 
-                onClick={() => navigate('/about')}
-                className="btn-outline text-lg"
-                style={{borderColor: 'white', color: 'white'}}
-                data-testid="cta-contact-btn"
-              >
-                İletişime Geç
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Footer */}
       <footer style={{background: '#1e293b', color: 'white', padding: '60px 0 40px 0'}}>
         <div className="container text-center">
