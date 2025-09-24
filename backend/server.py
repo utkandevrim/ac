@@ -189,20 +189,48 @@ async def initialize_default_data():
     # Create admin users
     admin_users = [
         {
+            "id": str(uuid.uuid4()),
             "email": "admin1@actorclub.com",
             "password": hash_password("ActorClub2024!"),
             "name": "Admin",
             "surname": "Bir",
+            "phone": None,
+            "birth_date": None,
+            "address": None,
+            "workplace": None,
+            "job_title": None,
+            "hobbies": None,
+            "skills": None,
+            "height": None,
+            "weight": None,
+            "profile_photo": None,
+            "projects": [],
+            "board_member": None,
             "is_admin": True,
-            "is_approved": True
+            "is_approved": True,
+            "created_at": datetime.now(timezone.utc)
         },
         {
+            "id": str(uuid.uuid4()),
             "email": "admin2@actorclub.com", 
             "password": hash_password("ClubActor2024@"),
             "name": "Admin",
             "surname": "İki",
+            "phone": None,
+            "birth_date": None,
+            "address": None,
+            "workplace": None,
+            "job_title": None,
+            "hobbies": None,
+            "skills": None,
+            "height": None,
+            "weight": None,
+            "profile_photo": None,
+            "projects": [],
+            "board_member": None,
             "is_admin": True,
-            "is_approved": True
+            "is_approved": True,
+            "created_at": datetime.now(timezone.utc)
         }
     ]
     
@@ -211,6 +239,15 @@ async def initialize_default_data():
         if not existing_admin:
             admin_user = User(**admin_data)
             await db.users.insert_one(admin_user.dict())
+            print(f"Created admin user: {admin_data['email']}")
+        else:
+            # Update existing admin with password if missing
+            if "password" not in existing_admin:
+                await db.users.update_one(
+                    {"email": admin_data["email"]},
+                    {"$set": {"password": admin_data["password"]}}
+                )
+                print(f"Updated password for admin: {admin_data['email']}")
     
     # Create leadership structure
     leadership_data = [
