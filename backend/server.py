@@ -108,6 +108,7 @@ class UserLogin(BaseModel):
 class UserUpdate(BaseModel):
     name: Optional[str] = None
     surname: Optional[str] = None
+    email: Optional[str] = None
     phone: Optional[str] = None
     birth_date: Optional[str] = None
     address: Optional[str] = None
