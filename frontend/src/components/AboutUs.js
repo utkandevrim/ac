@@ -34,6 +34,8 @@ const AboutUs = ({ user }) => {
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState('');
+  const [newPhotoUrl, setNewPhotoUrl] = useState('');
+  const [editPhotos, setEditPhotos] = useState([]);
 
   useEffect(() => {
     fetchAboutData();
