@@ -121,14 +121,12 @@ class ActorClubAPITester:
         }
         
         # Test 1: Valid user creation
-        import time
-        timestamp = int(time.time()) % 1000  # Use last 3 digits to keep it short
         valid_user = {
-            "username": f"test.yeni{timestamp}",
-            "email": f"test.yeni{timestamp}@actorclub.com",
+            "username": "test.yeniuye",
+            "email": "test.yeniuye.new@actorclub.com",  # Use different email
             "password": "ValidPass123!",
             "name": "Test",
-            "surname": f"Yeni{timestamp}"
+            "surname": "Yeniuye"
         }
         
         try:
