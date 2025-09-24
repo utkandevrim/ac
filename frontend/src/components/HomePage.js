@@ -226,53 +226,27 @@ const HomePage = () => {
 
           {/* Board Members */}
           <div className="grid grid-4">
-            <div className="card-person" data-testid="board-member-1">
-              <div className="avatar avatar-md avatar-placeholder">
-                DAA
+            {boardMembers.map((member, index) => (
+              <div key={member.id} className="card-person" data-testid={`board-member-${index + 1}`}>
+                {member.photo ? (
+                  <img 
+                    src={`${BACKEND_URL}${member.photo}`} 
+                    alt={member.name}
+                    className="w-20 h-20 rounded-full object-cover border-2 border-blue-200 mx-auto mb-4"
+                  />
+                ) : (
+                  <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-lg font-bold mx-auto mb-4">
+                    {member.name.split(' ').map(n => n[0]).join('')}
+                  </div>
+                )}
+                <h4 className="text-lg font-bold text-gray-900 mb-1">{member.name}</h4>
+                <p className="text-blue-600 font-semibold text-sm mb-2">Yönetim Kurulu Üyesi</p>
+                <div className="bg-gray-50 rounded-lg p-2 mt-3">
+                  <p className="text-xs font-bold text-gray-700">{member.name} Ekibi</p>
+                  <p className="text-xs text-gray-500">Üyeler</p>
+                </div>
               </div>
-              <h4 className="text-lg font-bold text-gray-900 mb-1">Duygu Asker Aksoy</h4>
-              <p className="text-blue-600 font-semibold text-sm mb-2">Yönetim Kurulu Üyesi</p>
-              <div className="bg-gray-50 rounded-lg p-2 mt-3">
-                <p className="text-xs font-bold text-gray-700">Hypatia - Duygu Asker Aksoy</p>
-                <p className="text-xs text-gray-500">28 Üye</p>
-              </div>
-            </div>
-
-            <div className="card-person" data-testid="board-member-2">
-              <div className="avatar avatar-md avatar-placeholder">
-                TÇ
-              </div>
-              <h4 className="text-lg font-bold text-gray-900 mb-1">Tuğba Çakı</h4>
-              <p className="text-blue-600 font-semibold text-sm mb-2">Yönetim Kurulu Üyesi</p>
-              <div className="bg-gray-50 rounded-lg p-2 mt-3">
-                <p className="text-xs font-bold text-gray-700">Diyojen - Tuğba Çakı</p>
-                <p className="text-xs text-gray-500">28 Üye</p>
-              </div>
-            </div>
-
-            <div className="card-person" data-testid="board-member-3">
-              <div className="avatar avatar-md avatar-placeholder">
-                UDZ
-              </div>
-              <h4 className="text-lg font-bold text-gray-900 mb-1">Utkan Devrim Zeyrek</h4>
-              <p className="text-blue-600 font-semibold text-sm mb-2">Yönetim Kurulu Üyesi</p>
-              <div className="bg-gray-50 rounded-lg p-2 mt-3">
-                <p className="text-xs font-bold text-gray-700">Artemis - Utkan Devrim Zeyrek</p>
-                <p className="text-xs text-gray-500">29 Üye</p>
-              </div>
-            </div>
-
-            <div className="card-person" data-testid="board-member-4">
-              <div className="avatar avatar-md avatar-placeholder">
-                SA
-              </div>
-              <h4 className="text-lg font-bold text-gray-900 mb-1">Seda Ateş</h4>
-              <p className="text-blue-600 font-semibold text-sm mb-2">Yönetim Kurulu Üyesi</p>
-              <div className="bg-gray-50 rounded-lg p-2 mt-3">
-                <p className="text-xs font-bold text-gray-700">Hermes - Seda Ateş</p>
-                <p className="text-xs text-gray-500">22 Üye</p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
