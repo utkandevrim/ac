@@ -101,13 +101,23 @@ const Dashboard = ({ user }) => {
     <div className="min-h-screen bg-gradient-to-br from-amber-50 to-red-50">
       <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
         {/* Welcome Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2" data-testid="dashboard-welcome">
-            Hoş Geldin, {user.name}!
-          </h1>
-          <p className="text-lg text-gray-600">
-            Actor Club portalındaki durumun ve güncel bilgilerin
-          </p>
+        <div className="mb-8 text-center">
+          <div className="mb-6">
+            <img 
+              src="https://customer-assets.emergentagent.com/job_actorclub/artifacts/4gypiwpr_ac%20logo.png" 
+              alt="Actor Club Logo" 
+              className="mx-auto h-16 w-auto mb-4"
+            />
+            <h1 className="text-5xl font-bold text-gray-900 mb-4">
+              Actor Club Portal'a Hoş Geldiniz
+            </h1>
+            <h2 className="text-3xl font-semibold text-red-700 mb-2" data-testid="dashboard-welcome">
+              Merhaba, {user.name}!
+            </h2>
+            <p className="text-lg text-gray-600">
+              Oyuncu kulübümüzün dijital dünyasına hoş geldin
+            </p>
+          </div>
         </div>
 
         {/* Stats Cards */}
