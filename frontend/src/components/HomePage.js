@@ -7,26 +7,24 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header Navigation */}
-      <header className="navbar">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <div className="flex items-center">
-              <img 
-                src="https://customer-assets.emergentagent.com/job_actorclub/artifacts/4gypiwpr_ac%20logo.png" 
-                alt="Actor Club Logo" 
-                className="h-10 w-auto logo-clean"
-                data-testid="actor-club-logo"
-              />
-            </div>
-            
-            {/* Navigation Menu */}
-            <nav className="hidden md:flex items-center space-x-8">
-              <a href="#" className="text-gray-700 hover:text-blue-600 font-medium transition-colors">Ana Sayfa</a>
-              <a href="#" className="text-gray-700 hover:text-blue-600 font-medium transition-colors" onClick={() => navigate('/members')}>Üyelerimiz</a>
-              <a href="#" className="text-gray-700 hover:text-blue-600 font-medium transition-colors" onClick={() => navigate('/events')}>Etkinlikler</a>
-              <a href="#" className="text-gray-700 hover:text-blue-600 font-medium transition-colors" onClick={() => navigate('/about')}>Hakkımızda</a>
+      {/* Navigation */}
+      <nav className="navbar">
+        <div className="nav-content">
+          <div className="flex items-center">
+            <img 
+              src="https://customer-assets.emergentagent.com/job_actorclub/artifacts/4gypiwpr_ac%20logo.png" 
+              alt="Actor Club Logo" 
+              className="logo"
+              data-testid="actor-club-logo"
+            />
+          </div>
+          
+          <ul className="nav-links hidden md:flex">
+            <li><a href="#" className="nav-link">Ana Sayfa</a></li>
+            <li><a href="#" className="nav-link" onClick={() => navigate('/members')}>Üyelerimiz</a></li>
+            <li><a href="#" className="nav-link" onClick={() => navigate('/events')}>Etkinlikler</a></li>
+            <li><a href="#" className="nav-link" onClick={() => navigate('/about')}>Hakkımızda</a></li>
+            <li>
               <Button 
                 onClick={() => navigate('/login')}
                 className="btn-primary"
@@ -34,214 +32,275 @@ const HomePage = () => {
               >
                 Üye Girişi
               </Button>
-            </nav>
+            </li>
+          </ul>
 
-            {/* Mobile Menu Button */}
-            <div className="md:hidden">
-              <Button 
-                onClick={() => navigate('/login')}
-                className="btn-primary"
-                data-testid="mobile-login-btn"
-              >
-                Giriş
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-6 py-16">
-        {/* Hero Section */}
-        <section className="text-center mb-20">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Actor Club Üye Portalı
-          </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-            Tiyatro sanatına tutkuyla bağlı olan sanatçılar için özel olarak tasarlanmış
-            üye platformuna hoş geldiniz.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="md:hidden">
             <Button 
               onClick={() => navigate('/login')}
-              className="btn-primary px-8 py-3"
+              className="btn-primary"
+              data-testid="mobile-login-btn"
+            >
+              Giriş
+            </Button>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="hero-section">
+        <div className="hero-content">
+          <h1 className="hero-title">
+            Actor Club Portal'a Hoş Geldiniz
+          </h1>
+          <p className="hero-subtitle">
+            Profesyonel oyunculuk dünyasında yeteneklerinizi geliştirin,
+            deneyimli mentorlardan öğrenin ve sanat camiasının bir parçası olun.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <Button 
+              onClick={() => navigate('/login')}
+              className="btn-primary text-lg"
               data-testid="hero-login-btn"
             >
-              Üyelik Girişi
+              Üyelik Başvurusu
             </Button>
             <Button 
-              className="btn-outline px-8 py-3"
               onClick={() => navigate('/about')}
+              className="btn-secondary text-lg"
               data-testid="hero-info-btn"
             >
               Daha Fazla Bilgi
             </Button>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Founder Section */}
-        <section className="mb-20">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Kurucu</h2>
-          </div>
-          
-          <div className="flex justify-center">
-            <div className="card-clean max-w-sm text-center" data-testid="founder-card">
-              <div className="w-24 h-24 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-xl font-bold">
+      {/* Founder Section */}
+      <section className="section">
+        <div className="container-narrow">
+          <div className="text-center mb-16">
+            <div className="card-person mx-auto max-w-lg" data-testid="founder-card">
+              <div className="avatar avatar-lg avatar-placeholder mx-auto">
                 MÇI
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Muzaffer Çağlar İşgören</h3>
-              <p className="text-blue-600 font-medium">Kurucu / Onursal Başkan</p>
-              <p className="text-gray-600 text-sm mt-2">
-                Actor Club'ın kurucusu ve vizyoner lideri
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">Muzaffer Çağlar İşgören</h3>
+              <p className="text-lg font-semibold text-blue-600 mb-4">Kurucu / Onursal Başkan</p>
+              <p className="text-gray-600 italic leading-relaxed">
+                "Actor Club, oyunculuk tutkusunu profesyonel becerilerle buluşturan 
+                bir platform olarak kurulmuştur. Amacımız, yetenekli bireyleri 
+                sanat dünyasında desteklemektir."
               </p>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Honorary Presidents Section */}
-        <section className="mb-20">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Onursal Başkanlar</h2>
+      {/* Honorary Presidents Section */}
+      <section className="section section-alt">
+        <div className="container">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Onursal Başkanlarımız</h2>
+            <p className="lead-text max-w-2xl mx-auto">
+              Deneyimleri ve vizyonlarıyla kulübümüze yön veren değerli isimler
+            </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="card-clean text-center hover-card" data-testid="honorary-president-1">
-              <div className="w-20 h-20 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-lg font-bold">
+          <div className="grid grid-3">
+            <div className="card-person" data-testid="honorary-president-1">
+              <div className="avatar avatar-placeholder">
                 GK
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-1">Göksel Kortay</h3>
-              <p className="text-blue-600 font-medium text-sm">Onursal Başkan</p>
+              <h3 className="text-xl font-bold text-gray-900 mb-1">Göksel Kortay</h3>
+              <p className="text-blue-600 font-semibold">Onursal Başkan</p>
             </div>
 
-            <div className="card-clean text-center hover-card" data-testid="honorary-president-2">
-              <div className="w-20 h-20 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-lg font-bold">
+            <div className="card-person" data-testid="honorary-president-2">
+              <div className="avatar avatar-placeholder">
                 KUB
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-1">Kökten Ulaş Birand</h3>
-              <p className="text-blue-600 font-medium text-sm">Onursal Başkan</p>
+              <h3 className="text-xl font-bold text-gray-900 mb-1">Kökten Ulaş Birand</h3>
+              <p className="text-blue-600 font-semibold">Onursal Başkan</p>
             </div>
 
-            <div className="card-clean text-center hover-card" data-testid="honorary-president-3">
-              <div className="w-20 h-20 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-lg font-bold">
+            <div className="card-person" data-testid="honorary-president-3">
+              <div className="avatar avatar-placeholder">
                 CK
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-1">Cengiz Karakuzu</h3>
-              <p className="text-blue-600 font-medium text-sm">Onursal Başkan</p>
+              <h3 className="text-xl font-bold text-gray-900 mb-1">Cengiz Karakuzu</h3>
+              <p className="text-blue-600 font-semibold">Onursal Başkan</p>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Board Chairman Section */}
-        <section className="mb-20">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Yönetim Kurulu Başkanı</h2>
+      {/* Board Section */}
+      <section className="section">
+        <div className="container">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Yönetim Kurulu</h2>
+            <p className="lead-text max-w-2xl mx-auto">
+              Kulübümüzün yönetiminden sorumlu dinamik ekibimiz
+            </p>
           </div>
-          
-          <div className="flex justify-center">
-            <div className="card-clean max-w-sm text-center" data-testid="board-chairman-card">
-              <div className="w-24 h-24 bg-gradient-to-r from-amber-500 to-orange-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-xl font-bold">
+
+          {/* Board Chairman */}
+          <div className="text-center mb-16">
+            <div className="card-person mx-auto max-w-lg" data-testid="board-chairman-card">
+              <div className="avatar avatar-lg" style={{background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', fontWeight: '700'}}>
                 ET
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Emre Turgut</h3>
-              <p className="text-amber-600 font-medium">Yönetim Kurulu Başkanı</p>
-              <p className="text-gray-600 text-sm mt-2">
-                Actor Club yönetim kurulunu başarıyla yöneten lider
-              </p>
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">Emre Turgut</h3>
+              <p className="text-lg font-semibold text-orange-600">Başkan</p>
             </div>
           </div>
-        </section>
 
-        {/* Board Members Section */}
-        <section className="mb-20">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Yönetim Kurulu Üyeleri</h2>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="card-clean text-center hover-card" data-testid="board-member-1">
-              <div className="w-20 h-20 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-lg font-bold">
-                TÇ
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-1">Tuğba Çakı</h3>
-              <p className="text-blue-600 font-medium text-sm mb-2">Yönetim Kurulu Üyesi</p>
-              <div className="bg-gray-50 rounded-lg p-2">
-                <p className="text-xs font-bold text-gray-700">Diyojen - Tuğba Çakı</p>
-                <p className="text-xs text-gray-500">28 Üye</p>
-              </div>
-            </div>
-
-            <div className="card-clean text-center hover-card" data-testid="board-member-2">
-              <div className="w-20 h-20 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-lg font-bold">
+          {/* Board Members */}
+          <div className="grid grid-4">
+            <div className="card-person" data-testid="board-member-1">
+              <div className="avatar avatar-md avatar-placeholder">
                 DAA
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-1">Duygu Asker Aksoy</h3>
-              <p className="text-blue-600 font-medium text-sm mb-2">Yönetim Kurulu Üyesi</p>
-              <div className="bg-gray-50 rounded-lg p-2">
+              <h4 className="text-lg font-bold text-gray-900 mb-1">Duygu Asker Aksoy</h4>
+              <p className="text-blue-600 font-semibold text-sm mb-2">Yönetim Kurulu Üyesi</p>
+              <div className="bg-gray-50 rounded-lg p-2 mt-3">
                 <p className="text-xs font-bold text-gray-700">Hypatia - Duygu Asker Aksoy</p>
                 <p className="text-xs text-gray-500">28 Üye</p>
               </div>
             </div>
 
-            <div className="card-clean text-center hover-card" data-testid="board-member-3">
-              <div className="w-20 h-20 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-lg font-bold">
-                SA
+            <div className="card-person" data-testid="board-member-2">
+              <div className="avatar avatar-md avatar-placeholder">
+                TÇ
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-1">Seda Ateş</h3>
-              <p className="text-blue-600 font-medium text-sm mb-2">Yönetim Kurulu Üyesi</p>
-              <div className="bg-gray-50 rounded-lg p-2">
-                <p className="text-xs font-bold text-gray-700">Hermes - Seda Ateş</p>
-                <p className="text-xs text-gray-500">22 Üye</p>
+              <h4 className="text-lg font-bold text-gray-900 mb-1">Tuğba Çakı</h4>
+              <p className="text-blue-600 font-semibold text-sm mb-2">Yönetim Kurulu Üyesi</p>
+              <div className="bg-gray-50 rounded-lg p-2 mt-3">
+                <p className="text-xs font-bold text-gray-700">Diyojen - Tuğba Çakı</p>
+                <p className="text-xs text-gray-500">28 Üye</p>
               </div>
             </div>
 
-            <div className="card-clean text-center hover-card" data-testid="board-member-4">
-              <div className="w-20 h-20 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-lg font-bold">
+            <div className="card-person" data-testid="board-member-3">
+              <div className="avatar avatar-md avatar-placeholder">
                 UDZ
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-1">Utkan Devrim Zeyrek</h3>
-              <p className="text-blue-600 font-medium text-sm mb-2">Yönetim Kurulu Üyesi</p>
-              <div className="bg-gray-50 rounded-lg p-2">
+              <h4 className="text-lg font-bold text-gray-900 mb-1">Utkan Devrim Zeyrek</h4>
+              <p className="text-blue-600 font-semibold text-sm mb-2">Yönetim Kurulu Üyesi</p>
+              <div className="bg-gray-50 rounded-lg p-2 mt-3">
                 <p className="text-xs font-bold text-gray-700">Artemis - Utkan Devrim Zeyrek</p>
                 <p className="text-xs text-gray-500">29 Üye</p>
               </div>
             </div>
-          </div>
-        </section>
 
-        {/* Call to Action */}
-        <section className="text-center bg-gray-50 rounded-lg p-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            Actor Club Ailesine Katılın
-          </h2>
-          <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-            Tiyatro sanatına olan tutkumuzu paylaşıyorsanız, Actor Club ailesinin bir parçası olun.
-          </p>
-          <Button 
-            onClick={() => navigate('/login')}
-            className="btn-primary px-8 py-3 text-lg"
-            data-testid="cta-join-btn"
-          >
-            Hemen Üye Girişi Yapın
-          </Button>
-        </section>
-      </main>
+            <div className="card-person" data-testid="board-member-4">
+              <div className="avatar avatar-md avatar-placeholder">
+                SA
+              </div>
+              <h4 className="text-lg font-bold text-gray-900 mb-1">Seda Ateş</h4>
+              <p className="text-blue-600 font-semibold text-sm mb-2">Yönetim Kurulu Üyesi</p>
+              <div className="bg-gray-50 rounded-lg p-2 mt-3">
+                <p className="text-xs font-bold text-gray-700">Hermes - Seda Ateş</p>
+                <p className="text-xs text-gray-500">22 Üye</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Actor Club Section */}
+      <section className="section section-alt">
+        <div className="container">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Neden Actor Club?</h2>
+          </div>
+          
+          <div className="grid grid-3">
+            <div className="card-feature">
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full mx-auto mb-6 flex items-center justify-center">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C20.832 18.477 19.246 18 17.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-4">Profesyonel Eğitim</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Deneyimli eğitmenlerden oyunculuk tekniklerini öğrenin ve yeteneklerinizi geliştirin.
+              </p>
+            </div>
+
+            <div className="card-feature">
+              <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-blue-500 rounded-full mx-auto mb-6 flex items-center justify-center">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-4">Güçlü Topluluk</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Aynı tutkuyu paylaşan kişilerle tanışın ve birlikte projeler geliştirin.
+              </p>
+            </div>
+
+            <div className="card-feature">
+              <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mx-auto mb-6 flex items-center justify-center">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-4">Kariyer Fırsatları</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Sektördeki bağlantılarımız sayesinde kariyer fırsatlarına erişim sağlayın.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="section">
+        <div className="container">
+          <div className="card text-center" style={{background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white', border: 'none', padding: '80px 40px'}}>
+            <h2 className="text-4xl font-bold mb-6">Hemen Başlayın</h2>
+            <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto leading-relaxed">
+              Actor Club ailesine katılın ve oyunculuk yolculuğunuza bugün başlayın.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button 
+                onClick={() => navigate('/login')}
+                className="btn-secondary text-lg"
+                data-testid="cta-join-btn"
+              >
+                Üyelik Başvurusu Yap
+              </Button>
+              <Button 
+                onClick={() => navigate('/about')}
+                className="btn-outline text-lg"
+                style={{borderColor: 'white', color: 'white'}}
+                data-testid="cta-contact-btn"
+              >
+                İletişime Geç
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12 mt-20">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <div className="mb-6">
+      <footer style={{background: '#1e293b', color: 'white', padding: '60px 0 40px 0'}}>
+        <div className="container text-center">
+          <div className="mb-8">
             <img 
               src="https://customer-assets.emergentagent.com/job_actorclub/artifacts/4gypiwpr_ac%20logo.png" 
               alt="Actor Club Logo" 
-              className="mx-auto h-12 w-auto mb-4 opacity-90 logo-clean"
+              className="logo mx-auto mb-6 opacity-90"
+              style={{filter: 'brightness(0) invert(1)'}}
             />
           </div>
-          <h3 className="text-xl font-bold mb-4">Actor Club Üye Portalı</h3>
-          <p className="text-gray-400 mb-4">
-            Tiyatro sanatına tutkuyla bağlı sanatçılar için özel platform
+          <h3 className="text-2xl font-bold mb-4">Actor Club Üye Portalı</h3>
+          <p className="text-gray-300 mb-6 max-w-xl mx-auto">
+            Tiyatro sanatına tutkuyla bağlı sanatçılar için özel olarak tasarlanmış 
+            profesyonel platform.
           </p>
-          <p className="text-gray-500 text-sm">
+          <p className="text-gray-400 text-sm">
             © 2025 Actor Club Üye Portalı. Tüm hakları saklıdır.
           </p>
         </div>
