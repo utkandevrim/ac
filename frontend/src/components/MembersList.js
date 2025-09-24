@@ -203,9 +203,18 @@ const MembersList = ({ user }) => {
             >
               {/* Profile Header */}
               <div className="flex items-center mb-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-amber-500 rounded-full flex items-center justify-center text-white text-xl font-bold mr-4">
-                  {member.name?.[0]}{member.surname?.[0]}
-                </div>
+                {member.profile_photo ? (
+                  <img 
+                    src={`${BACKEND_URL}${member.profile_photo}`} 
+                    alt={`${member.name} ${member.surname}`}
+                    className="w-16 h-16 rounded-full mr-4 object-cover border-2 border-red-200"
+                    data-testid={`member-photo-${member.id}`}
+                  />
+                ) : (
+                  <div className="w-16 h-16 bg-gradient-to-br from-red-500 to-amber-500 rounded-full flex items-center justify-center text-white text-xl font-bold mr-4">
+                    {member.name?.[0]}{member.surname?.[0]}
+                  </div>
+                )}
                 <div className="flex-1">
                   <h3 className="text-xl font-bold text-gray-900 mb-1" data-testid={`member-name-${member.id}`}>
                     {member.name} {member.surname}
