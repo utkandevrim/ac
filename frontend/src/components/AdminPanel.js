@@ -66,6 +66,7 @@ const AdminPanel = ({ user }) => {
   
   // User form data
   const [userForm, setUserForm] = useState({
+    username: '',
     email: '',
     password: '',
     name: '',
