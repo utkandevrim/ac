@@ -120,6 +120,7 @@ class UserUpdate(BaseModel):
     skills: Optional[str] = None
     height: Optional[str] = None
     weight: Optional[str] = None
+    profile_photo: Optional[str] = None
     projects: Optional[List[str]] = None
     is_approved: Optional[bool] = None
 
