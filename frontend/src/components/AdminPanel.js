@@ -793,16 +793,16 @@ const AdminPanel = ({ user }) => {
                 </div>
                 
                 <div>
-                  <Label htmlFor="board_member">Yönetim Kurulu Üyesi</Label>
+                  <Label htmlFor="board_member">Takım</Label>
                   <Select 
                     value={userForm.board_member} 
                     onValueChange={(value) => setUserForm({ ...userForm, board_member: value })}
                   >
                     <SelectTrigger data-testid="create-user-board-member">
-                      <SelectValue placeholder="Grup seçin" />
+                      <SelectValue placeholder="Takım seçin" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">Grup Seçilmemiş</SelectItem>
+                      <SelectItem value="">Takım Seçilmemiş</SelectItem>
                       {boardMembers.map((member) => (
                         <SelectItem key={member} value={member}>
                           {member}
