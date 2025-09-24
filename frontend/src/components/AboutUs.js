@@ -555,14 +555,43 @@ const AboutUs = ({ user }) => {
                   <p className="font-medium text-gray-900">Actor Club Portal</p>
                   <p>Sahne Tozu Tiyatrosu</p>
                 </div>
-                <div>
-                  <p className="font-medium text-gray-900">E-posta</p>
-                  <p>info@actorclub.com</p>
-                </div>
-                <div>
-                  <p className="font-medium text-gray-900">Web</p>
-                  <p>www.actorclub.com</p>
-                </div>
+                {aboutData.contact?.email && (
+                  <div>
+                    <p className="font-medium text-gray-900">E-posta</p>
+                    <p>{aboutData.contact.email}</p>
+                  </div>
+                )}
+                {aboutData.contact?.phone && (
+                  <div>
+                    <p className="font-medium text-gray-900">Telefon</p>
+                    <p>{aboutData.contact.phone}</p>
+                  </div>
+                )}
+                {aboutData.contact?.address && (
+                  <div>
+                    <p className="font-medium text-gray-900">Adres</p>
+                    <p>{aboutData.contact.address}</p>
+                  </div>
+                )}
+                {aboutData.contact?.website && (
+                  <div>
+                    <p className="font-medium text-gray-900">Web</p>
+                    <p>{aboutData.contact.website}</p>
+                  </div>
+                )}
+                {/* Fallback default contact if no contact data */}
+                {(!aboutData.contact || Object.values(aboutData.contact).every(v => !v)) && (
+                  <>
+                    <div>
+                      <p className="font-medium text-gray-900">E-posta</p>
+                      <p>info@actorclub.com</p>
+                    </div>
+                    <div>
+                      <p className="font-medium text-gray-900">Web</p>
+                      <p>www.actorclub.com</p>
+                    </div>
+                  </>
+                )}
               </div>
             </Card>
           </div>
