@@ -46,6 +46,7 @@ const AboutUs = ({ user }) => {
       const response = await axios.get(`${API}/about`);
       setAboutData(response.data);
       setEditContent(response.data.content || '');
+      setEditPhotos(response.data.photos || []);
     } catch (error) {
       console.error('Error fetching about data:', error);
       toast.error('İçerik yüklenirken hata oluştu');
