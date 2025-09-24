@@ -103,6 +103,15 @@ const AdminPanel = ({ user }) => {
     }
   }, [activeTab]);
 
+  const fetchLeadership = async () => {
+    try {
+      const response = await axios.get(`${API}/leadership`);
+      setLeadership(response.data);
+    } catch (error) {
+      console.error('Error fetching leadership:', error);
+    }
+  };
+
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem('token');
