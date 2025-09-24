@@ -122,11 +122,11 @@ class ActorClubAPITester:
         
         # Test 1: Valid user creation
         valid_user = {
-            "username": "test.yeniuye",
-            "email": "test.yeniuye.new@actorclub.com",  # Use different email
+            "username": "test.yenimember",
+            "email": "test.yenimember@actorclub.com",
             "password": "ValidPass123!",
             "name": "Test",
-            "surname": "Yeniuye"
+            "surname": "Yenimember"
         }
         
         try:
