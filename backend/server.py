@@ -734,6 +734,216 @@ async def upload_file(file: UploadFile = File(...), current_user: User = Depends
     
     return {"file_url": f"/uploads/{file_id}.{file_extension}"}
 
+# Admin-only endpoint to cleanup and recreate members
+@api_router.post("/admin/cleanup-members")
+async def cleanup_and_recreate_members(current_user: User = Depends(get_admin_user)):
+    try:
+        # Delete all non-admin users
+        await db.users.delete_many({"is_admin": {"$ne": True}})
+        await db.dues.delete_many({})
+        
+        # Recreate members with correct team assignments
+        members_data = [
+            # TUĞBA ÇAKI Takımı (Diyojen)
+            {"name": "İkbal", "surname": "Karatepe", "team": "Tuğba Çakı"},
+            {"name": "Deniz", "surname": "Duygulu", "team": "Tuğba Çakı"},
+            {"name": "Nazlı Sena", "surname": "Eser", "team": "Tuğba Çakı"},
+            {"name": "Ergun", "surname": "Acar", "team": "Tuğba Çakı"},
+            {"name": "Hatice Dilan", "surname": "Genç", "team": "Tuğba Çakı"},
+            {"name": "Banu", "surname": "Gümüşkaynak", "team": "Tuğba Çakı"},
+            {"name": "Ebru", "surname": "Ateşdağlı", "team": "Tuğba Çakı"},
+            {"name": "Hasan Ali", "surname": "Erk", "team": "Tuğba Çakı"},
+            {"name": "Mustafa Deniz", "surname": "Özer", "team": "Tuğba Çakı"},
+            {"name": "Hüseyin Ertan", "surname": "Sezgin", "team": "Tuğba Çakı"},
+            {"name": "Afet", "surname": "Bakay", "team": "Tuğba Çakı"},
+            {"name": "Cengiz", "surname": "Karakuzu", "team": "Tuğba Çakı"},
+            {"name": "Nadir", "surname": "Şimşek", "team": "Tuğba Çakı"},
+            {"name": "Melih", "surname": "Ülgentay", "team": "Tuğba Çakı"},
+            {"name": "Elif", "surname": "Alıveren", "team": "Tuğba Çakı"},
+            {"name": "Buğra Han", "surname": "Acar", "team": "Tuğba Çakı"},
+            {"name": "Bekir Berk", "surname": "Altınay", "team": "Tuğba Çakı"},
+            {"name": "Ceyda", "surname": "Çınar", "team": "Tuğba Çakı"},
+            {"name": "Ahmet", "surname": "İşleyen", "team": "Tuğba Çakı"},
+            {"name": "Abdullah", "surname": "Baş", "team": "Tuğba Çakı"},
+            {"name": "Alev", "surname": "Atam", "team": "Tuğba Çakı"},
+            {"name": "İzem", "surname": "Karslı", "team": "Tuğba Çakı"},
+            {"name": "Özkan", "surname": "Çiğdem", "team": "Tuğba Çakı"},
+            {"name": "Berkant", "surname": "Oman", "team": "Tuğba Çakı"},
+            {"name": "Beren", "surname": "Karamustafaoğlu", "team": "Tuğba Çakı"},
+            {"name": "Demet", "surname": "Aslan", "team": "Tuğba Çakı"},
+            {"name": "Ece", "surname": "Kılıç", "team": "Tuğba Çakı"},
+            {"name": "Hazal", "surname": "Aktaş", "team": "Tuğba Çakı"},
+            
+            # DUYGU ASKER AKSOY Takımı
+            {"name": "Sultan", "surname": "Güleryüz", "team": "Duygu Asker Aksoy"},
+            {"name": "Dilek Şahin", "surname": "Taş", "team": "Duygu Asker Aksoy"},
+            {"name": "Merve", "surname": "Dür", "team": "Duygu Asker Aksoy"},
+            {"name": "Sinan", "surname": "Telli", "team": "Duygu Asker Aksoy"},
+            {"name": "Ebru", "surname": "Polat", "team": "Duygu Asker Aksoy"},
+            {"name": "Fatma Neva", "surname": "Şen", "team": "Duygu Asker Aksoy"},
+            {"name": "Meltem", "surname": "Sözüer", "team": "Duygu Asker Aksoy"},
+            {"name": "Fethiye", "surname": "Turgut", "team": "Duygu Asker Aksoy"},
+            {"name": "Şahin Kul", "surname": "O", "team": "Duygu Asker Aksoy"},
+            {"name": "Ertuğrul", "surname": "Ceyhan", "team": "Duygu Asker Aksoy"},
+            {"name": "İbrahim", "surname": "Şanlı", "team": "Duygu Asker Aksoy"},
+            {"name": "İpek", "surname": "Apaydın", "team": "Duygu Asker Aksoy"},
+            {"name": "Aslı", "surname": "Cindaruk", "team": "Duygu Asker Aksoy"},
+            {"name": "Yadigar", "surname": "Külice", "team": "Duygu Asker Aksoy"},
+            {"name": "Volkan", "surname": "Arslan", "team": "Duygu Asker Aksoy"},
+            {"name": "Mahir", "surname": "Taşpulat", "team": "Duygu Asker Aksoy"},
+            {"name": "Gözde", "surname": "Karadağ", "team": "Duygu Asker Aksoy"},
+            {"name": "Rumeysa Nur", "surname": "Öztürk", "team": "Duygu Asker Aksoy"},
+            {"name": "Nafiz", "surname": "Selvi", "team": "Duygu Asker Aksoy"},
+            {"name": "Elif", "surname": "Kesikçiler", "team": "Duygu Asker Aksoy"},
+            {"name": "Özge", "surname": "Türkoğlu", "team": "Duygu Asker Aksoy"},
+            {"name": "Damla", "surname": "Ongün", "team": "Duygu Asker Aksoy"},
+            {"name": "Simay", "surname": "Cihan", "team": "Duygu Asker Aksoy"},
+            {"name": "Ece", "surname": "Arısoy", "team": "Duygu Asker Aksoy"},
+            {"name": "Şevval", "surname": "Karaboğa", "team": "Duygu Asker Aksoy"},
+            {"name": "Mehmet Emrah", "surname": "Güven", "team": "Duygu Asker Aksoy"},
+            {"name": "Hatice", "surname": "Avcı", "team": "Duygu Asker Aksoy"},
+            {"name": "Metin Celil", "surname": "Kuşsever", "team": "Duygu Asker Aksoy"},
+            
+            # SEDA ATEŞ Takımı
+            {"name": "Gürhan", "surname": "Aksu", "team": "Seda Ateş"},
+            {"name": "Hulusi", "surname": "Karabil", "team": "Seda Ateş"},
+            {"name": "Kökten Ulaş", "surname": "Birant", "team": "Seda Ateş"},
+            {"name": "Elif", "surname": "Gazel", "team": "Seda Ateş"},
+            {"name": "Tayyibe Alpay", "surname": "Uyanıker", "team": "Seda Ateş"},
+            {"name": "Eren", "surname": "Özgül", "team": "Seda Ateş"},
+            {"name": "Gaye", "surname": "Eren", "team": "Seda Ateş"},
+            {"name": "Şafak", "surname": "Sipahi", "team": "Seda Ateş"},
+            {"name": "Anıl", "surname": "Özçelik", "team": "Seda Ateş"},
+            {"name": "Çağla Beril", "surname": "Karayel", "team": "Seda Ateş"},
+            {"name": "Oğuz Serdar", "surname": "Zal", "team": "Seda Ateş"},
+            {"name": "Sabri Hakan", "surname": "Dokurlar", "team": "Seda Ateş"},
+            {"name": "Ahmet Rasim", "surname": "Burhanoğlu", "team": "Seda Ateş"},
+            {"name": "İrem", "surname": "Baysoy", "team": "Seda Ateş"},
+            {"name": "Abdülmetin", "surname": "Ürünveren", "team": "Seda Ateş"},
+            {"name": "Pelin", "surname": "Baki", "team": "Seda Ateş"},
+            {"name": "Esra", "surname": "Tür", "team": "Seda Ateş"},
+            {"name": "Leman", "surname": "Atiker", "team": "Seda Ateş"},
+            {"name": "Rabia Demir", "surname": "Köse", "team": "Seda Ateş"},
+            {"name": "Naci", "surname": "Çobanoğlu", "team": "Seda Ateş"},
+            {"name": "Özlem", "surname": "Demir", "team": "Seda Ateş"},
+            {"name": "Rahime Gözde", "surname": "Narin", "team": "Seda Ateş"},
+            
+            # UTKAN DEVRİM ZEYREK Takımı
+            {"name": "Saray", "surname": "Kaya", "team": "Utkan Devrim Zeyrek"},
+            {"name": "Ulaş", "surname": "Kesikçiler", "team": "Utkan Devrim Zeyrek"},
+            {"name": "Elif Tortop", "surname": "Doğan", "team": "Utkan Devrim Zeyrek"},
+            {"name": "Zeynep", "surname": "Ermeç", "team": "Utkan Devrim Zeyrek"},
+            {"name": "Gül", "surname": "Nacaroğlu", "team": "Utkan Devrim Zeyrek"},
+            {"name": "İrem", "surname": "Ayas", "team": "Utkan Devrim Zeyrek"},
+            {"name": "Kemal", "surname": "Erkilmen", "team": "Utkan Devrim Zeyrek"},
+            {"name": "Senem", "surname": "Ünal", "team": "Utkan Devrim Zeyrek"},
+            {"name": "Serkan", "surname": "Salgın", "team": "Utkan Devrim Zeyrek"},
+            {"name": "Didem", "surname": "Karabil", "team": "Utkan Devrim Zeyrek"},
+            {"name": "Ayşe", "surname": "Tumba", "team": "Utkan Devrim Zeyrek"},
+            {"name": "Nur Ayça", "surname": "Öztürk", "team": "Utkan Devrim Zeyrek"},
+            {"name": "Tamer", "surname": "Güleryüz", "team": "Utkan Devrim Zeyrek"},
+            {"name": "Bülent", "surname": "Erdağı", "team": "Utkan Devrim Zeyrek"},
+            {"name": "Ümit", "surname": "Peşeli", "team": "Utkan Devrim Zeyrek"},
+            {"name": "Aybike Asena", "surname": "Karakaya", "team": "Utkan Devrim Zeyrek"},
+            {"name": "Deniz", "surname": "Genç", "team": "Utkan Devrim Zeyrek"},
+            {"name": "Azad Burak", "surname": "Süne", "team": "Utkan Devrim Zeyrek"},
+            {"name": "Erdem", "surname": "Kocabay", "team": "Utkan Devrim Zeyrek"},
+            {"name": "Rıdvan", "surname": "Baş", "team": "Utkan Devrim Zeyrek"},
+            {"name": "Fulya", "surname": "Ersayan", "team": "Utkan Devrim Zeyrek"},
+            {"name": "Rasim Can", "surname": "Birol", "team": "Utkan Devrim Zeyrek"},
+            {"name": "Dilan", "surname": "Kart", "team": "Utkan Devrim Zeyrek"},
+            {"name": "Sıla", "surname": "Timur", "team": "Utkan Devrim Zeyrek"},
+            {"name": "Amir", "surname": "Karabuğday", "team": "Utkan Devrim Zeyrek"},
+            {"name": "Sude", "surname": "Kahraman", "team": "Utkan Devrim Zeyrek"},
+            {"name": "Samet", "surname": "Salık", "team": "Utkan Devrim Zeyrek"},
+            {"name": "Erem", "surname": "Kılıç", "team": "Utkan Devrim Zeyrek"},
+            {"name": "Seda", "surname": "Baykut", "team": "Utkan Devrim Zeyrek"},
+            
+            # Test kullanıcısı
+            {"name": "Test", "surname": "Kullanıcı", "team": None}
+        ]
+        
+        # Create password for each member  
+        import random
+        import string
+        
+        def generate_password():
+            # Generate 8-16 char password with at least 1 letter and 1 special char
+            length = random.randint(8, 16)
+            letters = string.ascii_letters
+            special_chars = "!@#$%^&*"
+            
+            # Ensure at least 1 letter and 1 special char
+            password = random.choice(letters) + random.choice(special_chars)
+            
+            # Fill the rest
+            remaining_chars = letters + string.digits + special_chars
+            for _ in range(length - 2):
+                password += random.choice(remaining_chars)
+            
+            # Shuffle the password
+            password_list = list(password)
+            random.shuffle(password_list)
+            return ''.join(password_list)
+        
+        created_count = 0
+        for member_data in members_data:
+            # Create username in lowercase format
+            name_parts = member_data["name"].lower().split()
+            surname_parts = member_data["surname"].lower().split()
+            
+            # Handle Turkish characters
+            turkish_map = {'ç': 'c', 'ğ': 'g', 'ı': 'i', 'ö': 'o', 'ş': 's', 'ü': 'u'}
+            name_clean = name_parts[0]  # Use only first part of name
+            surname_clean = surname_parts[0]  # Use only first part of surname
+            
+            for turkish, ascii_char in turkish_map.items():
+                name_clean = name_clean.replace(turkish, ascii_char)
+                surname_clean = surname_clean.replace(turkish, ascii_char)
+            
+            username = f"{name_clean}.{surname_clean}"
+            
+            user_dict = {
+                "id": str(uuid.uuid4()),
+                "username": username,
+                "email": f"{username}@actorclub.com",
+                "password": hash_password(generate_password()),
+                "name": member_data["name"],
+                "surname": member_data["surname"],
+                "phone": None,
+                "birth_date": None,
+                "address": None,
+                "workplace": None,
+                "job_title": None,
+                "hobbies": None,
+                "skills": None,
+                "height": None,
+                "weight": None,
+                "profile_photo": None,
+                "projects": [],
+                "board_member": member_data.get("team"),
+                "is_admin": False,
+                "is_approved": True,
+                "created_at": datetime.now(timezone.utc)
+            }
+            
+            user = User(**user_dict)
+            await db.users.insert_one(user.dict())
+            
+            # Create dues for the current year
+            months = ["Eylül", "Ekim", "Kasım", "Aralık", "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran"]
+            current_year = datetime.now().year
+            for month in months:
+                dues = Dues(user_id=user.id, month=month, year=current_year)
+                await db.dues.insert_one(dues.dict())
+                
+            created_count += 1
+            
+        return {"message": f"Successfully cleaned up and recreated {created_count} members"}
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Cleanup failed: {str(e)}")
+
 @api_router.get("/")
 async def root():
     return {"message": "Actor Club Portal API"}
