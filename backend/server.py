@@ -281,9 +281,9 @@ async def initialize_default_data():
 # Auth routes
 @api_router.post("/auth/login")
 async def login(user_data: UserLogin):
-    user = await db.users.find_one({"email": user_data.email})
+    user = await db.users.find_one({"username": user_data.username})
     if not user or not verify_password(user_data.password, user["password"]):
-        raise HTTPException(status_code=401, detail="Email veya şifre hatalı")
+        raise HTTPException(status_code=401, detail="Kullanıcı adı veya şifre hatalı")
     
     if not user["is_approved"]:
         raise HTTPException(status_code=401, detail="Üyeliğiniz henüz onaylanmamış")
