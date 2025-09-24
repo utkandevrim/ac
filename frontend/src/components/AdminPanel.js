@@ -35,7 +35,10 @@ import {
   Lock,
   Save,
   X,
-  Clock
+  Clock,
+  Upload,
+  Camera,
+  Image
 } from 'lucide-react';
 import { toast } from 'sonner';
 
