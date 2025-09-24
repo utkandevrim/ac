@@ -34,15 +34,29 @@ const AboutUs = ({ user }) => {
     content: '', 
     photos: [], 
     mission: '', 
-    vision: '' 
+    vision: '',
+    contact: {
+      email: '',
+      phone: '',
+      address: '',
+      website: ''
+    },
+    mainPhoto: null
   });
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState('');
   const [editMission, setEditMission] = useState('');
   const [editVision, setEditVision] = useState('');
+  const [editContact, setEditContact] = useState({
+    email: '',
+    phone: '',
+    address: '',
+    website: ''
+  });
   const [newPhotoUrl, setNewPhotoUrl] = useState('');
   const [editPhotos, setEditPhotos] = useState([]);
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
 
   useEffect(() => {
     fetchAboutData();
