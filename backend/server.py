@@ -974,8 +974,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Serve uploaded files statically - AFTER CORS
-app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
+# Serve uploaded files statically - AFTER CORS (commented out, using API endpoint instead)
+# app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
 
 # Configure logging
 logging.basicConfig(
