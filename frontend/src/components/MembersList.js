@@ -55,7 +55,18 @@ const MembersList = ({ user }) => {
       const response = await axios.get(`${API}/users`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      setMembers(response.data);
+      
+      // Filter out admin and test users for non-admin users
+      let filteredUsers = response.data;
+      if (!user.is_admin) {
+        filteredUsers = response.data.filter(member => 
+          !member.is_admin && 
+          !member.username.includes('test.') && 
+          member.name !== 'Test'
+        );
+      }
+      
+      setMembers(filteredUsers);
     } catch (error) {
       console.error('Error fetching members:', error);
     } finally {
