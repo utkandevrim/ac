@@ -123,29 +123,25 @@ const AboutUs = ({ user }) => {
   const handleSave = async () => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`${API}/about`, 
-        { 
-          content: editContent,
-          mission: editMission,
-          vision: editVision,
-          photos: editPhotos
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` }
-        }
-      );
-      
-      setAboutData({ 
-        content: editContent, 
+      const updatedData = {
+        content: editContent,
         mission: editMission,
         vision: editVision,
-        photos: editPhotos 
+        contact: editContact,
+        photos: editPhotos,
+        mainPhoto: aboutData.mainPhoto
+      };
+
+      await axios.put(`${API}/about`, updatedData, {
+        headers: { Authorization: `Bearer ${token}` }
       });
+
+      setAboutData(updatedData);
       setIsEditing(false);
-      toast.success('İçerik başarıyla güncellendi');
+      toast.success('Hakkımızda bilgileri güncellendi');
     } catch (error) {
-      console.error('Error updating about:', error);
-      toast.error('İçerik güncellenirken hata oluştu');
+      console.error('Error updating about data:', error);
+      toast.error('Güncelleme sırasında hata oluştu');
     }
   };
 
