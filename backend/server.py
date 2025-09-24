@@ -67,6 +67,9 @@ class User(BaseModel):
     is_approved: bool = False
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
+class UserWithPassword(User):
+    password: str
+
 class UserCreate(BaseModel):
     username: str  # New: username field
     email: str
