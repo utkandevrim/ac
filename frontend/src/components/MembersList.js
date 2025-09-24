@@ -261,8 +261,15 @@ const MembersList = ({ user }) => {
                   {member.is_admin ? 'Yönetici' : 'Üye'}
                 </Badge>
                 {member.board_member && (
-                  <Badge className="bg-amber-100 text-amber-800" data-testid={`member-board-${member.id}`}>
-                    {member.board_member}
+                  <Badge 
+                    className="bg-amber-100 text-amber-800 cursor-pointer hover:bg-amber-200" 
+                    data-testid={`member-board-${member.id}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleTeamClick(member.board_member);
+                    }}
+                  >
+                    {getTeamDisplayName(member.board_member)}
                   </Badge>
                 )}
                 <Badge variant="outline" className={member.is_approved ? "text-green-600 border-green-300" : "text-orange-600 border-orange-300"}>
