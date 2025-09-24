@@ -855,6 +855,74 @@ const AdminPanel = ({ user }) => {
           </DialogContent>
         </Dialog>
 
+        {/* Photo Upload Dialog */}
+        <Dialog open={showPhotoUploadDialog} onOpenChange={setShowPhotoUploadDialog}>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle>
+                <Camera className="h-5 w-5 inline mr-2" />
+                Fotoğraf Yükle
+              </DialogTitle>
+            </DialogHeader>
+            
+            {photoUploadTarget && (
+              <div className="space-y-4">
+                <div className="text-center">
+                  <p className="text-lg font-medium text-gray-900">
+                    {photoUploadTarget.name}
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {photoUploadTarget.type === 'user' ? 'Kullanıcı Profil Fotoğrafı' : 'Yönetim Ekibi Fotoğrafı'}
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="photo-upload" className="block text-center">
+                      <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 hover:border-gray-400 cursor-pointer">
+                        <Image className="h-12 w-12 mx-auto mb-4 text-gray-400" />
+                        <p className="text-sm text-gray-600">
+                          Fotoğraf seçmek için tıklayın
+                        </p>
+                        <p className="text-xs text-gray-400 mt-2">
+                          JPG, PNG, GIF (Maks. 5MB)
+                        </p>
+                      </div>
+                    </Label>
+                    <Input
+                      id="photo-upload"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleUploadPhoto}
+                      className="hidden"
+                      disabled={uploading}
+                    />
+                  </div>
+
+                  <div className="flex space-x-2">
+                    <Button 
+                      type="button" 
+                      variant="outline" 
+                      onClick={() => setShowPhotoUploadDialog(false)}
+                      className="flex-1"
+                      disabled={uploading}
+                    >
+                      İptal
+                    </Button>
+                  </div>
+
+                  {uploading && (
+                    <div className="text-center text-sm text-gray-600">
+                      <div className="animate-spin h-5 w-5 mx-auto mb-2 border-2 border-blue-500 border-t-transparent rounded-full"></div>
+                      Fotoğraf yükleniyor...
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
+
         {/* Change Password Dialog */}
         <Dialog open={showChangePasswordDialog} onOpenChange={setShowChangePasswordDialog}>
           <DialogContent className="max-w-md">
