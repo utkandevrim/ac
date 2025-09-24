@@ -96,11 +96,11 @@ const HomePage = () => {
           {/* Board Chairman */}
           <div className="text-center mb-16">
             <div className="card hover-lift max-w-md mx-auto" data-testid="board-chairman-card">
-              <div className="w-32 h-32 bg-gradient-to-br from-red-600 to-amber-500 rounded-full mx-auto mb-6 flex items-center justify-center text-white text-3xl font-bold">
+              <div className="w-32 h-32 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full mx-auto mb-6 flex items-center justify-center text-white text-3xl font-bold">
                 ET
               </div>
               <h3 className="text-2xl font-semibold text-gray-800 mb-2">Emre Turgut</h3>
-              <p className="text-red-600 font-bold text-lg">Yönetim Kurulu Başkanı</p>
+              <p className="text-blue-600 font-bold text-lg">Yönetim Kurulu Başkanı</p>
             </div>
           </div>
 
@@ -111,38 +111,38 @@ const HomePage = () => {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center card hover-lift" data-testid="board-member-1">
-              <div className="w-24 h-24 bg-gradient-to-br from-red-500 to-amber-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-xl font-bold">
+              <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-xl font-bold">
                 TÇ
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Tuğba Çakı</h3>
-              <p className="text-red-600 font-medium">Yönetim Kurulu Üyesi</p>
+              <p className="text-blue-600 font-medium">Yönetim Kurulu Üyesi</p>
               <p className="text-sm text-gray-500 mt-2">28 Üye</p>
             </div>
 
             <div className="text-center card hover-lift" data-testid="board-member-2">
-              <div className="w-24 h-24 bg-gradient-to-br from-red-500 to-amber-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-xl font-bold">
+              <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-xl font-bold">
                 DAA
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Duygu Asker Aksoy</h3>
-              <p className="text-red-600 font-medium">Yönetim Kurulu Üyesi</p>
+              <p className="text-blue-600 font-medium">Yönetim Kurulu Üyesi</p>
               <p className="text-sm text-gray-500 mt-2">28 Üye</p>
             </div>
 
             <div className="text-center card hover-lift" data-testid="board-member-3">
-              <div className="w-24 h-24 bg-gradient-to-br from-red-500 to-amber-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-xl font-bold">
+              <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-xl font-bold">
                 SA
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Seda Ateş</h3>
-              <p className="text-red-600 font-medium">Yönetim Kurulu Üyesi</p>
+              <p className="text-blue-600 font-medium">Yönetim Kurulu Üyesi</p>
               <p className="text-sm text-gray-500 mt-2">22 Üye</p>
             </div>
 
             <div className="text-center card hover-lift" data-testid="board-member-4">
-              <div className="w-24 h-24 bg-gradient-to-br from-red-500 to-amber-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-xl font-bold">
+              <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-xl font-bold">
                 UDZ
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Utkan Devrim Zeyrek</h3>
-              <p className="text-red-600 font-medium">Yönetim Kurulu Üyesi</p>
+              <p className="text-blue-600 font-medium">Yönetim Kurulu Üyesi</p>
               <p className="text-sm text-gray-500 mt-2">29 Üye</p>
             </div>
           </div>
