@@ -860,7 +860,7 @@ async def cleanup_and_recreate_members(current_user: User = Depends(get_admin_us
             {"name": "Seda", "surname": "Baykut", "team": "Utkan Devrim Zeyrek"},
             
             # Test kullanıcısı
-            {"name": "Test", "surname": "Kullanıcı", "team": None}
+            {"name": "Test", "surname": "Kullanıcı", "team": None, "password": "Test567!"}
         ]
         
         # Create password for each member  
@@ -903,11 +903,14 @@ async def cleanup_and_recreate_members(current_user: User = Depends(get_admin_us
             
             username = f"{name_clean}.{surname_clean}"
             
+            # Use custom password if provided, otherwise generate one
+            password = member_data.get("password", generate_password())
+            
             user_dict = {
                 "id": str(uuid.uuid4()),
                 "username": username,
                 "email": f"{username}@actorclub.com",
-                "password": hash_password(generate_password()),
+                "password": hash_password(password),
                 "name": member_data["name"],
                 "surname": member_data["surname"],
                 "phone": None,
