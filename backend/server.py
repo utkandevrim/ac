@@ -392,6 +392,14 @@ async def mark_due_as_paid(due_id: str, current_user: User = Depends(get_admin_u
     )
     return {"message": "Aidat ödendi olarak işaretlendi"}
 
+@api_router.put("/dues/{due_id}/unpay")
+async def mark_due_as_unpaid(due_id: str, current_user: User = Depends(get_admin_user)):
+    await db.dues.update_one(
+        {"id": due_id},
+        {"$set": {"is_paid": False, "payment_date": None}}
+    )
+    return {"message": "Aidat ödenmedi olarak işaretlendi"}
+
 # Events routes
 @api_router.post("/events", response_model=Event)
 async def create_event(event_data: EventCreate, current_user: User = Depends(get_admin_user)):
