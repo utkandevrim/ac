@@ -24,9 +24,9 @@ export const AuthContext = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const login = async (email, password) => {
+  const login = async (username, password) => {
     try {
-      const response = await axios.post(`${API}/auth/login`, { email, password });
+      const response = await axios.post(`${API}/auth/login`, { username, password });
       const { access_token, user: userData } = response.data;
       
       localStorage.setItem('token', access_token);
