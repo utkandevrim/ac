@@ -132,11 +132,27 @@ const HomePage = () => {
         <div className="container-narrow">
           <div className="text-center mb-16">
             <div className="card-person mx-auto max-w-lg" data-testid="founder-card">
-              <div className="avatar avatar-lg avatar-placeholder mx-auto">
-                MÇI
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Muzaffer Çağlar İşgören</h3>
-              <p className="text-lg font-semibold text-blue-600 mb-4">Kurucu / Onursal Başkan</p>
+              {founder && founder.photo ? (
+                <img 
+                  src={`${BACKEND_URL}${founder.photo}`} 
+                  alt={founder.name}
+                  className="w-32 h-32 rounded-full object-cover border-4 border-red-200 mx-auto mb-4"
+                />
+              ) : founder ? (
+                <div className="w-32 h-32 bg-gradient-to-br from-red-500 to-amber-500 rounded-full flex items-center justify-center text-white text-4xl font-bold mx-auto mb-4">
+                  {founder.name.split(' ').map(n => n[0]).join('')}
+                </div>
+              ) : (
+                <div className="w-32 h-32 bg-gradient-to-br from-red-500 to-amber-500 rounded-full flex items-center justify-center text-white text-4xl font-bold mx-auto mb-4">
+                  MÇI
+                </div>
+              )}
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                {founder ? founder.name : 'Muzaffer Çağlar İşgören'}
+              </h3>
+              <p className="text-lg font-semibold text-blue-600 mb-4">
+                {founder ? founder.position : 'Kurucu / Onursal Başkan'}
+              </p>
               <p className="text-gray-600 italic leading-relaxed">
                 "Actor Club, oyunculuk tutkusunu profesyonel becerilerle buluşturan 
                 bir platform olarak kurulmuştur. Amacımız, yetenekli bireyleri 
