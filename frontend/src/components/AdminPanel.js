@@ -447,6 +447,19 @@ const AdminPanel = ({ user }) => {
                             <Button 
                               variant="ghost" 
                               size="sm"
+                              onClick={() => openPhotoUploadDialog({
+                                type: 'user',
+                                id: user.id,
+                                name: `${user.name} ${user.surname}`
+                              })}
+                              className="text-blue-600 hover:text-blue-800"
+                              data-testid={`upload-photo-user-${user.id}`}
+                            >
+                              <Camera className="h-4 w-4" />
+                            </Button>
+                            <Button 
+                              variant="ghost" 
+                              size="sm"
                               onClick={() => handleDeleteUser(user.id)}
                               className="text-red-600 hover:text-red-800"
                               data-testid={`delete-user-${user.id}`}
