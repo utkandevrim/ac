@@ -174,29 +174,17 @@ const HomePage = () => {
           </div>
           
           <div className="grid grid-3">
-            <div className="card-person" data-testid="honorary-president-1">
-              <div className="avatar avatar-placeholder">
-                GK
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-1">Göksel Kortay</h3>
-              <p className="text-blue-600 font-semibold">Onursal Başkan</p>
-            </div>
-
-            <div className="card-person" data-testid="honorary-president-2">
-              <div className="avatar avatar-placeholder">
-                KUB
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-1">Kökten Ulaş Birand</h3>
-              <p className="text-blue-600 font-semibold">Onursal Başkan</p>
-            </div>
-
-            <div className="card-person" data-testid="honorary-president-3">
-              <div className="avatar avatar-placeholder">
-                CK
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-1">Cengiz Karakuzu</h3>
-              <p className="text-blue-600 font-semibold">Onursal Başkan</p>
-            </div>
+            {honorary.map((president, index) => (
+              renderPersonCard(president, `honorary-president-${index + 1}`)
+            ))}
+            {/* Fallback for loading state */}
+            {loading && (
+              <>
+                <div className="card-person">Yükleniyor...</div>
+                <div className="card-person">Yükleniyor...</div>
+                <div className="card-person">Yükleniyor...</div>
+              </>
+            )}
           </div>
         </div>
       </section>
