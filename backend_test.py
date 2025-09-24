@@ -121,9 +121,11 @@ class ActorClubAPITester:
         }
         
         # Test 1: Valid user creation
+        import time
+        timestamp = int(time.time())
         valid_user = {
-            "username": "test.yeniuye",
-            "email": "test.yeniuye@actorclub.com",
+            "username": f"test.yeniuye{timestamp}",
+            "email": f"test.yeniuye{timestamp}@actorclub.com",
             "password": "ValidPass123!",
             "name": "Test",
             "surname": "Yeni Üye"
