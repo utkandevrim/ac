@@ -53,6 +53,8 @@ const AboutUs = ({ user }) => {
       const response = await axios.get(`${API}/about`);
       setAboutData(response.data);
       setEditContent(response.data.content || '');
+      setEditMission(response.data.mission || '');
+      setEditVision(response.data.vision || '');
       setEditPhotos(response.data.photos || []);
     } catch (error) {
       console.error('Error fetching about data:', error);
