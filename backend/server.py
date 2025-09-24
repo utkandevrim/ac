@@ -512,6 +512,10 @@ async def create_user(user_data: UserCreate, current_user: User = Depends(get_ad
     if existing_user:
         raise HTTPException(status_code=400, detail="Bu email zaten kayıtlı")
     
+    existing_username = await db.users.find_one({"username": user_data.username})
+    if existing_username:
+        raise HTTPException(status_code=400, detail="Bu kullanıcı adı zaten kayıtlı")
+    
     user_dict = user_data.dict()
     user_dict["password"] = hash_password(user_data.password)
     user = User(**user_dict)
