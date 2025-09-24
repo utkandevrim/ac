@@ -107,6 +107,15 @@ const AboutUs = ({ user }) => {
     }
   };
 
+  const handleEdit = () => {
+    setIsEditing(true);
+    setEditContent(aboutData.content);
+    setEditMission(aboutData.mission);
+    setEditVision(aboutData.vision);
+    setEditContact(aboutData.contact || { email: '', phone: '', address: '', website: '' });
+    setEditPhotos(aboutData.photos || []);
+  };
+
   const handleAddPhoto = () => {
     if (newPhotoUrl.trim()) {
       setEditPhotos([...editPhotos, newPhotoUrl.trim()]);
