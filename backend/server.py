@@ -933,14 +933,14 @@ async def cleanup_and_recreate_members(current_user: User = Depends(get_admin_us
                 "created_at": datetime.now(timezone.utc)
             }
             
-            user = User(**user_dict)
-            await db.users.insert_one(user.dict())
+            user_with_password = UserWithPassword(**user_dict)
+            await db.users.insert_one(user_with_password.dict())
             
             # Create dues for the current year
             months = ["Eylül", "Ekim", "Kasım", "Aralık", "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran"]
             current_year = datetime.now().year
             for month in months:
-                dues = Dues(user_id=user.id, month=month, year=current_year)
+                dues = Dues(user_id=user_with_password.id, month=month, year=current_year)
                 await db.dues.insert_one(dues.dict())
                 
             created_count += 1
