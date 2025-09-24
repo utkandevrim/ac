@@ -426,9 +426,18 @@ const UserProfile = ({ user: currentUser }) => {
           <div className="space-y-6">
             {/* Profile Picture */}
             <Card className="card p-6 text-center">
-              <div className="w-32 h-32 bg-gradient-to-br from-red-500 to-amber-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-4xl font-bold">
-                {user.name?.[0]}{user.surname?.[0]}
-              </div>
+              {user.profile_photo ? (
+                <img 
+                  src={`${BACKEND_URL}${user.profile_photo}`} 
+                  alt={`${user.name} ${user.surname}`}
+                  className="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-red-200"
+                  data-testid="profile-photo"
+                />
+              ) : (
+                <div className="w-32 h-32 bg-gradient-to-br from-red-500 to-amber-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-4xl font-bold">
+                  {user.name?.[0]}{user.surname?.[0]}
+                </div>
+              )}
               <h3 className="text-xl font-bold text-gray-900 mb-2" data-testid="profile-name">
                 {user.name} {user.surname}
               </h3>
@@ -437,7 +446,7 @@ const UserProfile = ({ user: currentUser }) => {
               </Badge>
               {user.board_member && (
                 <Badge className="bg-red-100 text-red-800">
-                  {user.board_member} Grubu
+                  {user.board_member}
                 </Badge>
               )}
             </Card>
