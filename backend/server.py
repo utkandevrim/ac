@@ -955,13 +955,17 @@ async def root():
 # Include the router in the main app
 app.include_router(api_router)
 
+# CORS middleware - MUST be added BEFORE StaticFiles
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
+    allow_origins=["*"],  # Allow all origins for now
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Serve uploaded files statically - AFTER CORS
+app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
 
 # Configure logging
 logging.basicConfig(
