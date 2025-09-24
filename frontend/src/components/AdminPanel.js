@@ -430,6 +430,13 @@ const AdminPanel = ({ user }) => {
             </Card>
           </TabsContent>
 
+          {/* Dues Management Tab */}
+          <TabsContent value="dues" className="mt-6">
+            <Card className="card p-6">
+              <AdminDuesManager />
+            </Card>
+          </TabsContent>
+
           {/* Events Tab */}
           <TabsContent value="events" className="mt-6">
             <Card className="card p-6">
