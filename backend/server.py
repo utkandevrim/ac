@@ -534,7 +534,37 @@ async def create_user(user_data: UserCreate, current_user: User = Depends(get_ad
 @api_router.get("/users", response_model=List[User])
 async def get_users(current_user: User = Depends(get_current_user)):
     users = await db.users.find({"is_approved": True}).to_list(1000)
-    return [User(**user) for user in users]
+    
+    # Filter out users without required fields and fix them
+    valid_users = []
+    for user in users:
+        # Skip users without username field
+        if 'username' not in user or user['username'] is None:
+            # Create username for user
+            name_clean = user['name'].lower().replace(' ', '')
+            surname_clean = user['surname'].lower().replace(' ', '')
+            # Convert Turkish characters
+            turkish_map = {'ç': 'c', 'ğ': 'g', 'ı': 'i', 'ö': 'o', 'ş': 's', 'ü': 'u'}
+            for turkish, ascii_char in turkish_map.items():
+                name_clean = name_clean.replace(turkish, ascii_char)
+                surname_clean = surname_clean.replace(turkish, ascii_char)
+            
+            username = f"{name_clean}.{surname_clean}"
+            
+            # Update user in database
+            await db.users.update_one(
+                {"_id": user["_id"]},
+                {"$set": {"username": username}}
+            )
+            user['username'] = username
+        
+        try:
+            valid_users.append(User(**user))
+        except Exception as e:
+            # Skip invalid users
+            continue
+    
+    return valid_users
 
 @api_router.get("/users/pending", response_model=List[User])
 async def get_pending_users(current_user: User = Depends(get_admin_user)):
