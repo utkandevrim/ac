@@ -211,7 +211,18 @@ const UserProfile = ({ user: currentUser }) => {
 
                 <div>
                   <Label className="form-label">E-posta</Label>
-                  <p className="text-lg text-gray-900" data-testid="display-email">{user.email}</p>
+                  {isEditing ? (
+                    <Input
+                      type="email"
+                      value={editForm.email || ''}
+                      onChange={(e) => setEditForm({ ...editForm, email: e.target.value })}
+                      className="form-input"
+                      placeholder="email@example.com"
+                      data-testid="edit-email"
+                    />
+                  ) : (
+                    <p className="text-gray-900" data-testid="display-email">{user.email || 'Belirtilmemiş'}</p>
+                  )}
                 </div>
 
                 <div>
