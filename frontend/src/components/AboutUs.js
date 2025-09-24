@@ -187,13 +187,32 @@ const AboutUs = ({ user }) => {
                     <Textarea
                       value={editContent}
                       onChange={(e) => setEditContent(e.target.value)}
-                      className="form-input resize-none min-h-[300px]"
-                      placeholder="Actor Club ve Sahne Tozu Tiyatrosu hakkında bilgi ekleyin..."
+                      className="form-input resize-none min-h-[200px]"
+                      placeholder="Actor Club hakkında genel bilgi ekleyin..."
                       data-testid="edit-about-content"
                     />
-                    <p className="text-sm text-gray-500 mt-2">
-                      Metin formatını kullanabilirsiniz.
-                    </p>
+                  </div>
+
+                  <div>
+                    <Label className="form-label">Misyon</Label>
+                    <Textarea
+                      value={editMission}
+                      onChange={(e) => setEditMission(e.target.value)}
+                      className="form-input resize-none min-h-[150px]"
+                      placeholder="Misyonumuz hakkında bilgi ekleyin..."
+                      data-testid="edit-mission-content"
+                    />
+                  </div>
+
+                  <div>
+                    <Label className="form-label">Vizyon</Label>
+                    <Textarea
+                      value={editVision}
+                      onChange={(e) => setEditVision(e.target.value)}
+                      className="form-input resize-none min-h-[150px]"
+                      placeholder="Vizyonumuz hakkında bilgi ekleyin..."
+                      data-testid="edit-vision-content"
+                    />
                   </div>
 
                   {/* Photo Management */}
@@ -239,12 +258,45 @@ const AboutUs = ({ user }) => {
                   </div>
                 </div>
               ) : (
-                <div className="prose prose-lg max-w-none">
+                <div className="space-y-8">
+                  {/* About Content */}
                   {aboutData.content ? (
-                    <div className="whitespace-pre-wrap text-gray-700 leading-relaxed" data-testid="about-content">
-                      {aboutData.content}
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-4">Hakkımızda</h3>
+                      <div className="whitespace-pre-wrap text-gray-700 leading-relaxed" data-testid="about-content">
+                        {aboutData.content}
+                      </div>
                     </div>
-                  ) : (
+                  ) : null}
+
+                  {/* Mission */}
+                  {aboutData.mission ? (
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                        <Award className="h-5 w-5 mr-2 text-indigo-600" />
+                        Misyonumuz
+                      </h3>
+                      <div className="whitespace-pre-wrap text-gray-700 leading-relaxed bg-gradient-to-r from-indigo-50 to-purple-50 p-6 rounded-lg" data-testid="mission-content">
+                        {aboutData.mission}
+                      </div>
+                    </div>
+                  ) : null}
+
+                  {/* Vision */}
+                  {aboutData.vision ? (
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                        <Star className="h-5 w-5 mr-2 text-indigo-600" />
+                        Vizyonumuz
+                      </h3>
+                      <div className="whitespace-pre-wrap text-gray-700 leading-relaxed bg-gradient-to-r from-amber-50 to-orange-50 p-6 rounded-lg" data-testid="vision-content">
+                        {aboutData.vision}
+                      </div>
+                    </div>
+                  ) : null}
+
+                  {/* Empty state */}
+                  {!aboutData.content && !aboutData.mission && !aboutData.vision && (
                     <div className="text-center py-16 text-gray-500">
                       <Info className="h-16 w-16 mx-auto mb-4 opacity-50" />
                       <p className="text-lg">Henüz içerik eklenmemiş</p>
