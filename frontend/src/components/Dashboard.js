@@ -50,7 +50,7 @@ const Dashboard = ({ user }) => {
 
       if (user.is_admin) {
         setStats({
-          totalMembers: usersRes.data.length,
+          totalMembers: usersRes.data.filter(member => !member.is_admin && !member.username.includes('test.') && member.name !== 'Test').length,
           upcomingEvents: eventsRes.data.filter(e => new Date(e.date) > new Date()).length,
           paidDues: duesRes.data.filter(d => d.is_paid).length,
           unpaidDues: duesRes.data.filter(d => !d.is_paid).length
