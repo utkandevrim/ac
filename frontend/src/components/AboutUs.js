@@ -541,9 +541,11 @@ const AboutUs = ({ user }) => {
             <Card className="card p-6">
               <h3 className="text-lg font-bold text-gray-900 mb-4">Misyonumuz</h3>
               <p className="text-gray-700 text-sm leading-relaxed">
-                Actor Club olarak, sanat ve tiyatro severleri bir araya getirerek, 
-                yeteneklerin keşfedilmesi ve geliştirilmesi için güvenli ve destekleyici 
-                bir platform sunmayı hedefliyoruz.
+                {aboutData.mission || 
+                  `Actor Club olarak, sanat ve tiyatro severleri bir araya getirerek, 
+                  yeteneklerin keşfedilmesi ve geliştirilmesi için güvenli ve destekleyici 
+                  bir platform sunmayı hedefliyoruz.`
+                }
               </p>
             </Card>
 
