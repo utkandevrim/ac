@@ -45,7 +45,7 @@ const HomePage = () => {
       </div>
 
       {/* Leadership Section */}
-      <section className="py-20 bg-gradient-to-br from-amber-50 to-red-50">
+      <section className="py-20 bg-gradient-to-br from-white to-blue-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
