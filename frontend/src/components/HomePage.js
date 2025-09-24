@@ -202,10 +202,24 @@ const HomePage = () => {
           {/* Board Chairman */}
           <div className="text-center mb-16">
             <div className="card-person mx-auto max-w-lg" data-testid="board-chairman-card">
-              <div className="avatar avatar-lg" style={{background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', fontWeight: '700'}}>
-                ET
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Emre Turgut</h3>
+              {chairman && chairman.photo ? (
+                <img 
+                  src={`${BACKEND_URL}${chairman.photo}`} 
+                  alt={chairman.name}
+                  className="w-32 h-32 rounded-full object-cover border-4 border-orange-200 mx-auto mb-4"
+                />
+              ) : chairman ? (
+                <div className="w-32 h-32 bg-gradient-to-br from-orange-500 to-yellow-600 rounded-full flex items-center justify-center text-white text-4xl font-bold mx-auto mb-4">
+                  {chairman.name.split(' ').map(n => n[0]).join('')}
+                </div>
+              ) : (
+                <div className="w-32 h-32 bg-gradient-to-br from-orange-500 to-yellow-600 rounded-full flex items-center justify-center text-white text-4xl font-bold mx-auto mb-4">
+                  ET
+                </div>
+              )}
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                {chairman ? chairman.name : 'Emre Turgut'}
+              </h3>
               <p className="text-lg font-semibold text-orange-600">Başkan</p>
             </div>
           </div>
