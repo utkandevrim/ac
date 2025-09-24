@@ -114,7 +114,7 @@ const HomePage = () => {
               className="btn-primary text-lg"
               data-testid="hero-login-btn"
             >
-              Üyelik Başvurusu
+              Üye Girişi
             </Button>
             <Button 
               onClick={() => navigate('/about')}
