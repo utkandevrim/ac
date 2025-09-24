@@ -448,12 +448,14 @@ async def get_about():
     about = await db.about_us.find_one()
     if about:
         return AboutUs(**about)
-    return {"content": "", "photos": []}
+    return {"content": "", "mission": "", "vision": "", "photos": []}
 
 @api_router.put("/about")
-async def update_about(content: str, photos: List[str] = [], current_user: User = Depends(get_admin_user)):
+async def update_about(content: str, mission: str = "", vision: str = "", photos: List[str] = [], current_user: User = Depends(get_admin_user)):
     about_data = {
         "content": content,
+        "mission": mission,
+        "vision": vision,
         "photos": photos,
         "last_updated": datetime.now(timezone.utc)
     }
