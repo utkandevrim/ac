@@ -43,6 +43,7 @@ UPLOAD_DIR.mkdir(exist_ok=True)
 # Models
 class User(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    username: str  # New: username field (isim.soyisim format)
     email: str
     name: str
     surname: str
@@ -63,6 +64,7 @@ class User(BaseModel):
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class UserCreate(BaseModel):
+    username: str  # New: username field
     email: str
     password: str
     name: str
@@ -79,10 +81,16 @@ class UserCreate(BaseModel):
     projects: Optional[List[str]] = []
     board_member: Optional[str] = None
     
+    @validator('username')
+    def validate_username(cls, v):
+        if not re.match(r'^[a-z]+\.[a-z]+$', v):
+            raise ValueError('Kullanıcı adı isim.soyisim formatında olmalıdır (küçük harf)')
+        return v
+    
     @validator('password')
     def validate_password(cls, v):
-        if len(v) < 8:
-            raise ValueError('Şifre en az 8 karakter olmalıdır')
+        if len(v) < 8 or len(v) > 16:
+            raise ValueError('Şifre 8-16 karakter arasında olmalıdır')
         if not re.search(r'[A-Za-z]', v):
             raise ValueError('Şifre en az bir harf içermelidir')
         if not re.search(r'[!@#$%^&*(),.?":{}|<>]', v):
@@ -90,7 +98,7 @@ class UserCreate(BaseModel):
         return v
 
 class UserLogin(BaseModel):
-    email: str
+    username: str  # Changed from email to username
     password: str
 
 class UserUpdate(BaseModel):
