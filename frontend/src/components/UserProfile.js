@@ -107,12 +107,19 @@ const UserProfile = ({ user: currentUser }) => {
     if (!due.is_paid) {
       toast.info(
         <div>
-          <p className="font-medium">Ödeme Bilgileri</p>
-          <p className="text-sm mt-1">IBAN: {due.iban}</p>
-          <p className="text-sm">Tutar: {due.amount} TL</p>
-          <p className="text-sm">Ay: {due.month} {due.year}</p>
+          <p className="font-medium">Aidat Ödeme Bilgileri</p>
+          <div className="text-sm mt-2 space-y-1">
+            <p><strong>IBAN:</strong> TR15 0001 5001 5800 7314 0364 49</p>
+            <p><strong>İsim:</strong> Muzaffer Çağlar İşgören</p>
+            <p><strong>Banka:</strong> Vakıfbank İzmir Mersinli Şubesi</p>
+            <p><strong>Tutar:</strong> {due.amount} TL</p>
+            <p><strong>Ay:</strong> {due.month} {due.year}</p>
+            <p className="text-gray-600 italic mt-2">
+              Açıklama: "Actor Club aidatı içindir"
+            </p>
+          </div>
         </div>,
-        { duration: 8000 }
+        { duration: 12000 }
       );
     }
   };
