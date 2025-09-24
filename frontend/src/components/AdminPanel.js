@@ -278,7 +278,7 @@ const AdminPanel = ({ user }) => {
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="users" className="flex items-center" data-testid="users-tab">
               <Users className="h-4 w-4 mr-2" />
               Kullanıcılar
@@ -286,6 +286,10 @@ const AdminPanel = ({ user }) => {
             <TabsTrigger value="pending" className="flex items-center" data-testid="pending-tab">
               <CheckCircle className="h-4 w-4 mr-2" />
               Bekleyenler ({pendingUsers.length})
+            </TabsTrigger>
+            <TabsTrigger value="dues" className="flex items-center" data-testid="dues-tab">
+              <CreditCard className="h-4 w-4 mr-2" />
+              Aidat Yönetimi
             </TabsTrigger>
             <TabsTrigger value="events" className="flex items-center" data-testid="events-tab">
               <Calendar className="h-4 w-4 mr-2" />
