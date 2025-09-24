@@ -7,6 +7,7 @@ import { Textarea } from './ui/textarea';
 import { Card } from './ui/card';
 import { Badge } from './ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
+import AdminDuesManager from './AdminDuesManager';
 import {
   Dialog,
   DialogContent,
