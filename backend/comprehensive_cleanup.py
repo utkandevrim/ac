@@ -312,7 +312,7 @@ async def cleanup_database():
     print(f"\n✅ Cleanup completed successfully!")
     print(f"   Total users: {2 + len(members_data)} (2 admins + {len(members_data)} members)")
     
-    await client.close()
+    client.close()
 
 if __name__ == "__main__":
     asyncio.run(cleanup_database())
