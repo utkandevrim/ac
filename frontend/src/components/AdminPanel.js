@@ -50,10 +50,14 @@ const AdminPanel = ({ user }) => {
   const [users, setUsers] = useState([]);
   const [pendingUsers, setPendingUsers] = useState([]);
   const [events, setEvents] = useState([]);
+  const [leadership, setLeadership] = useState([]);
   const [allDues, setAllDues] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showCreateUserDialog, setShowCreateUserDialog] = useState(false);
   const [showChangePasswordDialog, setShowChangePasswordDialog] = useState(false);
+  const [showPhotoUploadDialog, setShowPhotoUploadDialog] = useState(false);
+  const [photoUploadTarget, setPhotoUploadTarget] = useState(null); // { type: 'user', id: 'user_id', name: 'John Doe' } or { type: 'leader', id: 'leader_id', name: 'Leader Name' }
+  const [uploading, setUploading] = useState(false);
   const [passwordForm, setPasswordForm] = useState({
     oldPassword: '',
     newPassword: '',
