@@ -1,9 +1,60 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const API = `${BACKEND_URL}/api`;
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const [leadership, setLeadership] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchLeadership();
+  }, []);
+
+  const fetchLeadership = async () => {
+    try {
+      const response = await axios.get(`${API}/leadership`);
+      setLeadership(response.data);
+    } catch (error) {
+      console.error('Error fetching leadership:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Group leadership by position
+  const founder = leadership.find(l => l.position.includes('Kurucu'));
+  const honorary = leadership.filter(l => l.position.includes('Onursal Başkan') && !l.position.includes('Kurucu'));
+  const chairman = leadership.find(l => l.position.includes('Yönetim Kurulu Başkanı'));
+  const boardMembers = leadership.filter(l => l.position.includes('Yönetim Kurulu Üyesi'));
+
+  const renderPersonCard = (person, testId, size = 'normal') => {
+    if (!person) return <div className="card-person" data-testid={testId}>Yükleniyor...</div>;
+    
+    const avatarSize = size === 'large' ? 'w-32 h-32 text-4xl' : 'w-24 h-24 text-2xl';
+    
+    return (
+      <div className="card-person" data-testid={testId}>
+        {person.photo ? (
+          <img 
+            src={`${BACKEND_URL}${person.photo}`} 
+            alt={person.name}
+            className={`${avatarSize} rounded-full object-cover border-4 border-red-200 mx-auto mb-4`}
+          />
+        ) : (
+          <div className={`${avatarSize} bg-gradient-to-br from-red-500 to-amber-500 rounded-full flex items-center justify-center text-white font-bold mx-auto mb-4`}>
+            {person.name.split(' ').map(n => n[0]).join('')}
+          </div>
+        )}
+        <h3 className="text-xl font-bold text-gray-900 mb-1">{person.name}</h3>
+        <p className="text-blue-600 font-semibold">{person.position}</p>
+      </div>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-white">
