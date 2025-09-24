@@ -143,6 +143,8 @@ class Leadership(BaseModel):
 class AboutUs(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     content: str
+    mission: Optional[str] = None
+    vision: Optional[str] = None
     photos: Optional[List[str]] = []
     last_updated: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
