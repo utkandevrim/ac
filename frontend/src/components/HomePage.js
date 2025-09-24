@@ -60,36 +60,36 @@ const HomePage = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
             {/* Founder */}
             <div className="text-center card hover-lift" data-testid="founder-card">
-              <div className="w-24 h-24 bg-gradient-to-br from-amber-400 to-red-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
+              <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
                 ÇI
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Çağlar İşgören</h3>
-              <p className="text-red-600 font-medium">Kurucu</p>
+              <p className="text-blue-600 font-medium">Kurucu</p>
             </div>
 
             {/* Honorary Presidents */}
             <div className="text-center card hover-lift" data-testid="honorary-president-1">
-              <div className="w-24 h-24 bg-gradient-to-br from-amber-400 to-red-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
+              <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
                 GK
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Göksel Kortay</h3>
-              <p className="text-red-600 font-medium">Onursal Başkan</p>
+              <p className="text-blue-600 font-medium">Onursal Başkan</p>
             </div>
 
             <div className="text-center card hover-lift" data-testid="honorary-president-2">
-              <div className="w-24 h-24 bg-gradient-to-br from-amber-400 to-red-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
+              <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
                 KUB
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Kökten Ulaş Birand</h3>
-              <p className="text-red-600 font-medium">Onursal Başkan</p>
+              <p className="text-blue-600 font-medium">Onursal Başkan</p>
             </div>
 
             <div className="text-center card hover-lift" data-testid="honorary-president-3">
-              <div className="w-24 h-24 bg-gradient-to-br from-amber-400 to-red-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
+              <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
                 CK
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">Cengiz Karakuzu</h3>
-              <p className="text-red-600 font-medium">Onursal Başkan</p>
+              <p className="text-blue-600 font-medium">Onursal Başkan</p>
             </div>
           </div>
 
