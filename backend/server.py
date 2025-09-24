@@ -695,20 +695,22 @@ async def get_about():
     return {"content": "", "mission": "", "vision": "", "photos": []}
 
 @api_router.put("/about")
-async def update_about(content: str, mission: str = "", vision: str = "", photos: List[str] = [], current_user: User = Depends(get_admin_user)):
-    about_data = {
-        "content": content,
-        "mission": mission,
-        "vision": vision,
-        "photos": photos,
+async def update_about(about_data: dict, current_user: User = Depends(get_admin_user)):
+    # Structure the data properly
+    structured_data = {
+        "content": about_data.get("content", ""),
+        "mission": about_data.get("mission", ""),
+        "vision": about_data.get("vision", ""),
+        "contact": about_data.get("contact", {}),
+        "mainPhoto": about_data.get("mainPhoto"),
+        "photos": about_data.get("photos", []),
         "last_updated": datetime.now(timezone.utc)
     }
     
     await db.about_us.delete_many({})  # Remove existing
-    about = AboutUs(**about_data)
-    await db.about_us.insert_one(about.dict())
+    await db.about_us.insert_one(structured_data)
     
-    return about
+    return {"message": "About bilgileri güncellendi"}
 
 # File serving endpoint instead of StaticFiles
 @api_router.get("/uploads/{file_name}")
