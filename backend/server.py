@@ -715,14 +715,22 @@ async def upload_file(file: UploadFile = File(...), current_user: User = Depends
         raise HTTPException(status_code=400, detail="Dosya seçilmedi")
     
     file_extension = file.filename.split(".")[-1].lower()
-    if file_extension not in ["jpg", "jpeg", "png", "gif"]:
+    if file_extension not in ["jpg", "jpeg", "png", "gif", "webp"]:
         raise HTTPException(status_code=400, detail="Sadece resim dosyaları yüklenebilir")
+    
+    # Check file size (5MB limit)
+    file_size = 0
+    content = await file.read()
+    file_size = len(content)
+    
+    if file_size > 5 * 1024 * 1024:  # 5MB
+        raise HTTPException(status_code=400, detail="Dosya boyutu 5MB'den küçük olmalıdır")
     
     file_id = str(uuid.uuid4())
     file_path = UPLOAD_DIR / f"{file_id}.{file_extension}"
     
     with open(file_path, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
+        buffer.write(content)
     
     return {"file_url": f"/uploads/{file_id}.{file_extension}"}
 
