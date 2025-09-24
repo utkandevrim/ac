@@ -35,12 +35,12 @@ h1, h2, h3, h4, h5, h6 {
   background-clip: text;
 }
 
-/* Colors - Fresh blue and cream theme */
+/* Colors - Fresh white, light blue and cream theme */
 :root {
   --primary: #3b82f6; /* Soft blue */
   --secondary: #f5f2e8; /* Cream */
   --accent: #60a5fa; /* Light blue */
-  --background: #fefefe; /* Pure white */
+  --background: #ffffff; /* Pure white */
   --surface: #ffffff;
   --text: #1e293b;
   --text-muted: #64748b;
