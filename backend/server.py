@@ -525,18 +525,18 @@ async def create_user(user_data: UserCreate, current_user: User = Depends(get_ad
     
     user_dict = user_data.dict()
     user_dict["password"] = hash_password(user_data.password)
-    user = User(**user_dict)
+    user_with_password = UserWithPassword(**user_dict)
     
-    await db.users.insert_one(user.dict())
+    await db.users.insert_one(user_with_password.dict())
     
     # Create dues for the current year
     months = ["Eylül", "Ekim", "Kasım", "Aralık", "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran"]
     current_year = datetime.now().year
     for month in months:
-        dues = Dues(user_id=user.id, month=month, year=current_year)
+        dues = Dues(user_id=user_with_password.id, month=month, year=current_year)
         await db.dues.insert_one(dues.dict())
     
-    return user
+    return User(**user_dict)
 
 @api_router.get("/users", response_model=List[User])
 async def get_users(current_user: User = Depends(get_current_user)):
