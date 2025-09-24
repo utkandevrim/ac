@@ -533,6 +533,96 @@ const AdminPanel = ({ user }) => {
             </Card>
           </TabsContent>
 
+          {/* Photo Management Tab */}
+          <TabsContent value="photos" className="mt-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Users Photo Management */}
+              <Card className="card p-6">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Üye Fotoğrafları</h2>
+                <div className="space-y-4 max-h-96 overflow-y-auto">
+                  {users.slice(0, 10).map((user) => (
+                    <div key={user.id} className="flex items-center justify-between p-3 border rounded-lg">
+                      <div className="flex items-center">
+                        {user.profile_photo ? (
+                          <img 
+                            src={`${BACKEND_URL}${user.profile_photo}`} 
+                            alt={`${user.name} ${user.surname}`}
+                            className="w-12 h-12 rounded-full object-cover mr-3"
+                          />
+                        ) : (
+                          <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-amber-500 rounded-full flex items-center justify-center text-white text-sm font-bold mr-3">
+                            {user.name?.[0]}{user.surname?.[0]}
+                          </div>
+                        )}
+                        <div>
+                          <p className="font-medium text-gray-900">{user.name} {user.surname}</p>
+                          <p className="text-sm text-gray-500">{user.username}</p>
+                        </div>
+                      </div>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => openPhotoUploadDialog({
+                          type: 'user',
+                          id: user.id,
+                          name: `${user.name} ${user.surname}`
+                        })}
+                      >
+                        <Upload className="h-4 w-4 mr-1" />
+                        {user.profile_photo ? 'Değiştir' : 'Ekle'}
+                      </Button>
+                    </div>
+                  ))}
+                  {users.length > 10 && (
+                    <p className="text-sm text-gray-500 text-center mt-4">
+                      Ve {users.length - 10} üye daha...
+                    </p>
+                  )}
+                </div>
+              </Card>
+
+              {/* Leadership Photo Management */}
+              <Card className="card p-6">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Yönetim Ekibi Fotoğrafları</h2>
+                <div className="space-y-4">
+                  {leadership.map((leader) => (
+                    <div key={leader.id} className="flex items-center justify-between p-3 border rounded-lg">
+                      <div className="flex items-center">
+                        {leader.photo ? (
+                          <img 
+                            src={`${BACKEND_URL}${leader.photo}`} 
+                            alt={leader.name}
+                            className="w-12 h-12 rounded-full object-cover mr-3"
+                          />
+                        ) : (
+                          <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-sm font-bold mr-3">
+                            {leader.name.split(' ').map(n => n[0]).join('')}
+                          </div>
+                        )}
+                        <div>
+                          <p className="font-medium text-gray-900">{leader.name}</p>
+                          <p className="text-sm text-gray-500">{leader.position}</p>
+                        </div>
+                      </div>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => openPhotoUploadDialog({
+                          type: 'leader',
+                          id: leader.id,
+                          name: leader.name
+                        })}
+                      >
+                        <Upload className="h-4 w-4 mr-1" />
+                        {leader.photo ? 'Değiştir' : 'Ekle'}
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+            </div>
+          </TabsContent>
+
           {/* Dues Management Tab */}
           <TabsContent value="dues" className="mt-6">
             <Card className="card p-6">
