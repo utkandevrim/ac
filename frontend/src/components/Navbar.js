@@ -43,14 +43,14 @@ const Navbar = ({ user, onLogout }) => {
         <div className="flex justify-between h-16">
           {/* Logo and main nav */}
           <div className="flex items-center">
-            <Link to="/dashboard" className="flex-shrink-0 flex items-center">
+            <Link to="/dashboard" className="flex-shrink-0 flex items-center" onClick={() => navigate('/')}>
               <img 
                 src="https://customer-assets.emergentagent.com/job_actorclub/artifacts/4gypiwpr_ac%20logo.png" 
                 alt="Actor Club Logo" 
-                className="h-10 w-auto mr-3"
+                className="h-10 w-auto mr-3 logo-modern"
                 data-testid="navbar-logo"
               />
-              <span className="text-xl font-bold text-gray-800">Actor Club</span>
+              <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Actor Club</span>
             </Link>
 
             {/* Desktop navigation */}
