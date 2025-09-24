@@ -200,10 +200,11 @@ async def initialize_default_data():
     admin_users = [
         {
             "id": str(uuid.uuid4()),
+            "username": "admin.yonetici",
             "email": "admin1@actorclub.com",
             "password": hash_password("ActorClub2024!"),
             "name": "Admin",
-            "surname": "Bir",
+            "surname": "Yönetici",
             "phone": None,
             "birth_date": None,
             "address": None,
@@ -222,10 +223,11 @@ async def initialize_default_data():
         },
         {
             "id": str(uuid.uuid4()),
-            "email": "admin2@actorclub.com", 
-            "password": hash_password("ClubActor2024@"),
-            "name": "Admin",
-            "surname": "İki",
+            "username": "muzaffer.isgoren",
+            "email": "muzaffer@actorclub.com", 
+            "password": hash_password("Founder123!"),
+            "name": "Muzaffer",
+            "surname": "İşgören",
             "phone": None,
             "birth_date": None,
             "address": None,
@@ -245,19 +247,213 @@ async def initialize_default_data():
     ]
     
     for admin_data in admin_users:
-        existing_admin = await db.users.find_one({"email": admin_data["email"]})
+        existing_admin = await db.users.find_one({"username": admin_data["username"]})
         if not existing_admin:
             admin_user = User(**admin_data)
             await db.users.insert_one(admin_user.dict())
-            print(f"Created admin user: {admin_data['email']}")
+            print(f"Created admin user: {admin_data['username']}")
         else:
             # Update existing admin with password if missing
-            if "password" not in existing_admin:
+            if "password" not in existing_admin or "username" not in existing_admin:
                 await db.users.update_one(
                     {"email": admin_data["email"]},
-                    {"$set": {"password": admin_data["password"]}}
+                    {"$set": {
+                        "password": admin_data["password"],
+                        "username": admin_data["username"]
+                    }}
                 )
-                print(f"Updated password for admin: {admin_data['email']}")
+                print(f"Updated admin: {admin_data['username']}")
+    
+    # Create all new members
+    members_data = [
+        # TUĞBA ÇAKI Takımı
+        {"name": "İkbal", "surname": "Karatepe", "team": "Diyojen"},
+        {"name": "Deniz", "surname": "Duygulu", "team": "Diyojen"},
+        {"name": "Nazlı Sena", "surname": "Eser", "team": "Diyojen"},
+        {"name": "Ergun", "surname": "Acar", "team": "Diyojen"},
+        {"name": "Hatice Dilan", "surname": "Genç", "team": "Diyojen"},
+        {"name": "Banu", "surname": "Gümüşkaynak", "team": "Diyojen"},
+        {"name": "Ebru", "surname": "Ateşdağlı", "team": "Diyojen"},
+        {"name": "Hasan Ali", "surname": "Erk", "team": "Diyojen"},
+        {"name": "Mustafa Deniz", "surname": "Özer", "team": "Diyojen"},
+        {"name": "Hüseyin Ertan", "surname": "Sezgin", "team": "Diyojen"},
+        {"name": "Afet", "surname": "Bakay", "team": "Diyojen"},
+        {"name": "Cengiz", "surname": "Karakuzu", "team": "Diyojen"},
+        {"name": "Nadir", "surname": "Şimşek", "team": "Diyojen"},
+        {"name": "Melih", "surname": "Ülgentay", "team": "Diyojen"},
+        {"name": "Elif", "surname": "Alıveren", "team": "Diyojen"},
+        {"name": "Buğra Han", "surname": "Acar", "team": "Diyojen"},
+        {"name": "Bekir Berk", "surname": "Altınay", "team": "Diyojen"},
+        {"name": "Ceyda", "surname": "Çınar", "team": "Diyojen"},
+        {"name": "Ahmet", "surname": "İşleyen", "team": "Diyojen"},
+        {"name": "Abdullah", "surname": "Baş", "team": "Diyojen"},
+        {"name": "Alev", "surname": "Atam", "team": "Diyojen"},
+        {"name": "İzem", "surname": "Karslı", "team": "Diyojen"},
+        {"name": "Özkan", "surname": "Çiğdem", "team": "Diyojen"},
+        {"name": "Berkant", "surname": "Oman", "team": "Diyojen"},
+        {"name": "Beren", "surname": "Karamustafaoğlu", "team": "Diyojen"},
+        {"name": "Demet", "surname": "Aslan", "team": "Diyojen"},
+        {"name": "Ece", "surname": "Kılıç", "team": "Diyojen"},
+        {"name": "Hazal", "surname": "Aktaş", "team": "Diyojen"},
+        
+        # DUYGU ASKER AKSOY Takımı  
+        {"name": "Sultan", "surname": "Güleryüz", "team": "Hypatia"},
+        {"name": "Dilek", "surname": "Şahin Taş", "team": "Hypatia"},
+        {"name": "Merve", "surname": "Dür", "team": "Hypatia"},
+        {"name": "Sinan", "surname": "Telli", "team": "Hypatia"},
+        {"name": "Ebru", "surname": "Polat", "team": "Hypatia"},
+        {"name": "Fatma Neva", "surname": "Şen", "team": "Hypatia"},
+        {"name": "Meltem", "surname": "Sözüer", "team": "Hypatia"},
+        {"name": "Fethiye", "surname": "Turgut", "team": "Hypatia"},
+        {"name": "Şahin", "surname": "Kul", "team": "Hypatia"},
+        {"name": "Ertuğrul", "surname": "Ceyhan", "team": "Hypatia"},
+        {"name": "İbrahim", "surname": "Şanlı", "team": "Hypatia"},
+        {"name": "İpek", "surname": "Apaydın", "team": "Hypatia"},
+        {"name": "Aslı", "surname": "Cindaruk", "team": "Hypatia"},
+        {"name": "Yadigar", "surname": "Külice", "team": "Hypatia"},
+        {"name": "Volkan", "surname": "Arslan", "team": "Hypatia"},
+        {"name": "Mahir", "surname": "Taşpulat", "team": "Hypatia"},
+        {"name": "Gözde", "surname": "Karadağ", "team": "Hypatia"},
+        {"name": "Rumeysa Nur", "surname": "Öztürk", "team": "Hypatia"},
+        {"name": "Nafiz", "surname": "Selvi", "team": "Hypatia"},
+        {"name": "Elif", "surname": "Kesikçiler", "team": "Hypatia"},
+        {"name": "Özge", "surname": "Türkoğlu", "team": "Hypatia"},
+        {"name": "Damla", "surname": "Ongün", "team": "Hypatia"},
+        {"name": "Simay", "surname": "Cihan", "team": "Hypatia"},
+        {"name": "Ece", "surname": "Arısoy", "team": "Hypatia"},
+        {"name": "Şevval", "surname": "Karaboğa", "team": "Hypatia"},
+        {"name": "Mehmet Emrah", "surname": "Güven", "team": "Hypatia"},
+        {"name": "Hatice", "surname": "Avcı", "team": "Hypatia"},
+        {"name": "Metin Celil", "surname": "Kuşsever", "team": "Hypatia"},
+        
+        # SEDA ATEŞ Takımı
+        {"name": "Gürhan", "surname": "Aksu", "team": "Artemis"},
+        {"name": "Hulusi", "surname": "Karabil", "team": "Artemis"},
+        {"name": "Kökten Ulaş", "surname": "Birant", "team": "Artemis"},
+        {"name": "Elif", "surname": "Gazel", "team": "Artemis"},
+        {"name": "Tayyibe Alpay", "surname": "Uyanıker", "team": "Artemis"},
+        {"name": "Eren", "surname": "Özgül", "team": "Artemis"},
+        {"name": "Gaye", "surname": "Eren", "team": "Artemis"},
+        {"name": "Şafak", "surname": "Sipahi", "team": "Artemis"},
+        {"name": "Anıl", "surname": "Özçelik", "team": "Artemis"},
+        {"name": "Çağla Beril", "surname": "Karayel", "team": "Artemis"},
+        {"name": "Oğuz Serdar", "surname": "Zal", "team": "Artemis"},
+        {"name": "Sabri Hakan", "surname": "Dokurlar", "team": "Artemis"},
+        {"name": "Ahmet Rasim", "surname": "Burhanoğlu", "team": "Artemis"},
+        {"name": "İrem", "surname": "Baysoy", "team": "Artemis"},
+        {"name": "Abdülmetin", "surname": "Ürünveren", "team": "Artemis"},
+        {"name": "Pelin", "surname": "Baki", "team": "Artemis"},
+        {"name": "Esra", "surname": "Tür", "team": "Artemis"},
+        {"name": "Leman", "surname": "Atiker", "team": "Artemis"},
+        {"name": "Rabia Demir", "surname": "Köse", "team": "Artemis"},
+        {"name": "Naci", "surname": "Çobanoğlu", "team": "Artemis"},
+        {"name": "Özlem", "surname": "Demir", "team": "Artemis"},
+        {"name": "Rahime Gözde", "surname": "Narin", "team": "Artemis"},
+        
+        # UTKAN DEVRİM ZEYREK Takımı
+        {"name": "Saray", "surname": "Kaya", "team": "Hermes"},
+        {"name": "Ulaş", "surname": "Kesikçiler", "team": "Hermes"},
+        {"name": "Elif", "surname": "Tortop Doğan", "team": "Hermes"},
+        {"name": "Zeynep", "surname": "Ermeç", "team": "Hermes"},
+        {"name": "Gül", "surname": "Nacaroğlu", "team": "Hermes"},
+        {"name": "İrem", "surname": "Ayas", "team": "Hermes"},
+        {"name": "Kemal", "surname": "Erkilmen", "team": "Hermes"},
+        {"name": "Senem", "surname": "Ünal", "team": "Hermes"},
+        {"name": "Serkan", "surname": "Salgın", "team": "Hermes"},
+        {"name": "Didem", "surname": "Karabil", "team": "Hermes"},
+        {"name": "Ayşe", "surname": "Tumba", "team": "Hermes"},
+        {"name": "Nur Ayça", "surname": "Öztürk", "team": "Hermes"},
+        {"name": "Tamer", "surname": "Güleryüz", "team": "Hermes"},
+        {"name": "Bülent", "surname": "Erdağı", "team": "Hermes"},
+        {"name": "Ümit", "surname": "Peşeli", "team": "Hermes"},
+        {"name": "Aybike Asena", "surname": "Karakaya", "team": "Hermes"},
+        {"name": "Deniz", "surname": "Genç", "team": "Hermes"},
+        {"name": "Azad Burak", "surname": "Süne", "team": "Hermes"},
+        {"name": "Erdem", "surname": "Kocabay", "team": "Hermes"},
+        {"name": "Rıdvan", "surname": "Baş", "team": "Hermes"},
+        {"name": "Fulya", "surname": "Ersayan", "team": "Hermes"},
+        {"name": "Rasim Can", "surname": "Birol", "team": "Hermes"},
+        {"name": "Dilan", "surname": "Kart", "team": "Hermes"},
+        {"name": "Sıla", "surname": "Timur", "team": "Hermes"},
+        {"name": "Amir", "surname": "Karabuğday", "team": "Hermes"},
+        {"name": "Sude", "surname": "Kahraman", "team": "Hermes"},
+        {"name": "Samet", "surname": "Salık", "team": "Hermes"},
+        {"name": "Erem", "surname": "Kılıç", "team": "Hermes"},
+        {"name": "Seda", "surname": "Baykut", "team": "Hermes"},
+        
+        # Test kullanıcısı
+        {"name": "Test", "surname": "Kullanıcı", "team": None}
+    ]
+    
+    # Create password for each member
+    import random
+    import string
+    
+    def generate_password():
+        # Generate 8-16 char password with at least 1 letter and 1 special char
+        length = random.randint(8, 16)
+        letters = string.ascii_letters
+        special_chars = "!@#$%^&*"
+        
+        # Ensure at least 1 letter and 1 special char
+        password = random.choice(letters) + random.choice(special_chars)
+        
+        # Fill the rest
+        remaining_chars = letters + string.digits + special_chars
+        for _ in range(length - 2):
+            password += random.choice(remaining_chars)
+        
+        # Shuffle the password
+        password_list = list(password)
+        random.shuffle(password_list)
+        return ''.join(password_list)
+    
+    for member_data in members_data:
+        # Create username in lowercase format
+        name_clean = member_data["name"].lower().replace(" ", "")
+        surname_clean = member_data["surname"].lower().replace(" ", "")
+        username = f"{name_clean}.{surname_clean}"
+        
+        # Skip if username already exists
+        existing_member = await db.users.find_one({"username": username})
+        if existing_member:
+            continue
+            
+        user_dict = {
+            "id": str(uuid.uuid4()),
+            "username": username,
+            "email": f"{username}@actorclub.com",
+            "password": hash_password(generate_password()),
+            "name": member_data["name"],
+            "surname": member_data["surname"],
+            "phone": None,
+            "birth_date": None,
+            "address": None,
+            "workplace": None,
+            "job_title": None,
+            "hobbies": None,
+            "skills": None,
+            "height": None,
+            "weight": None,
+            "profile_photo": None,
+            "projects": [],
+            "board_member": member_data.get("team"),
+            "is_admin": False,
+            "is_approved": True,
+            "created_at": datetime.now(timezone.utc)
+        }
+        
+        user = User(**user_dict)
+        await db.users.insert_one(user.dict())
+        
+        # Create dues for the current year
+        months = ["Eylül", "Ekim", "Kasım", "Aralık", "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran"]
+        current_year = datetime.now().year
+        for month in months:
+            dues = Dues(user_id=user.id, month=month, year=current_year)
+            await db.dues.insert_one(dues.dict())
+        
+        print(f"Created member: {username}")
     
     # Create leadership structure
     leadership_data = [
