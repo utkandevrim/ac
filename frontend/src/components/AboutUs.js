@@ -30,10 +30,17 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
 const AboutUs = ({ user }) => {
-  const [aboutData, setAboutData] = useState({ content: '', photos: [] });
+  const [aboutData, setAboutData] = useState({ 
+    content: '', 
+    photos: [], 
+    mission: '', 
+    vision: '' 
+  });
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState('');
+  const [editMission, setEditMission] = useState('');
+  const [editVision, setEditVision] = useState('');
   const [newPhotoUrl, setNewPhotoUrl] = useState('');
   const [editPhotos, setEditPhotos] = useState([]);
 
