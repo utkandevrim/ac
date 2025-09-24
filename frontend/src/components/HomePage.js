@@ -9,11 +9,9 @@ const HomePage = () => {
     <div className="min-h-screen">
       {/* Hero Section */}
       <div 
-        className="relative h-screen flex items-center justify-center theater-curtain"
+        className="relative h-screen flex items-center justify-center"
         style={{
-          backgroundImage: `linear-gradient(rgba(139, 38, 53, 0.7), rgba(139, 38, 53, 0.7)), url('https://images.unsplash.com/photo-1503095396549-807759245b35?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Nzd8MHwxfHNlYXJjaHwxfHx0aGVhdGVyJTIwcGVyZm9ybWFuY2V8ZW58MHx8fHwxNzU4NzMzNzc5fDA&ixlib=rb-4.1.0&q=85')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center'
+          background: 'linear-gradient(135deg, #3b82f6 0%, #60a5fa 50%, #f5f2e8 100%)',
         }}
       >
         <div className="spotlight">
