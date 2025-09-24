@@ -119,10 +119,10 @@ const AboutUs = ({ user }) => {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-4xl font-bold text-gray-900 mb-2" data-testid="about-title">
-              Biz Kimiz?
+              Hakkımızda
             </h1>
             <p className="text-lg text-gray-600">
-              Actor Club ve Sahne Tozu Tiyatrosu hakkında
+              Actor Club ve tiyatro topluluğumuz hakkında
             </p>
           </div>
           
