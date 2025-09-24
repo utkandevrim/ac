@@ -85,10 +85,10 @@ const AdminPanel = ({ user }) => {
   });
 
   const boardMembers = [
-    'Tuğba Çakı',
-    'Duygu Asker Aksoy',
-    'Seda Ateş', 
-    'Utkan Devrim Zeyrek'
+    'Diyojen',
+    'Hypatia',
+    'Artemis', 
+    'Hermes'
   ];
 
   useEffect(() => {
@@ -97,6 +97,9 @@ const AdminPanel = ({ user }) => {
       fetchPendingUsers();
     } else if (activeTab === 'events') {
       fetchEvents();
+    } else if (activeTab === 'photos') {
+      fetchUsers();
+      fetchLeadership();
     }
   }, [activeTab]);
 
