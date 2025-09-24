@@ -61,20 +61,31 @@ const AboutUs = ({ user }) => {
       await axios.put(`${API}/about`, 
         { 
           content: editContent,
-          photos: aboutData.photos || []
+          photos: editPhotos
         },
         {
           headers: { Authorization: `Bearer ${token}` }
         }
       );
       
-      setAboutData({ ...aboutData, content: editContent });
+      setAboutData({ content: editContent, photos: editPhotos });
       setIsEditing(false);
       toast.success('İçerik başarıyla güncellendi');
     } catch (error) {
       console.error('Error updating about:', error);
       toast.error('İçerik güncellenirken hata oluştu');
     }
+  };
+
+  const handleAddPhoto = () => {
+    if (newPhotoUrl.trim()) {
+      setEditPhotos([...editPhotos, newPhotoUrl.trim()]);
+      setNewPhotoUrl('');
+    }
+  };
+
+  const handleRemovePhoto = (index) => {
+    setEditPhotos(editPhotos.filter((_, i) => i !== index));
   };
 
   if (loading) {
