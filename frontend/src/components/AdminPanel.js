@@ -719,6 +719,31 @@ const AdminPanel = ({ user }) => {
             <form onSubmit={handleCreateUser} className="space-y-4" data-testid="create-user-form">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
+                  <Label htmlFor="username">Kullanıcı Adı *</Label>
+                  <Input
+                    id="username"
+                    value={userForm.username}
+                    onChange={(e) => setUserForm({ ...userForm, username: e.target.value })}
+                    placeholder="isim.soyisim"
+                    className="form-input"
+                    data-testid="create-user-username"
+                  />
+                </div>
+                
+                <div>
+                  <Label htmlFor="email">E-posta *</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={userForm.email}
+                    onChange={(e) => setUserForm({ ...userForm, email: e.target.value })}
+                    placeholder="email@example.com"
+                    className="form-input"
+                    data-testid="create-user-email"
+                  />
+                </div>
+                
+                <div>
                   <Label htmlFor="name">Ad *</Label>
                   <Input
                     id="name"
@@ -743,26 +768,13 @@ const AdminPanel = ({ user }) => {
                 </div>
                 
                 <div>
-                  <Label htmlFor="email">E-posta *</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={userForm.email}
-                    onChange={(e) => setUserForm({ ...userForm, email: e.target.value })}
-                    placeholder="email@example.com"
-                    className="form-input"
-                    data-testid="create-user-email"
-                  />
-                </div>
-                
-                <div>
                   <Label htmlFor="password">Şifre *</Label>
                   <Input
                     id="password"
                     type="password"
                     value={userForm.password}
                     onChange={(e) => setUserForm({ ...userForm, password: e.target.value })}
-                    placeholder="Şifre (min 8 karakter)"
+                    placeholder="Min 8 karakter, 1 harf, 1 özel simge"
                     className="form-input"
                     data-testid="create-user-password"
                   />
