@@ -149,6 +149,72 @@ const AdminPanel = ({ user }) => {
     }
   };
 
+  const handleUploadPhoto = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      toast.error('Lütfen sadece resim dosyası seçin');
+      return;
+    }
+
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    if (file.size > maxSize) {
+      toast.error('Dosya boyutu 5MB\'den küçük olmalıdır');
+      return;
+    }
+
+    setUploading(true);
+    try {
+      const token = localStorage.getItem('token');
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const uploadResponse = await axios.post(`${API}/upload`, formData, {
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      const photoUrl = uploadResponse.data.file_url;
+
+      if (photoUploadTarget.type === 'user') {
+        // Update user profile photo
+        await axios.put(`${API}/users/${photoUploadTarget.id}`, {
+          profile_photo: photoUrl
+        }, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        
+        toast.success('Kullanıcı fotoğrafı başarıyla güncellendi');
+        fetchUsers();
+      } else if (photoUploadTarget.type === 'leader') {
+        // Update leadership photo
+        await axios.put(`${API}/leadership/${photoUploadTarget.id}`, null, {
+          params: { photo_url: photoUrl },
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        
+        toast.success('Yönetim fotoğrafı başarıyla güncellendi');
+        fetchLeadership();
+      }
+
+      setShowPhotoUploadDialog(false);
+      setPhotoUploadTarget(null);
+    } catch (error) {
+      console.error('Error uploading photo:', error);
+      toast.error('Fotoğraf yüklenirken hata oluştu');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const openPhotoUploadDialog = (target) => {
+    setPhotoUploadTarget(target);
+    setShowPhotoUploadDialog(true);
+  };
+
   const handleCreateUser = async (e) => {
     e.preventDefault();
     
