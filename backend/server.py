@@ -743,7 +743,7 @@ async def upload_file(file: UploadFile = File(...), current_user: User = Depends
     with open(file_path, "wb") as buffer:
         buffer.write(content)
     
-    return {"file_url": f"/uploads/{file_id}.{file_extension}"}
+    return {"file_url": f"/api/uploads/{file_id}.{file_extension}"}
 
 # Admin-only endpoint to cleanup and recreate members
 @api_router.post("/admin/cleanup-members")
