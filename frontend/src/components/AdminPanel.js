@@ -218,7 +218,7 @@ const AdminPanel = ({ user }) => {
   const handleCreateUser = async (e) => {
     e.preventDefault();
     
-    if (!userForm.email || !userForm.password || !userForm.name || !userForm.surname) {
+    if (!userForm.username || !userForm.email || !userForm.password || !userForm.name || !userForm.surname) {
       toast.error('Lütfen gerekli alanları doldurun');
       return;
     }
@@ -232,7 +232,7 @@ const AdminPanel = ({ user }) => {
       toast.success('Kullanıcı başarıyla oluşturuldu');
       setShowCreateUserDialog(false);
       setUserForm({
-        email: '', password: '', name: '', surname: '', phone: '',
+        username: '', email: '', password: '', name: '', surname: '', phone: '',
         birth_date: '', address: '', workplace: '', job_title: '',
         hobbies: '', skills: '', height: '', weight: '', projects: [], board_member: ''
       });
