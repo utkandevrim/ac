@@ -691,8 +691,22 @@ async def update_leadership(leader_id: str, photo_url: str, current_user: User =
 async def get_about():
     about = await db.about_us.find_one()
     if about:
-        return AboutUs(**about)
-    return {"content": "", "mission": "", "vision": "", "photos": []}
+        # Remove MongoDB _id field for JSON serialization
+        about.pop('_id', None)
+        return about
+    return {
+        "content": "", 
+        "mission": "", 
+        "vision": "", 
+        "photos": [],
+        "contact": {
+            "email": "",
+            "phone": "",
+            "address": "",
+            "website": ""
+        },
+        "mainPhoto": None
+    }
 
 @api_router.put("/about")
 async def update_about(about_data: dict, current_user: User = Depends(get_admin_user)):
