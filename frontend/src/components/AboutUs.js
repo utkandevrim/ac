@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { Textarea } from './ui/textarea';
+import { Input } from './ui/input';
+import { Label } from './ui/label';
 import { 
   Info,
   Edit3,
@@ -12,7 +14,9 @@ import {
   Plus,
   Users,
   Award,
-  Star
+  Star,
+  Upload,
+  Trash2
 } from 'lucide-react';
 import {
   Dialog,
