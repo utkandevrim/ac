@@ -8,7 +8,7 @@ import { Eye, EyeOff } from 'lucide-react';
 
 const Login = ({ onLogin }) => {
   const [formData, setFormData] = useState({
-    email: '',
+    username: '',
     password: ''
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -19,7 +19,7 @@ const Login = ({ onLogin }) => {
     setLoading(true);
 
     try {
-      const result = await onLogin(formData.email, formData.password);
+      const result = await onLogin(formData.username, formData.password);
       
       if (result.success) {
         toast.success('Giriş başarılı!');
@@ -68,19 +68,19 @@ const Login = ({ onLogin }) => {
         <Card className="card-glass p-8 backdrop-blur-xl">
           <form className="space-y-6" onSubmit={handleSubmit} data-testid="login-form">
             <div>
-              <Label htmlFor="email" className="form-label text-gray-700">
-                E-posta Adresi
+              <Label htmlFor="username" className="form-label text-gray-700">
+                Kullanıcı Adı
               </Label>
               <Input
-                id="email"
-                name="email"
-                type="email"
+                id="username"
+                name="username"
+                type="text"
                 required
-                value={formData.email}
+                value={formData.username}
                 onChange={handleChange}
                 className="form-input"
-                placeholder="ornekkullanici@email.com"
-                data-testid="email-input"
+                placeholder="isim.soyisim"
+                data-testid="username-input"
               />
             </div>
 
@@ -127,10 +127,11 @@ const Login = ({ onLogin }) => {
 
           <div className="mt-8 pt-6 border-t border-gray-200">
             <div className="text-center text-sm text-gray-600">
-              <p className="mb-4">Test için admin hesapları:</p>
+              <p className="mb-4">Test için hesaplar:</p>
               <div className="space-y-2 text-xs bg-gray-50 p-4 rounded-lg">
-                <p><strong>Admin 1:</strong> admin1@actorclub.com / ActorClub2024!</p>
-                <p><strong>Admin 2:</strong> admin2@actorclub.com / ClubActor2024@</p>
+                <p><strong>Admin:</strong> admin.yonetici / ActorClub2024!</p>
+                <p><strong>Kurucu:</strong> muzaffer.isgoren / Founder123!</p>
+                <p><strong>Test Kullanıcı:</strong> test.kullanici / Test567!</p>
               </div>
             </div>
           </div>
