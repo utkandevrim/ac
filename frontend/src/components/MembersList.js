@@ -75,19 +75,40 @@ const MembersList = ({ user }) => {
   };
 
   const filterMembers = () => {
-    let filtered = members.filter(member => {
-      const matchesSearch = 
-        member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        member.surname.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        member.email.toLowerCase().includes(searchTerm.toLowerCase());
+    let filtered = members;
 
-      const matchesBoardMember = 
-        boardMemberFilter === 'all' || 
-        (boardMemberFilter === 'admin' && member.is_admin) ||
-        (boardMemberFilter !== 'all' && boardMemberFilter !== 'admin' && member.board_member === boardMemberFilter);
+    // Text search - case insensitive and includes all profile fields
+    if (searchTerm) {
+      const searchLower = searchTerm.toLowerCase().trim();
+      filtered = filtered.filter(member => {
+        const searchableFields = [
+          member.name,
+          member.surname,
+          member.email,
+          member.phone,
+          member.workplace,
+          member.job_title,
+          member.hobbies,
+          member.skills,
+          member.address,
+          member.board_member,
+          ...(member.projects || [])
+        ];
+        
+        return searchableFields.some(field => 
+          field && field.toString().toLowerCase().includes(searchLower)
+        );
+      });
+    }
 
-      return matchesSearch && matchesBoardMember;
-    });
+    // Board member filter
+    if (boardMemberFilter !== 'all') {
+      if (boardMemberFilter === 'admin') {
+        filtered = filtered.filter(member => member.is_admin);
+      } else {
+        filtered = filtered.filter(member => member.board_member === boardMemberFilter);
+      }
+    }
 
     setFilteredMembers(filtered);
   };
