@@ -296,6 +296,57 @@ const AboutUs = ({ user }) => {
                     />
                   </div>
 
+                  {/* Contact Information */}
+                  <div className="border-t pt-6">
+                    <Label className="form-label text-lg font-semibold">İletişim Bilgileri</Label>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                      <div>
+                        <Label className="form-label">E-posta</Label>
+                        <Input
+                          type="email"
+                          value={editContact.email}
+                          onChange={(e) => setEditContact({...editContact, email: e.target.value})}
+                          placeholder="info@actorclub.com"
+                          className="form-input"
+                          data-testid="edit-contact-email"
+                        />
+                      </div>
+                      
+                      <div>
+                        <Label className="form-label">Telefon</Label>
+                        <Input
+                          value={editContact.phone}
+                          onChange={(e) => setEditContact({...editContact, phone: e.target.value})}
+                          placeholder="+90 XXX XXX XX XX"
+                          className="form-input"
+                          data-testid="edit-contact-phone"
+                        />
+                      </div>
+                      
+                      <div className="md:col-span-2">
+                        <Label className="form-label">Adres</Label>
+                        <Input
+                          value={editContact.address}
+                          onChange={(e) => setEditContact({...editContact, address: e.target.value})}
+                          placeholder="İzmir, Türkiye"
+                          className="form-input"
+                          data-testid="edit-contact-address"
+                        />
+                      </div>
+                      
+                      <div>
+                        <Label className="form-label">Web Sitesi</Label>
+                        <Input
+                          value={editContact.website}
+                          onChange={(e) => setEditContact({...editContact, website: e.target.value})}
+                          placeholder="https://www.actorclub.com"
+                          className="form-input"
+                          data-testid="edit-contact-website"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
                   {/* Photo Management */}
                   <div>
                     <Label className="form-label">Fotoğraf Yönetimi</Label>
