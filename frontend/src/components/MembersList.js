@@ -117,6 +117,24 @@ const MembersList = ({ user }) => {
     navigate(`/profile/${memberId}`);
   };
 
+  const getTeamDisplayName = (teamName) => {
+    const teamMappings = {
+      'Tuğba Çakı': 'Diyojen - Tuğba Çakı',
+      'Duygu Asker Aksoy': 'Hypatia - Duygu Asker Aksoy',
+      'Utkan Devrim Zeyrek': 'Artemis - Utkan Devrim Zeyrek',
+      'Seda Ateş': 'Hermes - Seda Ateş'
+    };
+    return teamMappings[teamName] || teamName;
+  };
+
+  const handleTeamClick = (teamName) => {
+    setBoardMemberFilter(teamName);
+    setSearchTerm('');
+    // Show toast with team info
+    const teamMembers = members.filter(m => m.board_member === teamName);
+    toast.info(`${getTeamDisplayName(teamName)} takımı: ${teamMembers.length} üye`, { duration: 3000 });
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-amber-50 to-red-50 flex items-center justify-center">
