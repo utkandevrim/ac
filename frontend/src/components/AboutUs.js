@@ -214,11 +214,31 @@ const AboutUs = ({ user }) => {
         <div 
           className="relative h-64 md:h-80 rounded-2xl mb-12 overflow-hidden"
           style={{
-            backgroundImage: `linear-gradient(rgba(139, 38, 53, 0.6), rgba(201, 48, 44, 0.6)), url('https://images.unsplash.com/photo-1592854899481-f78db4baccb6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzV8MHwxfHNlYXJjaHwzfHxhY3RvcnMlMjBkcmFtYXxlbnwwfHx8fDE3NTg3MzM3ODV8MA&ixlib=rb-4.1.0&q=85')`,
+            backgroundImage: aboutData.mainPhoto 
+              ? `linear-gradient(rgba(139, 38, 53, 0.6), rgba(201, 48, 44, 0.6)), url('${BACKEND_URL}${aboutData.mainPhoto}')`
+              : `linear-gradient(rgba(139, 38, 53, 0.6), rgba(201, 48, 44, 0.6)), url('https://images.unsplash.com/photo-1592854899481-f78db4baccb6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzV8MHwxfHNlYXJjaHwzfHxhY3RvcnMlMjBkcmFtYXxlbnwwfHx8fDE3NTg3MzM3ODV8MA&ixlib=rb-4.1.0&q=85')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center'
           }}
         >
+          {user?.is_admin && (
+            <div className="absolute top-4 right-4">
+              <label className="cursor-pointer">
+                <div className="bg-white bg-opacity-90 hover:bg-opacity-100 rounded-lg p-2 flex items-center shadow-lg transition-colors">
+                  <Upload className="h-4 w-4 mr-1" />
+                  <span className="text-sm font-medium">Ana Fotoğraf Değiştir</span>
+                </div>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleUploadMainPhoto}
+                  className="hidden"
+                  disabled={uploadingPhoto}
+                />
+              </label>
+            </div>
+          )}
+          
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center text-white">
               <img 
