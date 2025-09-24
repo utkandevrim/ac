@@ -29,7 +29,7 @@ const Navbar = ({ user, onLogout }) => {
     { name: 'Anasayfa', href: '/dashboard', icon: Home },
     { name: 'Üyelerimiz', href: '/members', icon: Users },
     { name: 'Etkinlikler', href: '/events', icon: Calendar },
-    { name: 'Biz Kimiz', href: '/about', icon: Info },
+    { name: 'Hakkımızda', href: '/about', icon: Info },
   ];
 
   const handleLogout = () => {
