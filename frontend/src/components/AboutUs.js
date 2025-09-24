@@ -70,6 +70,8 @@ const AboutUs = ({ user }) => {
       await axios.put(`${API}/about`, 
         { 
           content: editContent,
+          mission: editMission,
+          vision: editVision,
           photos: editPhotos
         },
         {
@@ -77,7 +79,12 @@ const AboutUs = ({ user }) => {
         }
       );
       
-      setAboutData({ content: editContent, photos: editPhotos });
+      setAboutData({ 
+        content: editContent, 
+        mission: editMission,
+        vision: editVision,
+        photos: editPhotos 
+      });
       setIsEditing(false);
       toast.success('İçerik başarıyla güncellendi');
     } catch (error) {
