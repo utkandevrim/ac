@@ -251,7 +251,7 @@ async def initialize_default_data():
     
     # Create leadership structure
     leadership_data = [
-        {"name": "Çağlar İşgören", "position": "Kurucu", "order": 1},
+        {"name": "Muzaffer Çağlar İşgören", "position": "Kurucu / Onursal Başkan", "order": 1},
         {"name": "Göksel Kortay", "position": "Onursal Başkan", "order": 2},
         {"name": "Kökten Ulaş Birand", "position": "Onursal Başkan", "order": 3},
         {"name": "Cengiz Karakuzu", "position": "Onursal Başkan", "order": 4},
