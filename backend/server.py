@@ -709,6 +709,16 @@ async def update_about(content: str, mission: str = "", vision: str = "", photos
     
     return about
 
+# File serving endpoint instead of StaticFiles
+@api_router.get("/uploads/{file_name}")
+async def get_uploaded_file(file_name: str):
+    file_path = UPLOAD_DIR / file_name
+    if not file_path.exists():
+        raise HTTPException(status_code=404, detail="File not found")
+    
+    from fastapi.responses import FileResponse
+    return FileResponse(file_path)
+
 # File upload routes
 @api_router.post("/upload")
 async def upload_file(file: UploadFile = File(...), current_user: User = Depends(get_admin_user)):
