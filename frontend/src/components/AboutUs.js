@@ -163,7 +163,7 @@ const AboutUs = ({ user }) => {
                   </Button>
                 </>
               ) : (
-                <Button onClick={() => setIsEditing(true)} className="btn-outline" data-testid="edit-about-btn">
+                <Button onClick={handleEdit} className="btn-outline" data-testid="edit-about-btn">
                   <Edit3 className="h-4 w-4 mr-2" />
                   İçeriği Düzenle
                 </Button>
