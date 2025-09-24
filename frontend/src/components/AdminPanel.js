@@ -46,6 +46,7 @@ const AdminPanel = ({ user }) => {
   const [users, setUsers] = useState([]);
   const [pendingUsers, setPendingUsers] = useState([]);
   const [events, setEvents] = useState([]);
+  const [allDues, setAllDues] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showCreateUserDialog, setShowCreateUserDialog] = useState(false);
   const [showChangePasswordDialog, setShowChangePasswordDialog] = useState(false);
