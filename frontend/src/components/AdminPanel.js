@@ -81,7 +81,7 @@ const AdminPanel = ({ user }) => {
     height: '',
     weight: '',
     projects: [],
-    board_member: ''
+    board_member: 'none'
   });
 
   const boardMembers = [
