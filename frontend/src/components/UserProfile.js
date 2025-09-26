@@ -110,6 +110,37 @@ const UserProfile = ({ user: currentUser }) => {
     setEditForm({ ...editForm, projects: updatedProjects });
   };
 
+  const handlePasswordChange = async (e) => {
+    e.preventDefault();
+    
+    if (passwordForm.newPassword !== passwordForm.confirmPassword) {
+      toast.error('Yeni şifreler eşleşmiyor');
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem('token');
+      await axios.post(
+        `${API}/auth/change-password?old_password=${encodeURIComponent(passwordForm.oldPassword)}&new_password=${encodeURIComponent(passwordForm.newPassword)}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+      
+      toast.success('Şifre başarıyla değiştirildi');
+      setShowPasswordChange(false);
+      setPasswordForm({
+        oldPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+      });
+    } catch (error) {
+      console.error('Error changing password:', error);
+      toast.error(error.response?.data?.detail || 'Şifre değiştirirken hata oluştu');
+    }
+  };
+
   const handleDuesClick = (due) => {
     if (!due.is_paid) {
       toast.info(
