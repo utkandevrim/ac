@@ -239,7 +239,7 @@ const AdminPanel = ({ user }) => {
       setUserForm({
         username: '', email: '', password: '', name: '', surname: '', phone: '',
         birth_date: '', address: '', workplace: '', job_title: '',
-        hobbies: '', skills: '', height: '', weight: '', projects: [], board_member: ''
+        hobbies: '', skills: '', height: '', weight: '', projects: [], board_member: 'none'
       });
       fetchUsers();
       fetchPendingUsers();
