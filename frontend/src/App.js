@@ -193,11 +193,8 @@ const AppContent = () => {
                 />
               </Routes>
             </>
-          )}
-        </AuthContext>
-      </BrowserRouter>
-    </div>
-  );
+          );
+        };
 }
 
 export default App;
