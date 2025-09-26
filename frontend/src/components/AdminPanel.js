@@ -558,7 +558,18 @@ const AdminPanel = ({ user }) => {
                 </div>
 
                 <div className="space-y-4 max-h-96 overflow-y-auto">
-                  {users.map((user) => (
+                  {users
+                    .filter(user => {
+                      if (!photoSearchTerm) return true;
+                      const searchLower = photoSearchTerm.toLowerCase();
+                      return (
+                        user.name?.toLowerCase().includes(searchLower) ||
+                        user.surname?.toLowerCase().includes(searchLower) ||
+                        user.username?.toLowerCase().includes(searchLower) ||
+                        `${user.name} ${user.surname}`.toLowerCase().includes(searchLower)
+                      );
+                    })
+                    .map((user) => (
                     <div key={user.id} className="flex items-center justify-between p-3 border rounded-lg">
                       <div className="flex items-center">
                         {user.profile_photo ? (
