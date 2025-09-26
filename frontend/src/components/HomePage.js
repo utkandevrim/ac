@@ -9,8 +9,13 @@ const API = `${BACKEND_URL}/api`;
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
   const [leadership, setLeadership] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [homepageContent, setHomepageContent] = useState({});
+  const [isEditing, setIsEditing] = useState(false);
+  const [editContent, setEditContent] = useState({});
+  const [contentLoading, setContentLoading] = useState(true);
 
   useEffect(() => {
     fetchLeadership();
