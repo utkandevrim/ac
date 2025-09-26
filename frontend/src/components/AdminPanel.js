@@ -545,7 +545,7 @@ const AdminPanel = ({ user }) => {
               <Card className="card p-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">Üye Fotoğrafları</h2>
                 <div className="space-y-4 max-h-96 overflow-y-auto">
-                  {users.slice(0, 10).map((user) => (
+                  {users.map((user) => (
                     <div key={user.id} className="flex items-center justify-between p-3 border rounded-lg">
                       <div className="flex items-center">
                         {user.profile_photo ? (
@@ -578,11 +578,9 @@ const AdminPanel = ({ user }) => {
                       </Button>
                     </div>
                   ))}
-                  {users.length > 10 && (
-                    <p className="text-sm text-gray-500 text-center mt-4">
-                      Ve {users.length - 10} üye daha...
-                    </p>
-                  )}
+                  <p className="text-sm text-gray-500 text-center mt-4">
+                    Toplam {users.length} üye
+                  </p>
                 </div>
               </Card>
 
