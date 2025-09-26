@@ -240,11 +240,11 @@ frontend:
 
   - task: "Homepage layout changes and admin editing functionality"
     implemented: true
-    working: false
+    working: true
     file: "HomePage.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: false
         - agent: "main"
@@ -252,6 +252,9 @@ frontend:
         - working: false
         - agent: "main"
         - comment: "Implemented: 1) Hero section updated to show Muzaffer and Göksel side by side, 2) Both have 'Kurucu-Onursal Başkan' title, 3) Emre Turgut title changed to 'Yönetim Kurulu Başkanı', 4) Removed 'Ekibi Üyeler' descriptions, 5) Added admin editing functionality with modal for all homepage content. Also added backend endpoint for homepage content management."
+        - working: true
+        - agent: "testing"
+        - comment: "✅ VERIFIED: All homepage layout changes successfully implemented: 1) Hero section shows Muzaffer Çağlar İşgören and Göksel Kortay side-by-side both as 'Kurucu-Onursal Başkan', 2) Emre Turgut correctly displays as 'Yönetim Kurulu Başkanı', 3) All board members (Tuğba Çakı, Duygu Asker Aksoy, Seda Ateş, Utkan Devrim Zeyrek) show only 'Yönetim Kurulu Üyesi' with no 'Ekibi Üyeler' descriptions, 4) Admin editing functionality fully working - 'Edit Homepage' button appears for admin users, modal opens with all 7 required fields (Hero Title/Subtitle/Quote, Honorary Presidents Section Title/Subtitle, Management Section Title/Subtitle), save functionality works correctly. Fixed admin role detection issue (user.role vs user.is_admin). Minor: React key prop warning in console (non-critical)."
 
 metadata:
   created_by: "main_agent"
