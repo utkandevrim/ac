@@ -254,7 +254,7 @@ const HomePage = () => {
               <h3 className="text-2xl font-bold text-gray-900 mb-2">
                 {chairman ? chairman.name : 'Emre Turgut'}
               </h3>
-              <p className="font-semibold" style={{ color: 'var(--primary-blue)' }}>Başkan</p>
+              <p className="font-semibold" style={{ color: 'var(--primary-blue)' }}>Yönetim Kurulu Başkanı</p>
             </div>
           </div>
 
