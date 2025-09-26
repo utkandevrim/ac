@@ -277,10 +277,6 @@ const HomePage = () => {
                 <p className="font-semibold text-sm mb-3" style={{ color: 'var(--primary-blue)' }}>
                   Yönetim Kurulu Üyesi
                 </p>
-                <div className="bg-gray-50 rounded-xl p-3">
-                  <p className="text-xs font-bold text-gray-700">{member.name} Ekibi</p>
-                  <p className="text-xs text-gray-500">Üyeler</p>
-                </div>
               </div>
             ))}
           </div>
