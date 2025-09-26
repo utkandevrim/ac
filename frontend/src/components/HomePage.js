@@ -275,7 +275,7 @@ const HomePage = () => {
             
             {/* Right Content - Founder Cards Side by Side */}
             <div className="animate-slide-up-delay">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 {/* Muzaffer Çağlar İşgören */}
                 <div className="modern-card modern-card-lg">
                   {founder && founder.photo ? (
