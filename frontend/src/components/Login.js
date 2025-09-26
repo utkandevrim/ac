@@ -49,7 +49,7 @@ const Login = ({ onLogin }) => {
         backgroundPosition: 'center'
       }}
     >
-      <div className="max-w-md w-full space-y-8">
+      <div className="max-w-md w-full space-y-6 sm:space-y-8">
         <div className="text-center">
           <img 
             src="https://customer-assets.emergentagent.com/job_actorclub/artifacts/4gypiwpr_ac%20logo.png" 
