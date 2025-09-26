@@ -53,7 +53,7 @@ const HomePage = () => {
       });
       setHomepageContent(editContent);
       setIsEditing(false);
-      alert('Homepage content updated successfully!');
+      console.log('Homepage content updated successfully!');
     } catch (error) {
       console.error('Error updating homepage content:', error);
       alert('Failed to update content');
