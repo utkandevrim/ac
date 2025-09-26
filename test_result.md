@@ -345,6 +345,9 @@ frontend:
         - working: false
         - agent: "main"
         - comment: "User reports: 1) Website not responsive on mobile devices, 2) Dark mode readability issues - some text unreadable. Need to implement mobile-first responsive design and improve dark mode contrast/readability across all components."
+        - working: true
+        - agent: "main"
+        - comment: "MOBILE & DARK MODE FIXES COMPLETED: 1) Added comprehensive mobile responsive design with breakpoints (768px, 480px), 2) Enhanced dark mode support with proper CSS variables and color contrast, 3) Updated all major components (HomePage, Login, UserProfile, modals) for mobile responsiveness, 4) Added mobile-first approach with proper viewport scaling, 5) Improved button sizing, typography scaling, and layout spacing for mobile devices, 6) Fixed dark mode text readability issues across all components with proper color variables, 7) Tested on mobile viewport (375x667) in both light and dark modes - confirmed working correctly."
 
 metadata:
   created_by: "main_agent"
