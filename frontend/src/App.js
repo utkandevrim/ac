@@ -106,95 +106,95 @@ const AppContent = () => {
   const { user, login, logout } = React.useContext(AuthContext);
 
   return (
-            <>
-              <Toaster position="top-right" />
-              
-              <Routes>
-                {/* Public Routes */}
-                <Route path="/" element={<HomePage />} />
-                <Route 
-                  path="/login" 
-                  element={
-                    user ? <Navigate to="/dashboard" replace /> : <Login onLogin={login} />
-                  } 
-                />
-                
-                {/* Protected Routes */}
-                <Route
-                  path="/dashboard"
-                  element={
-                    <ProtectedRoute user={user}>
-                      <>
-                        <Navbar user={user} onLogout={logout} />
-                        <Dashboard user={user} />
-                      </>
-                    </ProtectedRoute>
-                  }
-                />
-                
-                <Route
-                  path="/profile/:userId?"
-                  element={
-                    <ProtectedRoute user={user}>
-                      <>
-                        <Navbar user={user} onLogout={logout} />
-                        <UserProfile user={user} />
-                      </>
-                    </ProtectedRoute>
-                  }
-                />
-                
-                <Route
-                  path="/members"
-                  element={
-                    <ProtectedRoute user={user}>
-                      <>
-                        <Navbar user={user} onLogout={logout} />
-                        <MembersList user={user} />
-                      </>
-                    </ProtectedRoute>
-                  }
-                />
-                
-                <Route
-                  path="/events"
-                  element={
-                    <ProtectedRoute user={user}>
-                      <>
-                        <Navbar user={user} onLogout={logout} />
-                        <Events user={user} />
-                      </>
-                    </ProtectedRoute>
-                  }
-                />
-                
-                <Route
-                  path="/about"
-                  element={
-                    <ProtectedRoute user={user}>
-                      <>
-                        <Navbar user={user} onLogout={logout} />
-                        <AboutUs user={user} />
-                      </>
-                    </ProtectedRoute>
-                  }
-                />
-                
-                <Route
-                  path="/admin"
-                  element={
-                    <ProtectedRoute user={user} requireAdmin={true}>
-                      <>
-                        <Navbar user={user} onLogout={logout} />
-                        <AdminPanel user={user} />
-                      </>
-                    </ProtectedRoute>
-                  }
-                />
-              </Routes>
-            </>
-          );
-        };
+    <>
+      <Toaster position="top-right" />
+      
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<HomePage />} />
+        <Route 
+          path="/login" 
+          element={
+            user ? <Navigate to="/dashboard" replace /> : <Login onLogin={login} />
+          } 
+        />
+        
+        {/* Protected Routes */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute user={user}>
+              <>
+                <Navbar user={user} onLogout={logout} />
+                <Dashboard user={user} />
+              </>
+            </ProtectedRoute>
+          }
+        />
+        
+        <Route
+          path="/profile/:userId?"
+          element={
+            <ProtectedRoute user={user}>
+              <>
+                <Navbar user={user} onLogout={logout} />
+                <UserProfile user={user} />
+              </>
+            </ProtectedRoute>
+          }
+        />
+        
+        <Route
+          path="/members"
+          element={
+            <ProtectedRoute user={user}>
+              <>
+                <Navbar user={user} onLogout={logout} />
+                <MembersList user={user} />
+              </>
+            </ProtectedRoute>
+          }
+        />
+        
+        <Route
+          path="/events"
+          element={
+            <ProtectedRoute user={user}>
+              <>
+                <Navbar user={user} onLogout={logout} />
+                <Events user={user} />
+              </>
+            </ProtectedRoute>
+          }
+        />
+        
+        <Route
+          path="/about"
+          element={
+            <ProtectedRoute user={user}>
+              <>
+                <Navbar user={user} onLogout={logout} />
+                <AboutUs user={user} />
+              </>
+            </ProtectedRoute>
+          }
+        />
+        
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute user={user} requireAdmin={true}>
+              <>
+                <Navbar user={user} onLogout={logout} />
+                <AdminPanel user={user} />
+              </>
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </>
+  );
+};
 }
 
 export default App;
