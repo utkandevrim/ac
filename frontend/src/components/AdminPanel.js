@@ -58,6 +58,7 @@ const AdminPanel = ({ user }) => {
   const [showPhotoUploadDialog, setShowPhotoUploadDialog] = useState(false);
   const [photoUploadTarget, setPhotoUploadTarget] = useState(null); // { type: 'user', id: 'user_id', name: 'John Doe' } or { type: 'leader', id: 'leader_id', name: 'Leader Name' }
   const [uploading, setUploading] = useState(false);
+  const [photoSearchTerm, setPhotoSearchTerm] = useState('');
   const [passwordForm, setPasswordForm] = useState({
     oldPassword: '',
     newPassword: '',
