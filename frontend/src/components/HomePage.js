@@ -111,37 +111,71 @@ const HomePage = () => {
               {/* Üyelik başvurusu ve daha fazla bilgi butonları kaldırıldı */}
             </div>
             
-            {/* Right Content - Founder Card */}
+            {/* Right Content - Founder Cards Side by Side */}
             <div className="animate-slide-up-delay">
-              <div className="modern-card modern-card-lg max-w-sm">
-                {founder && founder.photo ? (
-                  <img 
-                    src={`${BACKEND_URL}${founder.photo}`} 
-                    alt={founder.name}
-                    className="avatar-modern avatar-xl mx-auto mb-6"
-                  />
-                ) : founder ? (
-                  <div className="avatar-placeholder avatar-xl mx-auto mb-6">
-                    {founder.name.split(' ').map(n => n[0]).join('')}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Muzaffer Çağlar İşgören */}
+                <div className="modern-card modern-card-lg">
+                  {founder && founder.photo ? (
+                    <img 
+                      src={`${BACKEND_URL}${founder.photo}`} 
+                      alt={founder.name}
+                      className="avatar-modern avatar-lg mx-auto mb-4"
+                    />
+                  ) : founder ? (
+                    <div className="avatar-placeholder avatar-lg mx-auto mb-4">
+                      {founder.name.split(' ').map(n => n[0]).join('')}
+                    </div>
+                  ) : (
+                    <div className="avatar-placeholder avatar-lg mx-auto mb-4">
+                      MÇİ
+                    </div>
+                  )}
+                  <div className="text-center">
+                    <h3 className="text-lg font-bold text-gray-900 mb-2">
+                      Muzaffer Çağlar İşgören
+                    </h3>
+                    <p className="font-semibold mb-3" style={{ color: 'var(--primary-blue)' }}>
+                      Kurucu-Onursal Başkan
+                    </p>
                   </div>
-                ) : (
-                  <div className="avatar-placeholder avatar-xl mx-auto mb-6">
-                    MÇİ
-                  </div>
-                )}
-                <div className="text-center">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    Muzaffer Çağlar İşgören
-                  </h3>
-                  <p className="font-semibold mb-4" style={{ color: 'var(--primary-blue)' }}>
-                    Kurucu-Onursal Başkan
-                  </p>
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    "Actor Club, oyunculuk tutkusunu profesyonel becerilerle buluşturan 
-                    bir platform olarak kurulmuştur. Amacımız, yetenekli bireyleri sanat 
-                    dünyasında desteklemektir."
-                  </p>
                 </div>
+
+                {/* Göksel Kortay */}
+                <div className="modern-card modern-card-lg">
+                  {honorary.length > 0 && honorary[0].photo ? (
+                    <img 
+                      src={`${BACKEND_URL}${honorary[0].photo}`} 
+                      alt={honorary[0].name}
+                      className="avatar-modern avatar-lg mx-auto mb-4"
+                    />
+                  ) : honorary.length > 0 ? (
+                    <div className="avatar-placeholder avatar-lg mx-auto mb-4">
+                      {honorary[0].name.split(' ').map(n => n[0]).join('')}
+                    </div>
+                  ) : (
+                    <div className="avatar-placeholder avatar-lg mx-auto mb-4">
+                      GK
+                    </div>
+                  )}
+                  <div className="text-center">
+                    <h3 className="text-lg font-bold text-gray-900 mb-2">
+                      {honorary.length > 0 ? honorary[0].name : 'Göksel Kortay'}
+                    </h3>
+                    <p className="font-semibold mb-3" style={{ color: 'var(--primary-blue)' }}>
+                      Kurucu-Onursal Başkan
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Quote Section Below Cards */}
+              <div className="mt-8 text-center">
+                <p className="text-gray-600 text-sm leading-relaxed max-w-2xl mx-auto">
+                  "Actor Club, oyunculuk tutkusunu profesyonel becerilerle buluşturan 
+                  bir platform olarak kurulmuştur. Amacımız, yetenekli bireyleri sanat 
+                  dünyasında desteklemektir."
+                </p>
               </div>
             </div>
           </div>
