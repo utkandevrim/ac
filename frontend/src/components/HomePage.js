@@ -229,14 +229,28 @@ const HomePage = () => {
               <a href="/about" className="nav-link">Biz Kimiz</a>
             </div>
             
-            {/* Login Button */}
-            <button 
-              onClick={() => navigate('/login')}
-              className="btn-modern-primary"
-              data-testid="member-login-btn"
-            >
-              Üye Girişi
-            </button>
+            {/* Login Button / User Info */}
+            {user ? (
+              <div className="flex items-center space-x-3">
+                <span className="text-gray-700 font-medium">
+                  {user.name} {user.surname}
+                </span>
+                <button 
+                  onClick={() => navigate('/dashboard')}
+                  className="btn-modern-secondary"
+                >
+                  Dashboard
+                </button>
+              </div>
+            ) : (
+              <button 
+                onClick={() => navigate('/login')}
+                className="btn-modern-primary"
+                data-testid="member-login-btn"
+              >
+                Üye Girişi
+              </button>
+            )}
           </div>
         </div>
       </nav>
