@@ -225,7 +225,12 @@ const AdminPanel = ({ user }) => {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.post(`${API}/users`, userForm, {
+      const formData = { ...userForm };
+      // Convert "none" back to empty string for board_member
+      if (formData.board_member === 'none') {
+        formData.board_member = '';
+      }
+      await axios.post(`${API}/users`, formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
