@@ -276,3 +276,5 @@ agent_communication:
     - message: "Updated HomePage.js to remove membership application buttons and corrected founder information as requested by user. Changes: Removed 'Üyelik Başvurusu' and 'Daha Fazla Bilgi' buttons, updated founder name to 'Muzaffer Çağlar İşgören' and title to 'Kurucu-Onursal Başkan'. Ready for frontend testing."
     - agent: "testing"
     - message: "✅ HOMEPAGE TESTING COMPLETE: All requested homepage updates have been successfully verified. The homepage loads correctly, membership buttons are removed, founder information is updated correctly, login button works, and all sections display properly. Only minor React key prop warning found (non-critical). Homepage is ready for production use."
+    - agent: "main"
+    - message: "Major homepage redesign completed: 1) Hero section now shows Muzaffer Çağlar İşgören and Göksel Kortay side-by-side both as 'Kurucu-Onursal Başkan', 2) Updated Emre Turgut to 'Yönetim Kurulu Başkanı', 3) Removed team descriptions from board members, 4) Added full admin editing system with modal and backend endpoints for all homepage content (titles, subtitles, quotes). Ready for testing."
