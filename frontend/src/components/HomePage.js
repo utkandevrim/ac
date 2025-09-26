@@ -33,6 +33,37 @@ const HomePage = () => {
     }
   };
 
+  const fetchHomepageContent = async () => {
+    try {
+      const response = await axios.get(`${API}/homepage-content`);
+      setHomepageContent(response.data);
+      setEditContent(response.data);
+    } catch (error) {
+      console.error('Error fetching homepage content:', error);
+    } finally {
+      setContentLoading(false);
+    }
+  };
+
+  const updateHomepageContent = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      await axios.put(`${API}/homepage-content`, editContent, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setHomepageContent(editContent);
+      setIsEditing(false);
+      alert('Homepage content updated successfully!');
+    } catch (error) {
+      console.error('Error updating homepage content:', error);
+      alert('Failed to update content');
+    }
+  };
+
+  const handleInputChange = (field, value) => {
+    setEditContent(prev => ({ ...prev, [field]: value }));
+  };
+
   // Group leadership by position
   const founder = leadership.find(l => l.position.includes('Kurucu'));
   const honorary = leadership.filter(l => l.position.includes('Onursal Başkan') && !l.position.includes('Kurucu'));
