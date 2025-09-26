@@ -56,7 +56,7 @@ const HomePage = () => {
       console.log('Homepage content updated successfully!');
     } catch (error) {
       console.error('Error updating homepage content:', error);
-      alert('Failed to update content');
+      console.error('Failed to update content');
     }
   };
 
