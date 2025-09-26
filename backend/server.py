@@ -697,6 +697,37 @@ async def update_leadership(leader_id: str, photo_url: str, current_user: User =
     )
     return {"message": "Fotoğraf güncellendi"}
 
+# Homepage Content routes
+@api_router.get("/homepage-content")
+async def get_homepage_content():
+    content = await db.homepage_content.find_one()
+    if content:
+        content.pop('_id', None)
+        return content
+    # Return default values if no content exists
+    default_content = HomepageContent()
+    return default_content.dict()
+
+@api_router.put("/homepage-content")
+async def update_homepage_content(content_data: dict, current_user: User = Depends(get_admin_user)):
+    # Ensure we have default values for required fields
+    if not content_data.get("id"):
+        content_data["id"] = str(uuid.uuid4())
+    
+    content_data["last_updated"] = datetime.now(timezone.utc)
+    
+    # Update or create homepage content
+    existing = await db.homepage_content.find_one()
+    if existing:
+        await db.homepage_content.update_one(
+            {"id": existing.get("id", content_data["id"])},
+            {"$set": content_data}
+        )
+    else:
+        await db.homepage_content.insert_one(content_data)
+    
+    return {"message": "Homepage content updated successfully"}
+
 # About Us routes
 @api_router.get("/about")
 async def get_about():
