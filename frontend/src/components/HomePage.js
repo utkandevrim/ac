@@ -131,10 +131,10 @@ const HomePage = () => {
                 )}
                 <div className="text-center">
                   <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    {founder ? founder.name : 'Muzaffer Çağlar İşgören'}
+                    Muzaffer Çağlar İşgören
                   </h3>
                   <p className="font-semibold mb-4" style={{ color: 'var(--primary-blue)' }}>
-                    Kurucu
+                    Kurucu-Onursal Başkan
                   </p>
                   <p className="text-gray-600 text-sm leading-relaxed">
                     "Actor Club, oyunculuk tutkusunu profesyonel becerilerle buluşturan 
