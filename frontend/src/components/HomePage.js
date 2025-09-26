@@ -108,22 +108,7 @@ const HomePage = () => {
                 Profesyonel oyunculuk dünyasında yeteneklerinizi geliştirin, 
                 deneyimli mentorlardan öğrenin ve sanat camiasının bir parçası olun.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button 
-                  onClick={() => navigate('/login')}
-                  className="btn-modern-primary"
-                  data-testid="cta-join-btn"
-                >
-                  Üyelik Başvurusu
-                </button>
-                <button 
-                  onClick={() => navigate('/about')}
-                  className="btn-modern-secondary"
-                  data-testid="cta-info-btn"
-                >
-                  Daha Fazla Bilgi
-                </button>
-              </div>
+              {/* Üyelik başvurusu ve daha fazla bilgi butonları kaldırıldı */}
             </div>
             
             {/* Right Content - Founder Card */}
