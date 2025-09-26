@@ -278,16 +278,19 @@ frontend:
         - comment: "✅ FIXED & VERIFIED: Admin user creation functionality is now working correctly. Fixed critical React Select component error where empty string value was causing component crash. Changed SelectItem value from '' to 'none' and updated form submission logic to handle this properly. Comprehensive testing confirms: 1) Admin login successful (admin.yonetici / ActorClub2024!), 2) Admin panel loads correctly, 3) Create user dialog opens without errors, 4) All form fields are fillable, 5) Team selection dropdown works properly, 6) Form submission makes successful POST /api/users request with 200 response, 7) Dialog closes after successful creation, 8) New users are created with proper validation. User creation feature is fully functional."
 
   - task: "Show user name instead of login button on homepage after login"
-    implemented: false
-    working: false
+    implemented: true
+    working: true
     file: "HomePage.js"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: false
         - agent: "main"
         - comment: "After user login, homepage should show user's name and surname instead of 'Üye Girişi' button in navigation."
+        - working: true
+        - agent: "testing"
+        - comment: "✅ VERIFIED: Homepage correctly displays user name after login. Testing confirms: 1) Before login, homepage shows 'Üye Girişi' button, 2) After admin login (admin.yonetici / ActorClub2024!), homepage navigation shows 'Admin Yönetici Dashboard' instead of login button, 3) User authentication state is properly maintained across page navigation, 4) Navigation correctly reflects logged-in user status. Homepage login display functionality is working correctly."
 
 metadata:
   created_by: "main_agent"
