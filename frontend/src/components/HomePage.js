@@ -31,6 +31,9 @@ const HomePage = () => {
   const honorary = leadership.filter(l => l.position.includes('Onursal Başkan') && !l.position.includes('Kurucu'));
   const chairman = leadership.find(l => l.position.includes('Yönetim Kurulu Başkanı'));
   const boardMembers = leadership.filter(l => l.position.includes('Yönetim Kurulu Üyesi'));
+  
+  // Filter honorary presidents to exclude the first one (Göksel Kortay) since it's in hero
+  const remainingHonorary = honorary.slice(1);
 
   const renderPersonCard = (person, testId) => {
     if (!person) return (
