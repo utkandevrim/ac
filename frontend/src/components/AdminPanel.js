@@ -545,6 +545,18 @@ const AdminPanel = ({ user }) => {
               {/* Users Photo Management */}
               <Card className="card p-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">Üye Fotoğrafları</h2>
+                
+                {/* Search Bar */}
+                <div className="mb-4">
+                  <Input
+                    type="text"
+                    placeholder="Üye ara (isim, soyisim veya kullanıcı adı)..."
+                    value={photoSearchTerm}
+                    onChange={(e) => setPhotoSearchTerm(e.target.value)}
+                    className="w-full"
+                  />
+                </div>
+
                 <div className="space-y-4 max-h-96 overflow-y-auto">
                   {users.map((user) => (
                     <div key={user.id} className="flex items-center justify-between p-3 border rounded-lg">
