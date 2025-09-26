@@ -339,7 +339,7 @@ metadata:
 
 test_plan:
   current_focus: 
-    - "Fix admin panel photo management - show all members for photo upload"
+    - "Generate passwords for all regular members and add password change to profiles"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
