@@ -573,7 +573,7 @@ const UserProfile = ({ user: currentUser }) => {
       {/* Password Change Modal */}
       {showPasswordChange && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg max-w-md w-full p-6">
+          <div className="bg-white rounded-lg max-w-md w-full p-4 sm:p-6">
             <h2 className="text-xl font-bold mb-4">Şifre Değiştir</h2>
             
             <form onSubmit={handlePasswordChange} className="space-y-4">
