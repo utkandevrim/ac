@@ -69,7 +69,11 @@ export const AuthProvider = ({ children }) => {
     );
   }
 
-  return children({ user, login, logout });
+  return (
+    <AuthContext.Provider value={{ user, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 // Protected Route Component
