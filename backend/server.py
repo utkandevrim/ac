@@ -162,6 +162,17 @@ class AboutUs(BaseModel):
     photos: Optional[List[str]] = []
     last_updated: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
+class HomepageContent(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    hero_title: str = "Actor Club Portal'a Hoş Geldiniz"
+    hero_subtitle: str = "Profesyonel oyunculuk dünyasında yeteneklerinizi geliştirin, deneyimli mentorlardan öğrenin ve sanat camiasının bir parçası olun."
+    hero_quote: str = "\"Actor Club, oyunculuk tutkusunu profesyonel becerilerle buluşturan bir platform olarak kurulmuştur. Amacımız, yetenekli bireyleri sanat dünyasında desteklemektir.\""
+    honorary_section_title: str = "Onursal Başkanlarımız"
+    honorary_section_subtitle: str = "Deneyimleri ve vizyonlarıyla kulübümüze yön veren değerli isimler"
+    management_section_title: str = "Yönetim Kurulumuz"
+    management_section_subtitle: str = "Actor Club'ın geleceğini şekillendiren deneyimli yöneticilerimiz"
+    last_updated: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
 # Helper functions
 def hash_password(password: str) -> str:
     return pwd_context.hash(password)
