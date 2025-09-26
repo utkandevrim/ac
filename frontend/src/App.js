@@ -94,8 +94,18 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <AuthContext>
-          {({ user, login, logout }) => (
+        <AuthProvider>
+          <AppContent />
+        </AuthProvider>
+      </BrowserRouter>
+    </div>
+  );
+}
+
+const AppContent = () => {
+  const { user, login, logout } = React.useContext(AuthContext);
+
+  return (
             <>
               <Toaster position="top-right" />
               
