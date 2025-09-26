@@ -259,6 +259,30 @@ frontend:
         - agent: "testing"
         - comment: "✅ VERIFIED: All homepage layout changes successfully implemented: 1) Hero section shows Muzaffer Çağlar İşgören and Göksel Kortay side-by-side both as 'Kurucu-Onursal Başkan', 2) Emre Turgut correctly displays as 'Yönetim Kurulu Başkanı', 3) All board members (Tuğba Çakı, Duygu Asker Aksoy, Seda Ateş, Utkan Devrim Zeyrek) show only 'Yönetim Kurulu Üyesi' with no 'Ekibi Üyeler' descriptions, 4) Admin editing functionality fully working - 'Edit Homepage' button appears for admin users, modal opens with all 7 required fields (Hero Title/Subtitle/Quote, Honorary Presidents Section Title/Subtitle, Management Section Title/Subtitle), save functionality works correctly. Fixed admin role detection issue (user.role vs user.is_admin). Minor: React key prop warning in console (non-critical)."
 
+  - task: "Fix admin user creation functionality"
+    implemented: false
+    working: false
+    file: "AdminPanel.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: false
+        - agent: "main"
+        - comment: "User reports admin user creation feature not working. Need to investigate AdminPanel user creation form and fix any issues."
+
+  - task: "Show user name instead of login button on homepage after login"
+    implemented: false
+    working: false
+    file: "HomePage.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+        - working: false
+        - agent: "main"
+        - comment: "After user login, homepage should show user's name and surname instead of 'Üye Girişi' button in navigation."
+
 metadata:
   created_by: "main_agent"
   version: "1.0"
