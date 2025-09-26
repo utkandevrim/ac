@@ -57,10 +57,10 @@ const Login = ({ onLogin }) => {
             className="mx-auto h-24 w-auto mb-6 drop-shadow-2xl"
             data-testid="login-logo"
           />
-          <h2 className="text-4xl font-bold text-white mb-2">
+          <h2 className="text-2xl sm:text-4xl font-bold text-white mb-2">
             Hoş Geldiniz
           </h2>
-          <p className="text-xl text-white opacity-90">
+          <p className="text-lg sm:text-xl text-white opacity-90">
             Actor Club Portal'a giriş yapın
           </p>
         </div>
