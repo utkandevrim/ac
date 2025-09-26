@@ -512,7 +512,7 @@ async def change_password(old_password: str, new_password: str, current_user: Us
     
     # Validate new password
     try:
-        UserCreate(email="temp@temp.com", password=new_password, name="temp", surname="temp")
+        UserCreate(username="temp.temp", email="temp@temp.com", password=new_password, name="temp", surname="temp")
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     
