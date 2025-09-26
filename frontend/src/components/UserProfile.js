@@ -616,13 +616,14 @@ const UserProfile = ({ user: currentUser }) => {
                 />
               </div>
 
-              <div className="flex gap-3 pt-4">
-                <Button type="submit" className="flex-1" data-testid="submit-password-change">
+              <div className="flex flex-col sm:flex-row gap-3 pt-4">
+                <Button type="submit" className="flex-1 text-sm sm:text-base" data-testid="submit-password-change">
                   Şifre Değiştir
                 </Button>
                 <Button 
                   type="button" 
                   variant="outline" 
+                  className="flex-1 text-sm sm:text-base"
                   onClick={() => {
                     setShowPasswordChange(false);
                     setPasswordForm({
