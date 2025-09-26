@@ -248,12 +248,13 @@ const HomePage = () => {
             {/* Left Content */}
             <div className="animate-slide-up">
               <h1 className="title-hero">
-                Actor Club Portal'a<br />
-                <span style={{ color: 'var(--primary-blue)' }}>Hoş Geldiniz</span>
+                {homepageContent.hero_title?.split(' ').slice(0, -2).join(' ')}<br />
+                <span style={{ color: 'var(--primary-blue)' }}>
+                  {homepageContent.hero_title?.split(' ').slice(-2).join(' ') || 'Hoş Geldiniz'}
+                </span>
               </h1>
               <p className="subtitle">
-                Profesyonel oyunculuk dünyasında yeteneklerinizi geliştirin, 
-                deneyimli mentorlardan öğrenin ve sanat camiasının bir parçası olun.
+                {homepageContent.hero_subtitle || 'Profesyonel oyunculuk dünyasında yeteneklerinizi geliştirin, deneyimli mentorlardan öğrenin ve sanat camiasının bir parçası olun.'}
               </p>
               {/* Üyelik başvurusu ve daha fazla bilgi butonları kaldırıldı */}
             </div>
