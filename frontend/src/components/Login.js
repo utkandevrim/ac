@@ -65,8 +65,8 @@ const Login = ({ onLogin }) => {
           </p>
         </div>
 
-        <Card className="card-glass p-8 backdrop-blur-xl">
-          <form className="space-y-6" onSubmit={handleSubmit} data-testid="login-form">
+        <Card className="card-glass p-6 sm:p-8 backdrop-blur-xl">
+          <form className="space-y-4 sm:space-y-6" onSubmit={handleSubmit} data-testid="login-form">
             <div>
               <Label htmlFor="username" className="form-label text-gray-700">
                 Kullanıcı Adı
