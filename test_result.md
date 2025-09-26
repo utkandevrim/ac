@@ -230,7 +230,8 @@ metadata:
   run_ui: false
 
 test_plan:
-  current_focus: []
+  current_focus: 
+    - "Update homepage content - remove membership buttons and fix founder info"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
