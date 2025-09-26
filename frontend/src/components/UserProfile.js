@@ -569,6 +569,77 @@ const UserProfile = ({ user: currentUser }) => {
           </div>
         </div>
       </div>
+
+      {/* Password Change Modal */}
+      {showPasswordChange && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg max-w-md w-full p-6">
+            <h2 className="text-xl font-bold mb-4">Şifre Değiştir</h2>
+            
+            <form onSubmit={handlePasswordChange} className="space-y-4">
+              <div>
+                <Label htmlFor="oldPassword">Mevcut Şifre</Label>
+                <Input
+                  id="oldPassword"
+                  type="password"
+                  value={passwordForm.oldPassword}
+                  onChange={(e) => setPasswordForm({...passwordForm, oldPassword: e.target.value})}
+                  required
+                  data-testid="old-password-input"
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="newPassword">Yeni Şifre</Label>
+                <Input
+                  id="newPassword"
+                  type="password"
+                  value={passwordForm.newPassword}
+                  onChange={(e) => setPasswordForm({...passwordForm, newPassword: e.target.value})}
+                  required
+                  data-testid="new-password-input"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  8-16 karakter, en az 1 harf ve 1 özel karakter içermeli
+                </p>
+              </div>
+
+              <div>
+                <Label htmlFor="confirmPassword">Yeni Şifre Tekrar</Label>
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  value={passwordForm.confirmPassword}
+                  onChange={(e) => setPasswordForm({...passwordForm, confirmPassword: e.target.value})}
+                  required
+                  data-testid="confirm-password-input"
+                />
+              </div>
+
+              <div className="flex gap-3 pt-4">
+                <Button type="submit" className="flex-1" data-testid="submit-password-change">
+                  Şifre Değiştir
+                </Button>
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  onClick={() => {
+                    setShowPasswordChange(false);
+                    setPasswordForm({
+                      oldPassword: '',
+                      newPassword: '',
+                      confirmPassword: ''
+                    });
+                  }}
+                  data-testid="cancel-password-change"
+                >
+                  İptal
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
