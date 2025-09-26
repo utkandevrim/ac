@@ -19,6 +19,7 @@ const HomePage = () => {
 
   useEffect(() => {
     fetchLeadership();
+    fetchHomepageContent();
   }, []);
 
   const fetchLeadership = async () => {
