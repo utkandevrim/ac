@@ -35,6 +35,12 @@ const UserProfile = ({ user: currentUser }) => {
   const [loading, setLoading] = useState(true);
   const [editForm, setEditForm] = useState({});
   const [newProject, setNewProject] = useState('');
+  const [showPasswordChange, setShowPasswordChange] = useState(false);
+  const [passwordForm, setPasswordForm] = useState({
+    oldPassword: '',
+    newPassword: '',
+    confirmPassword: ''
+  });
 
   const isOwnProfile = !userId || userId === currentUser.id;
   const targetUserId = userId || currentUser.id;
