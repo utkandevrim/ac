@@ -20,7 +20,8 @@ import {
   Save,
   X,
   Plus,
-  Trash2
+  Trash2,
+  Lock
 } from 'lucide-react';
 import { toast } from 'sonner';
 
