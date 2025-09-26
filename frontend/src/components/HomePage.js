@@ -231,13 +231,13 @@ const HomePage = () => {
             
             {/* Login Button / User Info */}
             {user ? (
-              <div className="flex items-center space-x-3">
-                <span className="text-gray-700 font-medium">
+              <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3">
+                <span className="text-gray-700 font-medium text-center sm:text-left text-sm sm:text-base">
                   {user.name} {user.surname}
                 </span>
                 <button 
                   onClick={() => navigate('/dashboard')}
-                  className="btn-modern-secondary"
+                  className="btn-modern-secondary text-sm sm:text-base px-3 py-2 sm:px-4 sm:py-2"
                 >
                   Dashboard
                 </button>
@@ -245,7 +245,7 @@ const HomePage = () => {
             ) : (
               <button 
                 onClick={() => navigate('/login')}
-                className="btn-modern-primary"
+                className="btn-modern-primary text-sm sm:text-base px-4 py-2 sm:px-6 sm:py-3"
                 data-testid="member-login-btn"
               >
                 Üye Girişi
