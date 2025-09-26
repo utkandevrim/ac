@@ -198,6 +198,18 @@ backend:
         - agent: "testing"
         - comment: "✅ VERIFIED: Admin users can create new users with proper validation. Username and password policies are enforced during user creation."
 
+  - task: "Add homepage content management endpoints"
+    implemented: true
+    working: false
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: false
+        - agent: "main"
+        - comment: "Added HomepageContent model and GET/PUT endpoints at /api/homepage-content for admin editing of all homepage text content including hero title/subtitle, section titles, and quotes."
+
 frontend:
   - task: "Update login form to use username field instead of email"
     implemented: false
