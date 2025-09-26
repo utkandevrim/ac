@@ -332,9 +332,9 @@ const HomePage = () => {
       <section className="section-modern-sm" style={{ background: 'rgba(255, 255, 255, 0.5)' }}>
         <div className="container-modern">
           <div className="text-center mb-16">
-            <h2 className="title-section">Onursal Başkanlarımız</h2>
+            <h2 className="title-section">{homepageContent.honorary_section_title || 'Onursal Başkanlarımız'}</h2>
             <p className="subtitle-section">
-              Deneyimleri ve vizyonlarıyla kulübümüze yön veren değerli isimler
+              {homepageContent.honorary_section_subtitle || 'Deneyimleri ve vizyonlarıyla kulübümüze yön veren değerli isimler'}
             </p>
           </div>
           
