@@ -32,216 +32,230 @@ const HomePage = () => {
   const chairman = leadership.find(l => l.position.includes('Yönetim Kurulu Başkanı'));
   const boardMembers = leadership.filter(l => l.position.includes('Yönetim Kurulu Üyesi'));
 
-  const renderPersonCard = (person, testId, size = 'normal') => {
-    if (!person) return <div className="card-person" data-testid={testId}>Yükleniyor...</div>;
-    
-    const avatarSize = size === 'large' ? 'w-32 h-32 text-4xl' : 'w-24 h-24 text-2xl';
+  const renderPersonCard = (person, testId) => {
+    if (!person) return (
+      <div className="person-card-modern" data-testid={testId}>
+        <div className="loading-modern">Yükleniyor...</div>
+      </div>
+    );
     
     return (
-      <div className="card-person" data-testid={testId}>
+      <div className="person-card-modern animate-slide-up" data-testid={testId}>
         {person.photo ? (
           <img 
             src={`${BACKEND_URL}${person.photo}`} 
             alt={person.name}
-            className={`${avatarSize} rounded-full object-cover border-4 border-red-200 mx-auto mb-4`}
+            className="avatar-modern avatar-lg mx-auto"
           />
         ) : (
-          <div className={`${avatarSize} bg-gradient-to-br from-red-500 to-amber-500 rounded-full flex items-center justify-center text-white font-bold mx-auto mb-4`}>
+          <div className="avatar-placeholder avatar-lg mx-auto">
             {person.name.split(' ').map(n => n[0]).join('')}
           </div>
         )}
-        <h3 className="text-xl font-bold text-gray-900 mb-1">{person.name}</h3>
-        <p className="text-blue-600 font-semibold">{person.position}</p>
+        <h3>{person.name}</h3>
+        <p>{person.position}</p>
       </div>
     );
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Navigation */}
-      <nav className="navbar">
-        <div className="nav-content">
-          <div className="flex items-center">
-            <img 
-              src="https://customer-assets.emergentagent.com/job_actorclub/artifacts/4gypiwpr_ac%20logo.png" 
-              alt="Actor Club Logo" 
-              className="logo"
-              data-testid="actor-club-logo"
-            />
-          </div>
-          
-          <ul className="nav-links hidden md:flex">
-            <li><a href="#" className="nav-link">Ana Sayfa</a></li>
-            <li><a href="#" className="nav-link" onClick={() => navigate('/members')}>Üyelerimiz</a></li>
-            <li><a href="#" className="nav-link" onClick={() => navigate('/events')}>Etkinlikler</a></li>
-            <li><a href="#" className="nav-link" onClick={() => navigate('/about')}>Hakkımızda</a></li>
-            <li>
-              <Button 
-                onClick={() => navigate('/login')}
-                className="btn-primary"
-                data-testid="login-nav-btn"
-              >
-                Üye Girişi
-              </Button>
-            </li>
-          </ul>
-
-          <div className="md:hidden">
-            <Button 
+    <div className="min-h-screen" style={{ background: 'var(--background-gradient)' }}>
+      {/* Modern Navigation */}
+      <nav className="modern-nav">
+        <div className="container-modern">
+          <div className="flex items-center justify-between py-4">
+            {/* Logo */}
+            <div className="flex items-center">
+              <img 
+                src="https://customer-assets.emergentagent.com/job_actorclub/artifacts/4gypiwpr_ac%20logo.png" 
+                alt="Actor Club Logo" 
+                className="h-10 w-auto"
+              />
+              <span className="ml-3 text-xl font-bold text-gray-900">Actor Club</span>
+            </div>
+            
+            {/* Navigation Links */}
+            <div className="hidden md:flex items-center space-x-2">
+              <a href="/" className="nav-link active">Ana Sayfa</a>
+              <a href="/members" className="nav-link">Üyelerimiz</a>
+              <a href="/events" className="nav-link">Etkinlikler</a>
+              <a href="/about" className="nav-link">Biz Kimiz</a>
+            </div>
+            
+            {/* Login Button */}
+            <button 
               onClick={() => navigate('/login')}
-              className="btn-primary"
-              data-testid="mobile-login-btn"
+              className="btn-modern-primary"
+              data-testid="member-login-btn"
             >
-              Giriş
-            </Button>
+              Üye Girişi
+            </button>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="hero-section">
-        <div className="hero-content">
-          <h1 className="hero-title">
-            Actor Club Portal'a Hoş Geldiniz
-          </h1>
-          <p className="hero-subtitle">
-            Profesyonel oyunculuk dünyasında yeteneklerinizi geliştirin,
-            deneyimli mentorlardan öğrenin ve sanat camiasının bir parçası olun.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Button 
-              onClick={() => navigate('/login')}
-              className="btn-primary text-lg"
-              data-testid="hero-login-btn"
-            >
-              Üye Girişi
-            </Button>
-            <Button 
-              onClick={() => navigate('/about')}
-              className="btn-secondary text-lg"
-              data-testid="hero-info-btn"
-            >
-              Daha Fazla Bilgi
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Founder Section */}
-      <section className="section">
-        <div className="container-narrow">
-          <div className="text-center mb-16">
-            <div className="card-person mx-auto max-w-lg" data-testid="founder-card">
-              {founder && founder.photo ? (
-                <img 
-                  src={`${BACKEND_URL}${founder.photo}`} 
-                  alt={founder.name}
-                  className="w-32 h-32 rounded-full object-cover border-4 border-red-200 mx-auto mb-4"
-                />
-              ) : founder ? (
-                <div className="w-32 h-32 bg-gradient-to-br from-red-500 to-amber-500 rounded-full flex items-center justify-center text-white text-4xl font-bold mx-auto mb-4">
-                  {founder.name.split(' ').map(n => n[0]).join('')}
-                </div>
-              ) : (
-                <div className="w-32 h-32 bg-gradient-to-br from-red-500 to-amber-500 rounded-full flex items-center justify-center text-white text-4xl font-bold mx-auto mb-4">
-                  MÇI
-                </div>
-              )}
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                {founder ? founder.name : 'Muzaffer Çağlar İşgören'}
-              </h3>
-              <p className="text-lg font-semibold text-blue-600 mb-4">
-                {founder ? founder.position : 'Kurucu / Onursal Başkan'}
+      <section className="section-modern">
+        <div className="container-modern">
+          <div className="hero-modern">
+            {/* Left Content */}
+            <div className="animate-slide-up">
+              <h1 className="title-hero">
+                Actor Club Portal'a<br />
+                <span style={{ color: 'var(--primary-blue)' }}>Hoş Geldiniz</span>
+              </h1>
+              <p className="subtitle">
+                Profesyonel oyunculuk dünyasında yeteneklerinizi geliştirin, 
+                deneyimli mentorlardan öğrenin ve sanat camiasının bir parçası olun.
               </p>
-              <p className="text-gray-600 italic leading-relaxed">
-                "Actor Club, oyunculuk tutkusunu profesyonel becerilerle buluşturan 
-                bir platform olarak kurulmuştur. Amacımız, yetenekli bireyleri 
-                sanat dünyasında desteklemektir."
-              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <button 
+                  onClick={() => navigate('/login')}
+                  className="btn-modern-primary"
+                  data-testid="cta-join-btn"
+                >
+                  Üyelik Başvurusu
+                </button>
+                <button 
+                  onClick={() => navigate('/about')}
+                  className="btn-modern-secondary"
+                  data-testid="cta-info-btn"
+                >
+                  Daha Fazla Bilgi
+                </button>
+              </div>
+            </div>
+            
+            {/* Right Content - Founder Card */}
+            <div className="animate-slide-up-delay">
+              <div className="modern-card modern-card-lg max-w-sm">
+                {founder && founder.photo ? (
+                  <img 
+                    src={`${BACKEND_URL}${founder.photo}`} 
+                    alt={founder.name}
+                    className="avatar-modern avatar-xl mx-auto mb-6"
+                  />
+                ) : founder ? (
+                  <div className="avatar-placeholder avatar-xl mx-auto mb-6">
+                    {founder.name.split(' ').map(n => n[0]).join('')}
+                  </div>
+                ) : (
+                  <div className="avatar-placeholder avatar-xl mx-auto mb-6">
+                    MÇİ
+                  </div>
+                )}
+                <div className="text-center">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
+                    {founder ? founder.name : 'Muzaffer Çağlar İşgören'}
+                  </h3>
+                  <p className="font-semibold mb-4" style={{ color: 'var(--primary-blue)' }}>
+                    Kurucu
+                  </p>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    "Actor Club, oyunculuk tutkusunu profesyonel becerilerle buluşturan 
+                    bir platform olarak kurulmuştur. Amacımız, yetenekli bireyleri sanat 
+                    dünyasında desteklemektir."
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Honorary Presidents Section */}
-      <section className="section section-alt">
-        <div className="container">
+      <section className="section-modern-sm" style={{ background: 'rgba(255, 255, 255, 0.5)' }}>
+        <div className="container-modern">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Onursal Başkanlarımız</h2>
-            <p className="lead-text max-w-2xl mx-auto">
+            <h2 className="title-section">Onursal Başkanlarımız</h2>
+            <p className="subtitle-section">
               Deneyimleri ve vizyonlarıyla kulübümüze yön veren değerli isimler
             </p>
           </div>
           
-          <div className="grid grid-3">
+          <div className="grid-modern-3">
             {honorary.map((president, index) => (
               renderPersonCard(president, `honorary-president-${index + 1}`)
             ))}
             {/* Fallback for loading state */}
             {loading && (
               <>
-                <div className="card-person">Yükleniyor...</div>
-                <div className="card-person">Yükleniyor...</div>
-                <div className="card-person">Yükleniyor...</div>
+                <div className="person-card-modern">
+                  <div className="loading-modern">
+                    <div className="spinner-modern"></div>
+                  </div>
+                </div>
+                <div className="person-card-modern">
+                  <div className="loading-modern">
+                    <div className="spinner-modern"></div>
+                  </div>
+                </div>
+                <div className="person-card-modern">
+                  <div className="loading-modern">
+                    <div className="spinner-modern"></div>
+                  </div>
+                </div>
               </>
             )}
           </div>
         </div>
       </section>
 
-      {/* Board Section */}
-      <section className="section">
-        <div className="container">
+      {/* Management Board Section */}
+      <section className="section-modern">
+        <div className="container-modern">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Yönetim Kurulu</h2>
-            <p className="lead-text max-w-2xl mx-auto">
-              Kulübümüzün yönetiminden sorumlu dinamik ekibimiz
+            <h2 className="title-section">Yönetim Kurulumuz</h2>
+            <p className="subtitle-section">
+              Actor Club'ın geleceğini şekillendiren deneyimli yöneticilerimiz
             </p>
           </div>
 
           {/* Board Chairman */}
           <div className="text-center mb-16">
-            <div className="card-person mx-auto max-w-lg" data-testid="board-chairman-card">
+            <div className="max-w-md mx-auto">
               {chairman && chairman.photo ? (
                 <img 
                   src={`${BACKEND_URL}${chairman.photo}`} 
                   alt={chairman.name}
-                  className="w-32 h-32 rounded-full object-cover border-4 border-orange-200 mx-auto mb-4"
+                  className="avatar-modern avatar-xl mx-auto mb-6"
                 />
               ) : chairman ? (
-                <div className="w-32 h-32 bg-gradient-to-br from-orange-500 to-yellow-600 rounded-full flex items-center justify-center text-white text-4xl font-bold mx-auto mb-4">
+                <div className="avatar-placeholder avatar-xl mx-auto mb-6">
                   {chairman.name.split(' ').map(n => n[0]).join('')}
                 </div>
               ) : (
-                <div className="w-32 h-32 bg-gradient-to-br from-orange-500 to-yellow-600 rounded-full flex items-center justify-center text-white text-4xl font-bold mx-auto mb-4">
+                <div className="avatar-placeholder avatar-xl mx-auto mb-6">
                   ET
                 </div>
               )}
               <h3 className="text-2xl font-bold text-gray-900 mb-2">
                 {chairman ? chairman.name : 'Emre Turgut'}
               </h3>
-              <p className="text-lg font-semibold text-orange-600">Başkan</p>
+              <p className="font-semibold" style={{ color: 'var(--primary-blue)' }}>Başkan</p>
             </div>
           </div>
 
           {/* Board Members */}
-          <div className="grid grid-4">
+          <div className="grid-modern-4">
             {boardMembers.map((member, index) => (
-              <div key={member.id} className="card-person" data-testid={`board-member-${index + 1}`}>
+              <div key={member.id} className="person-card-modern animate-slide-up" data-testid={`board-member-${index + 1}`}>
                 {member.photo ? (
                   <img 
                     src={`${BACKEND_URL}${member.photo}`} 
                     alt={member.name}
-                    className="w-20 h-20 rounded-full object-cover border-2 border-blue-200 mx-auto mb-4"
+                    className="avatar-modern avatar-md mx-auto"
                   />
                 ) : (
-                  <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-lg font-bold mx-auto mb-4">
+                  <div className="avatar-placeholder avatar-md mx-auto">
                     {member.name.split(' ').map(n => n[0]).join('')}
                   </div>
                 )}
-                <h4 className="text-lg font-bold text-gray-900 mb-1">{member.name}</h4>
-                <p className="text-blue-600 font-semibold text-sm mb-2">Yönetim Kurulu Üyesi</p>
-                <div className="bg-gray-50 rounded-lg p-2 mt-3">
+                <h4 className="text-lg font-bold text-gray-900 mt-4 mb-1">{member.name}</h4>
+                <p className="font-semibold text-sm mb-3" style={{ color: 'var(--primary-blue)' }}>
+                  Yönetim Kurulu Üyesi
+                </p>
+                <div className="bg-gray-50 rounded-xl p-3">
                   <p className="text-xs font-bold text-gray-700">{member.name} Ekibi</p>
                   <p className="text-xs text-gray-500">Üyeler</p>
                 </div>
@@ -251,62 +265,15 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Why Actor Club Section */}
-      <section className="section section-alt">
-        <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Neden Actor Club?</h2>
-          </div>
-          
-          <div className="grid grid-3">
-            <div className="card-feature">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full mx-auto mb-6 flex items-center justify-center">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C20.832 18.477 19.246 18 17.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Profesyonel Eğitim</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Deneyimli eğitmenlerden oyunculuk tekniklerini öğrenin ve yeteneklerinizi geliştirin.
-              </p>
-            </div>
-
-            <div className="card-feature">
-              <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-blue-500 rounded-full mx-auto mb-6 flex items-center justify-center">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Güçlü Topluluk</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Aynı tutkuyu paylaşan kişilerle tanışın ve birlikte projeler geliştirin.
-              </p>
-            </div>
-
-            <div className="card-feature">
-              <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mx-auto mb-6 flex items-center justify-center">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Kariyer Fırsatları</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Sektördeki bağlantılarımız sayesinde kariyer fırsatlarına erişim sağlayın.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Footer */}
-      <footer style={{background: '#1e293b', color: 'white', padding: '60px 0 40px 0'}}>
-        <div className="container text-center">
+      <footer style={{ background: 'var(--text-dark)', color: 'white', padding: '60px 0 40px 0' }}>
+        <div className="container-modern text-center">
           <div className="mb-8">
             <img 
               src="https://customer-assets.emergentagent.com/job_actorclub/artifacts/4gypiwpr_ac%20logo.png" 
               alt="Actor Club Logo" 
-              className="logo mx-auto mb-6 opacity-90"
-              style={{filter: 'brightness(0) invert(1)'}}
+              className="h-12 w-auto mx-auto mb-6 opacity-90"
+              style={{ filter: 'brightness(0) invert(1)' }}
             />
           </div>
           <h3 className="text-2xl font-bold mb-4">Actor Club Üye Portalı</h3>
