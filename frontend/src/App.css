@@ -61,11 +61,20 @@ html, body {
 
 /* Modern Card System */
 .modern-card {
-  background: white;
+  background: var(--bg-primary);
   border-radius: 16px;
   box-shadow: var(--card-shadow);
   transition: all 0.3s ease;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+@media (prefers-color-scheme: dark) {
+  .modern-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+  }
 }
 
 .modern-card:hover {
