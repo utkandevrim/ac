@@ -196,7 +196,7 @@ const HomePage = () => {
           </div>
           
           <div className="grid-modern-3">
-            {honorary.map((president, index) => (
+            {remainingHonorary.map((president, index) => (
               renderPersonCard(president, `honorary-president-${index + 1}`)
             ))}
             {/* Fallback for loading state */}
