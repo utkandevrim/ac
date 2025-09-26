@@ -370,9 +370,9 @@ const HomePage = () => {
       <section className="section-modern">
         <div className="container-modern">
           <div className="text-center mb-16">
-            <h2 className="title-section">Yönetim Kurulumuz</h2>
+            <h2 className="title-section">{homepageContent.management_section_title || 'Yönetim Kurulumuz'}</h2>
             <p className="subtitle-section">
-              Actor Club'ın geleceğini şekillendiren deneyimli yöneticilerimiz
+              {homepageContent.management_section_subtitle || 'Actor Club\'ın geleceğini şekillendiren deneyimli yöneticilerimiz'}
             </p>
           </div>
 
