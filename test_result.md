@@ -334,6 +334,18 @@ frontend:
         - agent: "testing"
         - comment: "✅ PASSWORD CHANGE FUNCTIONALITY VERIFIED: Comprehensive testing confirms all core features working correctly: 1) LOGIN: test.kullanici / Test567! works successfully, 2) UI COMPONENTS: 'Şifre Değiştir' button visible next to 'Düzenle' button in profile header, 3) MODAL: Opens with all 3 required fields (Mevcut Şifre, Yeni Şifre, Yeni Şifre Tekrar), 4) POLICY TEXT: Password policy help text displayed correctly ('8-16 karakter, en az 1 harf ve 1 özel karakter içermeli'), 5) BACKEND VALIDATION: API calls to /api/auth/change-password work correctly - wrong password returns 400 error, correct password change returns 200 success, 6) FORM VALIDATION: Frontend validation prevents mismatched passwords, 7) API INTEGRATION: Backend logs confirm successful password changes. Minor: Toast notifications could be more visible, but core functionality is solid. Password change feature is fully functional and ready for production use."
 
+  - task: "Fix mobile responsiveness and dark mode compatibility"
+    implemented: false
+    working: false
+    file: "App.css, HomePage.js, components"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: false
+        - agent: "main"
+        - comment: "User reports: 1) Website not responsive on mobile devices, 2) Dark mode readability issues - some text unreadable. Need to implement mobile-first responsive design and improve dark mode contrast/readability across all components."
+
 metadata:
   created_by: "main_agent"
   version: "1.0"
