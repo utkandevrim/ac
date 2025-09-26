@@ -189,16 +189,16 @@ const HomePage = () => {
               </div>
             </div>
 
-            <div className="flex gap-4 mt-8">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-6 sm:mt-8">
               <button
                 onClick={updateHomepageContent}
-                className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg"
+                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 sm:px-6 sm:py-2 rounded-lg text-sm sm:text-base"
               >
                 Save Changes
               </button>
               <button
                 onClick={() => setIsEditing(false)}
-                className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-lg"
+                className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 sm:px-6 sm:py-2 rounded-lg text-sm sm:text-base"
               >
                 Cancel
               </button>
