@@ -101,6 +101,112 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--background-gradient)' }}>
+      {/* Admin Edit Button */}
+      {user && user.role === 'admin' && (
+        <div className="fixed top-20 right-4 z-50">
+          <button
+            onClick={() => setIsEditing(!isEditing)}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow-lg"
+          >
+            {isEditing ? 'Cancel Edit' : 'Edit Homepage'}
+          </button>
+        </div>
+      )}
+
+      {/* Edit Modal */}
+      {isEditing && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto p-6">
+            <h2 className="text-2xl font-bold mb-6">Edit Homepage Content</h2>
+            
+            <div className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium mb-2">Hero Title</label>
+                <input
+                  type="text"
+                  value={editContent.hero_title || ''}
+                  onChange={(e) => handleInputChange('hero_title', e.target.value)}
+                  className="w-full p-3 border rounded-lg"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">Hero Subtitle</label>
+                <textarea
+                  value={editContent.hero_subtitle || ''}
+                  onChange={(e) => handleInputChange('hero_subtitle', e.target.value)}
+                  className="w-full p-3 border rounded-lg h-24"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">Hero Quote</label>
+                <textarea
+                  value={editContent.hero_quote || ''}
+                  onChange={(e) => handleInputChange('hero_quote', e.target.value)}
+                  className="w-full p-3 border rounded-lg h-20"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">Honorary Presidents Section Title</label>
+                <input
+                  type="text"
+                  value={editContent.honorary_section_title || ''}
+                  onChange={(e) => handleInputChange('honorary_section_title', e.target.value)}
+                  className="w-full p-3 border rounded-lg"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">Honorary Presidents Section Subtitle</label>
+                <input
+                  type="text"
+                  value={editContent.honorary_section_subtitle || ''}
+                  onChange={(e) => handleInputChange('honorary_section_subtitle', e.target.value)}
+                  className="w-full p-3 border rounded-lg"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">Management Section Title</label>
+                <input
+                  type="text"
+                  value={editContent.management_section_title || ''}
+                  onChange={(e) => handleInputChange('management_section_title', e.target.value)}
+                  className="w-full p-3 border rounded-lg"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">Management Section Subtitle</label>
+                <input
+                  type="text"
+                  value={editContent.management_section_subtitle || ''}
+                  onChange={(e) => handleInputChange('management_section_subtitle', e.target.value)}
+                  className="w-full p-3 border rounded-lg"
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-4 mt-8">
+              <button
+                onClick={updateHomepageContent}
+                className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg"
+              >
+                Save Changes
+              </button>
+              <button
+                onClick={() => setIsEditing(false)}
+                className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-lg"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Modern Navigation */}
       <nav className="modern-nav">
         <div className="container-modern">
