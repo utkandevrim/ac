@@ -86,7 +86,7 @@ async def fix_users_and_passwords():
         
         print('🔄 KULLANICILAR DÜZELTİLİYOR...')
         print('=' * 80)
-        print(f'{'#':<3} {'ESKİ USERNAME':<30} {'YENİ USERNAME':<30} {'PASSWORD':<15}')
+        print(f'{"#":<3} {"ESKİ USERNAME":<30} {"YENİ USERNAME":<30} {"PASSWORD":<15}')
         print('-' * 80)
         
         for i, user in enumerate(sorted(regular_users, key=lambda x: x.get('username', '')), 1):
