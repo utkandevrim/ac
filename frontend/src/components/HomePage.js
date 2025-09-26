@@ -102,7 +102,7 @@ const HomePage = () => {
   return (
     <div className="min-h-screen" style={{ background: 'var(--background-gradient)' }}>
       {/* Admin Edit Button */}
-      {user && user.role === 'admin' && (
+      {user && user.is_admin && (
         <div className="fixed top-20 right-4 z-50">
           <button
             onClick={() => setIsEditing(!isEditing)}
