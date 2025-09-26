@@ -603,7 +603,18 @@ const AdminPanel = ({ user }) => {
                     </div>
                   ))}
                   <p className="text-sm text-gray-500 text-center mt-4">
-                    Toplam {users.length} üye
+                    {photoSearchTerm ? 
+                      `${users.filter(user => {
+                        const searchLower = photoSearchTerm.toLowerCase();
+                        return (
+                          user.name?.toLowerCase().includes(searchLower) ||
+                          user.surname?.toLowerCase().includes(searchLower) ||
+                          user.username?.toLowerCase().includes(searchLower) ||
+                          `${user.name} ${user.surname}`.toLowerCase().includes(searchLower)
+                        );
+                      }).length} üye bulundu (${users.length} toplam)` :
+                      `Toplam ${users.length} üye`
+                    }
                   </p>
                 </div>
               </Card>
