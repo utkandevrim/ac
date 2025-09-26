@@ -292,6 +292,18 @@ frontend:
         - agent: "testing"
         - comment: "✅ VERIFIED: Homepage correctly displays user name after login. Testing confirms: 1) Before login, homepage shows 'Üye Girişi' button, 2) After admin login (admin.yonetici / ActorClub2024!), homepage navigation shows 'Admin Yönetici Dashboard' instead of login button, 3) User authentication state is properly maintained across page navigation, 4) Navigation correctly reflects logged-in user status. Homepage login display functionality is working correctly."
 
+  - task: "Fix admin panel photo management - show all members for photo upload"
+    implemented: false
+    working: false
+    file: "AdminPanel.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: false
+        - agent: "main"
+        - comment: "User reports that in admin panel photo management section, only first few members are visible with 'Ve 101 üye daha...' message, but admin cannot scroll to see/access other members to upload their photos. Need to fix member list display and scrolling functionality."
+
 metadata:
   created_by: "main_agent"
   version: "1.0"
