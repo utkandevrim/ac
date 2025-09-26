@@ -206,10 +206,16 @@ const UserProfile = ({ user: currentUser }) => {
                   </Button>
                 </>
               ) : (
-                <Button onClick={() => setIsEditing(true)} className="btn-outline" data-testid="edit-profile-btn">
-                  <Edit3 className="h-4 w-4 mr-2" />
-                  Düzenle
-                </Button>
+                <>
+                  <Button onClick={() => setIsEditing(true)} className="btn-outline" data-testid="edit-profile-btn">
+                    <Edit3 className="h-4 w-4 mr-2" />
+                    Düzenle
+                  </Button>
+                  <Button onClick={() => setShowPasswordChange(true)} variant="outline" data-testid="change-password-btn">
+                    <Lock className="h-4 w-4 mr-2" />
+                    Şifre Değiştir
+                  </Button>
+                </>
               )}
             </div>
           )}
