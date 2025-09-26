@@ -211,6 +211,18 @@ frontend:
         - agent: "main"
         - comment: "Login component needs to send username instead of email"
 
+  - task: "Update homepage content - remove membership buttons and fix founder info"
+    implemented: true
+    working: true
+    file: "HomePage.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+        - working: true
+        - agent: "main"
+        - comment: "Removed 'Üyelik Başvurusu' and 'Daha Fazla Bilgi' buttons. Updated founder name to 'Muzaffer Çağlar İşgören' and title to 'Kurucu-Onursal Başkan'"
+
 metadata:
   created_by: "main_agent"
   version: "1.0"
