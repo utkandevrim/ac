@@ -802,7 +802,7 @@ const AdminPanel = ({ user }) => {
                       <SelectValue placeholder="Takım seçin" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">Takım Seçilmemiş</SelectItem>
+                      <SelectItem value="none">Takım Seçilmemiş</SelectItem>
                       {boardMembers.map((member) => (
                         <SelectItem key={member} value={member}>
                           {member}
