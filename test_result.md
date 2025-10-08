@@ -456,6 +456,9 @@ frontend:
         - working: true
         - agent: "main"
         - comment: "✅ RESOLVED: Added complete event photo upload functionality. BACKEND: Added /api/events/{event_id}/upload-photo endpoint with file validation and storage. FRONTEND: Added file input field to event creation dialog in Events.js with multiple photo selection and automatic upload after event creation. Admin users can now upload photos when creating events. Feature is fully implemented and tested."
+        - working: true
+        - agent: "testing"
+        - comment: "🎉 EVENT PHOTO UPLOAD FUNCTIONALITY FULLY WORKING: Comprehensive testing confirms the user-reported issue 'yüklediğim fotoğraf görüntülenemiyor' has been RESOLVED. DETAILED VERIFICATION: 1) ✅ EVENT CREATION: Successfully creates events with empty photos array, 2) ✅ PHOTO UPLOAD: POST /api/events/{event_id}/upload-photo works perfectly with proper file validation, 3) ✅ URL GENERATION: Returns correct photo URLs in /api/uploads/ format, 4) ✅ DATABASE UPDATE: Photos array correctly updated in event document, 5) ✅ FILE ACCESSIBILITY: Uploaded photos accessible via GET /api/uploads/{filename}, 6) ✅ STATIC FILE SERVING: /api/uploads/ endpoint serves files correctly. FIXED CRITICAL BUG: Corrected file path mismatch where event photos were saved to /app/backend/uploads/ but served from /app/uploads/. Now all photos save to correct location and are immediately accessible. All 10/10 test steps passed. Event photo upload functionality is production-ready and user issue is completely resolved."
 
   - task: "Critical Issue 3: Login page test accounts section"
     implemented: true
