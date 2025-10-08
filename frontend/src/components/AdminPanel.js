@@ -312,9 +312,17 @@ const AdminPanel = ({ user }) => {
         headers: { Authorization: `Bearer ${token}` }
       });
       
-      toast.success('Kullanıcı silindi');
-      fetchUsers();
-      fetchPendingUsers();
+      // Immediately update local state to remove user from UI
+      setUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
+      
+      toast.success('Kullanıcı kalıcı olarak silindi');
+      
+      // Force refresh from server after state update
+      setTimeout(() => {
+        fetchUsers(true); // Force refresh
+        fetchPendingUsers();
+      }, 500);
+      
     } catch (error) {
       console.error('Error deleting user:', error);
       toast.error('Kullanıcı silinirken hata oluştu');
