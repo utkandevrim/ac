@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'sonner';
+import QRCode from 'qrcode';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { 
