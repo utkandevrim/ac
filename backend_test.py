@@ -821,13 +821,26 @@ class ActorClubAPITester:
             if response.status_code == 200:
                 created_user = response.json()
                 created_user_id = created_user['id']
-                print(f"   DEBUG: Created user ID: {created_user_id}")
-                print(f"   DEBUG: Created user data: {created_user}")
-                self.log_test(
-                    "Issue 1 - Test User Creation", 
-                    True, 
-                    f"Created test user for deletion: {created_user['username']} (ID: {created_user_id})"
+                
+                # Approve the user so it appears in the users list
+                approve_response = self.session.put(
+                    f"{API_BASE}/users/{created_user_id}",
+                    json={"is_approved": True},
+                    headers=headers
                 )
+                
+                if approve_response.status_code == 200:
+                    self.log_test(
+                        "Issue 1 - Test User Creation & Approval", 
+                        True, 
+                        f"Created and approved test user: {created_user['username']} (ID: {created_user_id})"
+                    )
+                else:
+                    self.log_test(
+                        "Issue 1 - Test User Approval", 
+                        False, 
+                        f"Failed to approve user: HTTP {approve_response.status_code}: {approve_response.text}"
+                    )
             else:
                 self.log_test(
                     "Issue 1 - Test User Creation", 
