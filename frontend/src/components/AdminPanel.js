@@ -141,11 +141,18 @@ const AdminPanel = ({ user }) => {
     }
   };
 
-  const fetchUsers = async () => {
+  const fetchUsers = async (forceRefresh = false) => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.get(`${API}/users`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        },
+        // Add timestamp to force fresh data
+        params: forceRefresh ? { _t: Date.now() } : {}
       });
       setUsers(response.data);
     } catch (error) {
