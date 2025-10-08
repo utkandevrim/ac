@@ -732,10 +732,11 @@ async def get_user_dues(user_id: str, current_user: User = Depends(get_current_u
 
 @api_router.put("/dues/{due_id}/pay")
 async def mark_due_as_paid(due_id: str, current_user: User = Depends(get_admin_user)):
-    await db.dues.update_one(
+    result = await db.dues.update_one(
         {"id": due_id},
         {"$set": {"is_paid": True, "payment_date": datetime.now(timezone.utc)}}
     )
+    print(f"DEBUG: Dues payment update result - matched: {result.matched_count}, modified: {result.modified_count}")
     return {"message": "Aidat ödendi olarak işaretlendi"}
 
 @api_router.put("/dues/{due_id}/unpay")
