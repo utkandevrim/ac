@@ -492,10 +492,8 @@ metadata:
 
 test_plan:
   current_focus: 
-    - "Critical Issue 4: Dues payment status persistence"
-    - "Critical Issue 3: Login page test accounts section"
-  stuck_tasks:
-    - "Critical Issue 4: Dues payment status persistence"
+    - "Critical Issue 2: Event photo upload functionality"
+  stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
