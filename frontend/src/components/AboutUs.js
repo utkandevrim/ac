@@ -322,47 +322,7 @@ const AboutUs = ({ user }) => {
                     </div>
                   </div>
 
-                  {/* Photo Management */}
-                  <div>
-                    <Label className="form-label">Fotoğraf Yönetimi</Label>
-                    
-                    {/* Add new photo */}
-                    <div className="flex space-x-2 mb-4">
-                      <Input
-                        value={newPhotoUrl}
-                        onChange={(e) => setNewPhotoUrl(e.target.value)}
-                        placeholder="Fotoğraf URL'si girin"
-                        className="form-input"
-                        data-testid="new-photo-url"
-                      />
-                      <Button onClick={handleAddPhoto} className="btn-primary" data-testid="add-photo-btn">
-                        <Plus className="h-4 w-4" />
-                      </Button>
-                    </div>
-
-                    {/* Current photos */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                      {editPhotos.map((photo, index) => (
-                        <div key={index} className="relative group">
-                          <img 
-                            src={photo} 
-                            alt={`Gallery ${index + 1}`}
-                            className="w-full h-24 object-cover rounded-lg"
-                            onError={(e) => {
-                              e.target.src = 'https://via.placeholder.com/200x150?text=Hata';
-                            }}
-                          />
-                          <button
-                            onClick={() => handleRemovePhoto(index)}
-                            className="absolute top-1 right-1 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                            data-testid={`remove-photo-${index}`}
-                          >
-                            <Trash2 className="h-3 w-3" />
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                  {/* Photo Management section removed as requested */}
                 </div>
               ) : (
                 <div className="space-y-8">
