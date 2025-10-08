@@ -821,10 +821,12 @@ class ActorClubAPITester:
             if response.status_code == 200:
                 created_user = response.json()
                 created_user_id = created_user['id']
+                print(f"   DEBUG: Created user ID: {created_user_id}")
+                print(f"   DEBUG: Created user data: {created_user}")
                 self.log_test(
                     "Issue 1 - Test User Creation", 
                     True, 
-                    f"Created test user for deletion: {created_user['username']}"
+                    f"Created test user for deletion: {created_user['username']} (ID: {created_user_id})"
                 )
             else:
                 self.log_test(
