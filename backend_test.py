@@ -839,7 +839,36 @@ class ActorClubAPITester:
             self.log_test("Issue 1 - Test User Creation", False, f"Request failed: {str(e)}")
         
         if created_user_id:
-            # First, let's verify the user exists before deletion
+            # First, let's verify the user exists before deletion by checking the users list
+            try:
+                all_users_response = self.session.get(f"{API_BASE}/users", headers=headers)
+                if all_users_response.status_code == 200:
+                    all_users = all_users_response.json()
+                    found_user = next((u for u in all_users if u['id'] == created_user_id), None)
+                    if found_user:
+                        self.log_test(
+                            "Issue 1 - User Found in Users List", 
+                            True, 
+                            f"User found in users list: {found_user['username']}"
+                        )
+                    else:
+                        self.log_test(
+                            "Issue 1 - User Found in Users List", 
+                            False, 
+                            f"User not found in users list. Total users: {len(all_users)}"
+                        )
+                        # Print first few user IDs for debugging
+                        print(f"   DEBUG: First 3 user IDs in list: {[u.get('id') for u in all_users[:3]]}")
+                else:
+                    self.log_test(
+                        "Issue 1 - Get Users List", 
+                        False, 
+                        f"Failed to get users list: HTTP {all_users_response.status_code}"
+                    )
+            except Exception as e:
+                self.log_test("Issue 1 - Users List Check", False, f"Users list check failed: {str(e)}")
+            
+            # Now try the individual user GET endpoint
             try:
                 verify_before = self.session.get(
                     f"{API_BASE}/users/{created_user_id}",
