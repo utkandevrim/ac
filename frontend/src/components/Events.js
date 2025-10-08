@@ -226,6 +226,24 @@ const Events = ({ user }) => {
                     />
                   </div>
                   
+                  <div>
+                    <Label htmlFor="photos">Etkinlik Fotoğrafları</Label>
+                    <Input
+                      id="photos"
+                      type="file"
+                      multiple
+                      accept="image/*"
+                      onChange={(e) => setSelectedFiles(Array.from(e.target.files))}
+                      className="form-input"
+                      data-testid="event-photos-input"
+                    />
+                    {selectedFiles.length > 0 && (
+                      <p className="text-xs text-gray-500 mt-1">
+                        {selectedFiles.length} fotoğraf seçildi
+                      </p>
+                    )}
+                  </div>
+                  
                   <div className="flex space-x-2 pt-4">
                     <Button type="submit" className="btn-primary flex-1" data-testid="submit-event-btn">
                       Oluştur
