@@ -834,6 +834,29 @@ class ActorClubAPITester:
             self.log_test("Issue 1 - Test User Creation", False, f"Request failed: {str(e)}")
         
         if created_user_id:
+            # First, let's verify the user exists before deletion
+            try:
+                verify_before = self.session.get(
+                    f"{API_BASE}/users/{created_user_id}",
+                    headers=headers
+                )
+                
+                if verify_before.status_code == 200:
+                    self.log_test(
+                        "Issue 1 - User Exists Before Deletion", 
+                        True, 
+                        f"User exists before deletion attempt (HTTP {verify_before.status_code})"
+                    )
+                else:
+                    self.log_test(
+                        "Issue 1 - User Exists Before Deletion", 
+                        False, 
+                        f"User not found before deletion: HTTP {verify_before.status_code}: {verify_before.text}"
+                    )
+                    
+            except Exception as e:
+                self.log_test("Issue 1 - User Verification Before Deletion", False, f"Pre-deletion check failed: {str(e)}")
+            
             try:
                 # Delete the user
                 response = self.session.delete(
@@ -877,6 +900,27 @@ class ActorClubAPITester:
                         False, 
                         f"DELETE request failed: HTTP {response.status_code}: {response.text}"
                     )
+                    
+                    # Let's also check if we can find the user in the users list
+                    try:
+                        all_users_response = self.session.get(f"{API_BASE}/users", headers=headers)
+                        if all_users_response.status_code == 200:
+                            all_users = all_users_response.json()
+                            found_user = next((u for u in all_users if u['id'] == created_user_id), None)
+                            if found_user:
+                                self.log_test(
+                                    "Issue 1 - User Found in List After Failed Delete", 
+                                    False, 
+                                    f"User still exists in users list: {found_user['username']}"
+                                )
+                            else:
+                                self.log_test(
+                                    "Issue 1 - User Not Found in List", 
+                                    True, 
+                                    "User not found in users list (may have been deleted despite 404 error)"
+                                )
+                    except Exception as e:
+                        self.log_test("Issue 1 - User List Check", False, f"Failed to check users list: {str(e)}")
                     
             except Exception as e:
                 self.log_test("Issue 1 - User Deletion API", False, f"Delete request failed: {str(e)}")
