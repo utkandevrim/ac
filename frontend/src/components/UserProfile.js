@@ -193,27 +193,28 @@ const UserProfile = ({ user: currentUser }) => {
           </div>
           
           {isOwnProfile && (
-            <div className="flex space-x-3">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
               {isEditing ? (
                 <>
-                  <Button onClick={handleSave} className="btn-primary" data-testid="save-profile-btn">
+                  <Button onClick={handleSave} className="btn-primary touch-target" data-testid="save-profile-btn">
                     <Save className="h-4 w-4 mr-2" />
                     Kaydet
                   </Button>
-                  <Button onClick={() => setIsEditing(false)} variant="outline" data-testid="cancel-edit-btn">
+                  <Button onClick={() => setIsEditing(false)} variant="outline" className="touch-target" data-testid="cancel-edit-btn">
                     <X className="h-4 w-4 mr-2" />
                     İptal
                   </Button>
                 </>
               ) : (
                 <>
-                  <Button onClick={() => setIsEditing(true)} className="btn-outline" data-testid="edit-profile-btn">
+                  <Button onClick={() => setIsEditing(true)} className="btn-outline touch-target" data-testid="edit-profile-btn">
                     <Edit3 className="h-4 w-4 mr-2" />
                     Düzenle
                   </Button>
-                  <Button onClick={() => setShowPasswordChange(true)} variant="outline" data-testid="change-password-btn">
+                  <Button onClick={() => setShowPasswordChange(true)} variant="outline" className="touch-target text-sm" data-testid="change-password-btn">
                     <Lock className="h-4 w-4 mr-2" />
-                    Şifre Değiştir
+                    <span className="hidden sm:inline">Şifre Değiştir</span>
+                    <span className="sm:hidden">Şifre</span>
                   </Button>
                 </>
               )}
