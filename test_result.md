@@ -426,7 +426,7 @@ metadata:
 
 test_plan:
   current_focus: 
-    - "Implement Campaigns page with QR code discount system"
+    - "Fix AdminPanel loading error and test campaign management"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
