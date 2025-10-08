@@ -742,21 +742,29 @@ async def search_users(query: str, current_user: User = Depends(get_current_user
     return [User(**user) for user in users]
 
 # Dues routes
-@api_router.get("/dues/{user_id}", response_model=List[Dues])
+@api_router.get("/dues/{user_id}")
 async def get_user_dues(user_id: str, current_user: User = Depends(get_current_user)):
     if user_id != current_user.id and not current_user.is_admin:
         raise HTTPException(status_code=403, detail="Yetkisiz erişim")
     
     dues = await db.dues.find({"user_id": user_id}).to_list(1000)
     
-    # Convert MongoDB _id to id for frontend
-    processed_dues = []
+    # Convert MongoDB _id to id for frontend and convert datetime to ISO string
+    result = []
     for due in dues:
-        due['id'] = str(due['_id'])
-        del due['_id']
-        processed_dues.append(Dues(**due))
+        due_dict = {
+            "id": str(due["_id"]),
+            "user_id": due["user_id"],
+            "month": due["month"],
+            "year": due["year"],
+            "amount": due["amount"],
+            "is_paid": due["is_paid"],
+            "payment_date": due["payment_date"].isoformat() if due["payment_date"] else None,
+            "iban": due["iban"]
+        }
+        result.append(due_dict)
     
-    return processed_dues
+    return result
 
 @api_router.put("/dues/{due_id}/pay")
 async def mark_due_as_paid(due_id: str, current_user: User = Depends(get_admin_user)):
