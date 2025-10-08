@@ -173,6 +173,28 @@ class HomepageContent(BaseModel):
     management_section_subtitle: str = "Actor Club'ın geleceğini şekillendiren deneyimli yöneticilerimiz"
     last_updated: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
+class Campaign(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    title: str
+    description: str
+    company_name: str
+    discount_details: str
+    terms_conditions: str
+    image_url: Optional[str] = None
+    is_active: bool = True
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    expires_at: Optional[datetime] = None
+
+class QRToken(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    token: str
+    user_id: str
+    campaign_id: str
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    expires_at: datetime
+    is_used: bool = False
+    used_at: Optional[datetime] = None
+
 # Helper functions
 def hash_password(password: str) -> str:
     return pwd_context.hash(password)
