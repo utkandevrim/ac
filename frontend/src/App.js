@@ -15,6 +15,8 @@ import AdminPanel from "./components/AdminPanel";
 import AboutUs from "./components/AboutUs";
 import HomePage from "./components/HomePage";
 import Navbar from "./components/Navbar";
+import Campaigns from "./components/Campaigns";
+import QRVerification from "./components/QRVerification";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
