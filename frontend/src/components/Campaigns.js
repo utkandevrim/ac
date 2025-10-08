@@ -75,20 +75,21 @@ const Campaigns = ({ user }) => {
     }
   };
 
-  // Simple QR Code generator (you might want to use a library like qrcode.js)
-  const generateQRCodeSVG = (text) => {
-    // This is a simple placeholder. In production, use a proper QR code library
-    return `data:image/svg+xml,${encodeURIComponent(`
-      <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
-        <rect width="200" height="200" fill="white"/>
-        <text x="100" y="100" text-anchor="middle" font-family="Arial" font-size="12" fill="black">
-          QR CODE
-        </text>
-        <text x="100" y="120" text-anchor="middle" font-family="Arial" font-size="8" fill="gray">
-          ${text.substring(0, 20)}...
-        </text>
-      </svg>
-    `)}`;
+  // Generate QR Code using qrcode library
+  const generateQRCodeImage = async (text) => {
+    try {
+      return await QRCode.toDataURL(text, {
+        width: 256,
+        margin: 2,
+        color: {
+          dark: '#000000',
+          light: '#FFFFFF'
+        }
+      });
+    } catch (error) {
+      console.error('Error generating QR code:', error);
+      return null;
+    }
   };
 
   if (loading) {
