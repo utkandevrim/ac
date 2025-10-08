@@ -1227,6 +1227,155 @@ const AdminPanel = ({ user }) => {
             </form>
           </DialogContent>
         </Dialog>
+
+        {/* Campaign Create/Edit Dialog */}
+        <Dialog open={showCreateCampaignDialog || editingCampaign !== null} onOpenChange={() => {
+          setShowCreateCampaignDialog(false);
+          setEditingCampaign(null);
+          setCampaignForm({
+            title: '',
+            description: '',
+            company_name: '',
+            discount_details: '',
+            terms_conditions: '',
+            image_url: '',
+            expires_at: ''
+          });
+        }}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle className="flex items-center">
+                <Gift className="h-5 w-5 mr-2 text-blue-600" />
+                {editingCampaign ? 'Kampanya Düzenle' : 'Yeni Kampanya Oluştur'}
+              </DialogTitle>
+            </DialogHeader>
+            <form onSubmit={editingCampaign ? handleUpdateCampaign : handleCreateCampaign} className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Campaign Title */}
+                <div>
+                  <Label htmlFor="campaignTitle">Kampanya Başlığı *</Label>
+                  <Input
+                    id="campaignTitle"
+                    value={campaignForm.title}
+                    onChange={(e) => setCampaignForm({ ...campaignForm, title: e.target.value })}
+                    placeholder="Örn: Kafe İndirim Kampanyası"
+                    required
+                    className="form-input"
+                  />
+                </div>
+
+                {/* Company Name */}
+                <div>
+                  <Label htmlFor="companyName">Şirket Adı *</Label>
+                  <Input
+                    id="companyName"
+                    value={campaignForm.company_name}
+                    onChange={(e) => setCampaignForm({ ...campaignForm, company_name: e.target.value })}
+                    placeholder="Örn: Sanat Café"
+                    required
+                    className="form-input"
+                  />
+                </div>
+              </div>
+
+              {/* Description */}
+              <div>
+                <Label htmlFor="campaignDesc">Kampanya Açıklaması *</Label>
+                <textarea
+                  id="campaignDesc"
+                  value={campaignForm.description}
+                  onChange={(e) => setCampaignForm({ ...campaignForm, description: e.target.value })}
+                  placeholder="Kampanya hakkında detaylı bilgi..."
+                  required
+                  rows={3}
+                  className="w-full p-3 border border-gray-300 rounded-lg resize-none"
+                />
+              </div>
+
+              {/* Discount Details */}
+              <div>
+                <Label htmlFor="discountDetails">İndirim Detayları *</Label>
+                <Input
+                  id="discountDetails"
+                  value={campaignForm.discount_details}
+                  onChange={(e) => setCampaignForm({ ...campaignForm, discount_details: e.target.value })}
+                  placeholder="Örn: %25 indirim - Tüm içecekler"
+                  required
+                  className="form-input"
+                />
+              </div>
+
+              {/* Terms & Conditions */}
+              <div>
+                <Label htmlFor="termsConditions">Kampanya Şartları</Label>
+                <textarea
+                  id="termsConditions"
+                  value={campaignForm.terms_conditions}
+                  onChange={(e) => setCampaignForm({ ...campaignForm, terms_conditions: e.target.value })}
+                  placeholder="Kampanya şart ve koşulları..."
+                  rows={2}
+                  className="w-full p-3 border border-gray-300 rounded-lg resize-none"
+                />
+              </div>
+
+              {/* Image URL */}
+              <div>
+                <Label htmlFor="imageUrl">Kampanya Fotoğrafı URL</Label>
+                <Input
+                  id="imageUrl"
+                  type="url"
+                  value={campaignForm.image_url}
+                  onChange={(e) => setCampaignForm({ ...campaignForm, image_url: e.target.value })}
+                  placeholder="https://example.com/image.jpg"
+                  className="form-input"
+                />
+                {campaignForm.image_url && (
+                  <div className="mt-2">
+                    <img 
+                      src={campaignForm.image_url} 
+                      alt="Önizleme"
+                      className="w-32 h-20 object-cover rounded border"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* Expires At */}
+              <div>
+                <Label htmlFor="expiresAt">Bitiş Tarihi (Opsiyonel)</Label>
+                <Input
+                  id="expiresAt"
+                  type="date"
+                  value={campaignForm.expires_at}
+                  onChange={(e) => setCampaignForm({ ...campaignForm, expires_at: e.target.value })}
+                  className="form-input"
+                />
+              </div>
+              
+              <div className="flex space-x-2 pt-4">
+                <Button type="submit" className="btn-primary flex-1">
+                  <Save className="h-4 w-4 mr-2" />
+                  {editingCampaign ? 'Güncelle' : 'Oluştur'}
+                </Button>
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  onClick={() => {
+                    setShowCreateCampaignDialog(false);
+                    setEditingCampaign(null);
+                  }}
+                  className="flex-1"
+                >
+                  <X className="h-4 w-4 mr-2" />
+                  İptal
+                </Button>
+              </div>
+            </form>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
