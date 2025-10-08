@@ -193,6 +193,24 @@ const AppContent = () => {
             </ProtectedRoute>
           }
         />
+        
+        <Route
+          path="/campaigns"
+          element={
+            <ProtectedRoute user={user}>
+              <>
+                <Navbar user={user} onLogout={logout} />
+                <Campaigns user={user} />
+              </>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Public QR Verification Route */}
+        <Route
+          path="/verify-qr/:qrToken"
+          element={<QRVerification />}
+        />
       </Routes>
     </>
   );
