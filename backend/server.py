@@ -792,6 +792,52 @@ async def get_event(event_id: str):
         raise HTTPException(status_code=404, detail="Etkinlik bulunamadı")
     return Event(**event)
 
+@api_router.put("/events/{event_id}")
+async def update_event(event_id: str, event_data: EventCreate, current_user: User = Depends(get_admin_user)):
+    result = await db.events.update_one(
+        {"id": event_id},
+        {"$set": event_data.dict()}
+    )
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Etkinlik bulunamadı")
+    
+    # Return updated event
+    event = await db.events.find_one({"id": event_id})
+    return Event(**event)
+
+@api_router.post("/events/{event_id}/upload-photo")
+async def upload_event_photo(event_id: str, file: UploadFile = File(...), current_user: User = Depends(get_admin_user)):
+    # Check if event exists
+    event = await db.events.find_one({"id": event_id})
+    if not event:
+        raise HTTPException(status_code=404, detail="Etkinlik bulunamadı")
+    
+    # Validate file type
+    if not file.content_type.startswith('image/'):
+        raise HTTPException(status_code=400, detail="Sadece resim dosyaları yükleyebilirsiniz")
+    
+    # Save file
+    file_extension = file.filename.split('.')[-1].lower()
+    filename = f"event_{event_id}_{uuid.uuid4()}.{file_extension}"
+    file_path = f"uploads/{filename}"
+    
+    os.makedirs("uploads", exist_ok=True)
+    
+    # Save the uploaded file
+    with open(file_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+    
+    # Update event with new photo
+    photo_url = f"/api/uploads/{filename}"
+    
+    # Add to photos array
+    await db.events.update_one(
+        {"id": event_id},
+        {"$push": {"photos": photo_url}}
+    )
+    
+    return {"message": "Etkinlik fotoğrafı başarıyla yüklendi", "photo_url": photo_url}
+
 @api_router.delete("/events/{event_id}")
 async def delete_event(event_id: str, current_user: User = Depends(get_admin_user)):
     result = await db.events.delete_one({"id": event_id})
