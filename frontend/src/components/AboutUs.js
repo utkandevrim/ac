@@ -512,39 +512,55 @@ const AboutUs = ({ user }) => {
             <Card className="card p-6">
               <h3 className="text-lg font-bold text-gray-900 mb-4">Yönetim Kadrosu</h3>
               <div className="space-y-4">
-                <div className="text-center p-4 bg-gradient-to-r from-red-50 to-amber-50 rounded-lg">
-                  <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-amber-500 rounded-full mx-auto mb-2 flex items-center justify-center text-white text-sm font-bold">
-                    ÇI
+                {/* Board Chairman */}
+                {leadership.filter(leader => leader.position.includes('Yönetim Kurulu Başkanı')).map((chairman, index) => (
+                  <div key={`chairman-${index}`} className="text-center p-4 bg-gradient-to-r from-red-50 to-amber-50 rounded-lg">
+                    {chairman.photo ? (
+                      <img 
+                        src={`${BACKEND_URL}${chairman.photo}`} 
+                        alt={chairman.name}
+                        className="w-12 h-12 rounded-full mx-auto mb-2 object-cover"
+                      />
+                    ) : (
+                      <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-amber-500 rounded-full mx-auto mb-2 flex items-center justify-center text-white text-sm font-bold">
+                        {chairman.name.split(' ').map(n => n[0]).join('')}
+                      </div>
+                    )}
+                    <p className="font-semibold text-gray-900">{chairman.name}</p>
+                    <p className="text-sm text-red-600">Yönetim Kurulu Başkanı</p>
                   </div>
-                  <p className="font-semibold text-gray-900">Çağlar İşgören</p>
-                  <p className="text-sm text-red-600">Kurucu</p>
-                </div>
+                ))}
 
-                <div className="text-center p-4 bg-gradient-to-r from-red-50 to-amber-50 rounded-lg">
-                  <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-amber-500 rounded-full mx-auto mb-2 flex items-center justify-center text-white text-sm font-bold">
-                    ET
-                  </div>
-                  <p className="font-semibold text-gray-900">Emre Turgut</p>
-                  <p className="text-sm text-red-600">Yönetim Kurulu Başkanı</p>
-                </div>
-
+                {/* Board Members Grid */}
                 <div className="grid grid-cols-2 gap-2">
-                  <div className="text-center p-3 bg-gray-50 rounded-lg">
-                    <div className="w-8 h-8 bg-gradient-to-br from-red-500 to-amber-500 rounded-full mx-auto mb-1 flex items-center justify-center text-white text-xs font-bold">
-                      TÇ
+                  {leadership
+                    .filter(leader => leader.position.includes('Yönetim Kurulu Üyesi'))
+                    .map((member, index) => (
+                    <div key={`member-${index}`} className="text-center p-3 bg-gray-50 rounded-lg">
+                      {member.photo ? (
+                        <img 
+                          src={`${BACKEND_URL}${member.photo}`} 
+                          alt={member.name}
+                          className="w-8 h-8 rounded-full mx-auto mb-1 object-cover"
+                        />
+                      ) : (
+                        <div className="w-8 h-8 bg-gradient-to-br from-red-500 to-amber-500 rounded-full mx-auto mb-1 flex items-center justify-center text-white text-xs font-bold">
+                          {member.name.split(' ').map(n => n[0]).join('')}
+                        </div>
+                      )}
+                      <p className="text-xs font-medium text-gray-900">{member.name}</p>
+                      <p className="text-xs text-gray-600">YK Üyesi</p>
                     </div>
-                    <p className="text-xs font-medium text-gray-900">Tuğba Çakı</p>
-                    <p className="text-xs text-gray-600">YK Üyesi</p>
-                  </div>
-
-                  <div className="text-center p-3 bg-gray-50 rounded-lg">
-                    <div className="w-8 h-8 bg-gradient-to-br from-red-500 to-amber-500 rounded-full mx-auto mb-1 flex items-center justify-center text-white text-xs font-bold">
-                      DAA
-                    </div>
-                    <p className="text-xs font-medium text-gray-900">Duygu A. Aksoy</p>
-                    <p className="text-xs text-gray-600">YK Üyesi</p>
-                  </div>
+                  ))}
                 </div>
+                
+                {/* If no leadership data loaded, show loading or empty state */}
+                {leadership.length === 0 && (
+                  <div className="text-center p-4 text-gray-500">
+                    <Users className="w-8 h-8 mx-auto mb-2" />
+                    <p className="text-sm">Yönetim kadrosu bilgileri yükleniyor...</p>
+                  </div>
+                )}
               </div>
             </Card>
 
