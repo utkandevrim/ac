@@ -204,8 +204,45 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 def create_access_token(data: dict):
     to_encode = data.copy()
+    expire = datetime.now(timezone.utc) + timedelta(hours=24)
+    to_encode.update({"exp": expire})
     token = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return token
+
+def generate_qr_token():
+    """Generate a unique QR token"""
+    import secrets
+    return secrets.token_urlsafe(32)
+
+async def check_member_dues_eligibility(user_id: str) -> bool:
+    """Check if member has paid all dues except current month"""
+    try:
+        # Get user's dues
+        dues = await db.dues.find({"user_id": user_id}).to_list(length=None)
+        
+        # Get current month/year
+        current_date = datetime.now()
+        current_month = current_date.month
+        current_year = current_date.year
+        
+        # Check if all previous months are paid
+        for due in dues:
+            due_month = due.get('month')
+            due_year = due.get('year')
+            is_paid = due.get('is_paid', False)
+            
+            # Skip current month
+            if due_year == current_year and due_month == current_month:
+                continue
+                
+            # If any previous month is unpaid, not eligible
+            if not is_paid:
+                return False
+                
+        return True
+    except Exception as e:
+        print(f"Error checking dues eligibility: {e}")
+        return False
 
 def decode_token(token: str):
     try:
