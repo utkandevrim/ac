@@ -384,19 +384,29 @@ const EventCard = ({ event, isUpcoming, isAdmin, onDelete }) => {
 
   return (
     <Card className="card hover-lift" data-testid={`event-card-${event.id}`}>
-      {/* Event Image Placeholder */}
-      <div 
-        className="h-48 bg-gradient-to-br from-red-500 to-amber-500 rounded-t-lg flex items-center justify-center"
-        style={{
-          backgroundImage: `linear-gradient(rgba(139, 38, 53, 0.8), rgba(201, 48, 44, 0.8)), url('https://images.pexels.com/photos/6899936/pexels-photo-6899936.jpeg')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center'
-        }}
-      >
-        <div className="text-center text-white">
-          <ImageIcon className="h-12 w-12 mx-auto mb-2 opacity-80" />
-          <p className="text-sm opacity-80">Etkinlik Görseli</p>
-        </div>
+      {/* Event Image */}
+      <div className="h-48 rounded-t-lg overflow-hidden">
+        {event.photos && event.photos.length > 0 ? (
+          <img 
+            src={event.photos[0]} 
+            alt={event.title}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <div 
+            className="h-full bg-gradient-to-br from-red-500 to-amber-500 flex items-center justify-center"
+            style={{
+              backgroundImage: `linear-gradient(rgba(139, 38, 53, 0.8), rgba(201, 48, 44, 0.8)), url('https://images.pexels.com/photos/6899936/pexels-photo-6899936.jpeg')`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center'
+            }}
+          >
+            <div className="text-center text-white">
+              <ImageIcon className="h-12 w-12 mx-auto mb-2 opacity-80" />
+              <p className="text-sm opacity-80">Etkinlik Görseli</p>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="p-6">
