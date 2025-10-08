@@ -40,8 +40,7 @@ const AboutUs = ({ user }) => {
       phone: '',
       address: '',
       website: ''
-    },
-    mainPhoto: null
+    }
   });
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
