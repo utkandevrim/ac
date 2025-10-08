@@ -744,8 +744,6 @@ async def get_user_dues(user_id: str, current_user: User = Depends(get_current_u
 
 @api_router.put("/dues/{due_id}/pay")
 async def mark_due_as_paid(due_id: str, current_user: User = Depends(get_admin_user)):
-    from bson import ObjectId
-    
     try:
         # Convert string due_id to ObjectId and update using _id
         object_id = ObjectId(due_id)
@@ -753,13 +751,11 @@ async def mark_due_as_paid(due_id: str, current_user: User = Depends(get_admin_u
             {"_id": object_id},
             {"$set": {"is_paid": True, "payment_date": datetime.now(timezone.utc)}}
         )
-        print(f"DEBUG: Dues payment update result - matched: {result.matched_count}, modified: {result.modified_count}")
         
         if result.matched_count == 0:
             raise HTTPException(status_code=404, detail="Aidat bulunamadı")
             
     except Exception as e:
-        print(f"DEBUG: Error in dues payment: {e}")
         raise HTTPException(status_code=400, detail="Geçersiz aidat ID")
     
     return {"message": "Aidat ödendi olarak işaretlendi"}
