@@ -38,6 +38,7 @@ const Events = ({ user }) => {
     date: '',
     location: ''
   });
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   useEffect(() => {
     fetchEvents();
