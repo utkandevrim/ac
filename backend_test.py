@@ -798,13 +798,13 @@ class ActorClubAPITester:
         
         # First, create a test user to delete (use timestamp to ensure uniqueness)
         import time
-        timestamp = str(int(time.time()))
+        timestamp = str(int(time.time()))[-6:]  # Use last 6 digits
         test_user_for_deletion = {
-            "username": f"delete.testuser{timestamp}",
-            "email": f"delete.testuser{timestamp}@actorclub.com",
+            "username": f"delete.test{timestamp}",  # Fixed format: isim.soyisim
+            "email": f"delete.test{timestamp}@actorclub.com",
             "password": "DeleteTest123!",
             "name": "Delete",
-            "surname": f"TestUser{timestamp}"
+            "surname": f"Test{timestamp}"
         }
         
         created_user_id = None
