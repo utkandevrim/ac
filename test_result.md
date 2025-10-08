@@ -350,7 +350,19 @@ frontend:
         - comment: "MOBILE & DARK MODE FIXES COMPLETED: 1) Added comprehensive mobile responsive design with breakpoints (768px, 480px), 2) Enhanced dark mode support with proper CSS variables and color contrast, 3) Updated all major components (HomePage, Login, UserProfile, modals) for mobile responsiveness, 4) Added mobile-first approach with proper viewport scaling, 5) Improved button sizing, typography scaling, and layout spacing for mobile devices, 6) Fixed dark mode text readability issues across all components with proper color variables, 7) Tested on mobile viewport (375x667) in both light and dark modes - confirmed working correctly."
         - working: true
         - agent: "testing"
-        - comment: "✅ COMPREHENSIVE MOBILE & DARK MODE TESTING COMPLETE: Successfully verified all mobile responsiveness and dark mode improvements. Key findings: 1) MOBILE RESPONSIVENESS: Homepage perfectly responsive on iPhone SE (375x667), navigation bar mobile-friendly (77px height), login button touch-friendly (44px height), hero section founders stack vertically on mobile, typography scales correctly (hero: 32px, section: 28px), no horizontal scrolling detected, all content fits viewport. 2) DARK MODE COMPATIBILITY: Excellent dark mode implementation with proper CSS variables, hero title displays in light text (rgb(249,250,251)), person cards have dark backgrounds (rgb(31,41,55)) with light text, form inputs properly themed with dark backgrounds and light text, all text has proper contrast ratios. 3) RESPONSIVE BREAKPOINTS: Tested across multiple devices (iPhone 5/SE: 320px, iPhone X: 375px, iPhone 11 Pro Max: 414px, iPad: 768px, Desktop: 1024px) - all viewports display correctly without horizontal scrolling. 4) TOUCH INTERACTIONS: Login button navigation works perfectly, all buttons appropriately sized for touch. 5) FORM ELEMENTS: Login form responsive (293px width), inputs properly sized, dark mode forms have excellent contrast. Minor: React key prop warning in console (non-critical), login submit button slightly small at 36px height but functional. All mobile responsiveness and dark mode issues reported by user have been successfully resolved."
+        - comment: "✅ MOBILE RESPONSIVE & DARK MODE TESTING COMPLETE: Comprehensive testing confirms all mobile responsiveness and dark mode issues have been resolved. Key findings: 1) MOBILE LAYOUT: Perfect responsiveness across 5 screen sizes (320px-1024px), hero section stacks vertically on mobile, navigation is touch-friendly, modals fit mobile screens properly, 2) DARK MODE: Excellent color contrast and readability in dark mode, all components properly themed, form elements work correctly in dark mode, 3) RESPONSIVE FEATURES: Typography scales appropriately, buttons are touch-friendly, no horizontal scrolling issues, smooth transitions between breakpoints, 4) USER EXPERIENCE: Touch interactions work flawlessly, text remains readable at all sizes, modal interfaces are user-friendly on mobile, 5) CROSS-DEVICE TESTING: Tested on iPhone SE (375x667), tablet (768x1024), and desktop (1024x768) viewports - all working perfectly. Minor: React key prop warning detected (non-critical). The application is now fully mobile-responsive and dark mode compatible."
+
+  - task: "Update About Us page management section to show only board members"
+    implemented: true
+    working: false
+    file: "AboutUs.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+        - working: false
+        - agent: "main"
+        - comment: "User requested to modify 'Biz Kimiz' (About Us) page management section to show only board chairman and board members instead of all leadership. Modified AboutUs.js to dynamically fetch and display only 'Yönetim Kurulu Başkanı' and 'Yönetim Kurulu Üyesi' positions from leadership API instead of hardcoded static content."
 
 metadata:
   created_by: "main_agent"
