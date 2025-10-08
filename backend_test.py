@@ -754,6 +754,342 @@ class ActorClubAPITester:
         else:
             self.log_test("DELETE /api/campaigns/{id}", False, "No campaign ID available for delete test")
     
+    def test_critical_user_issues(self):
+        """Test the 4 critical issues reported by user"""
+        print("=== Testing Critical User-Reported Issues ===")
+        
+        # Use super.admin credentials as specified in review request
+        super_admin_creds = {"username": "super.admin", "password": "AdminActor2024!"}
+        
+        try:
+            response = self.session.post(
+                f"{API_BASE}/auth/login",
+                json=super_admin_creds,
+                headers={"Content-Type": "application/json"}
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                admin_token = data['access_token']
+                self.log_test(
+                    "Critical Issues - Admin Login", 
+                    True, 
+                    f"Successfully logged in as {data['user']['name']} {data['user']['surname']}"
+                )
+            else:
+                self.log_test(
+                    "Critical Issues - Admin Login", 
+                    False, 
+                    f"Failed to login with super.admin credentials: HTTP {response.status_code}: {response.text}"
+                )
+                return
+                
+        except Exception as e:
+            self.log_test("Critical Issues - Admin Login", False, f"Login request failed: {str(e)}")
+            return
+        
+        headers = {
+            "Authorization": f"Bearer {admin_token}",
+            "Content-Type": "application/json"
+        }
+        
+        # ISSUE 1: User deletion not persistent
+        print("\n--- Testing Issue 1: User Deletion Persistence ---")
+        
+        # First, create a test user to delete
+        test_user_for_deletion = {
+            "username": "delete.testuser",
+            "email": "delete.testuser@actorclub.com",
+            "password": "DeleteTest123!",
+            "name": "Delete",
+            "surname": "TestUser"
+        }
+        
+        created_user_id = None
+        
+        try:
+            # Create test user
+            response = self.session.post(
+                f"{API_BASE}/users",
+                json=test_user_for_deletion,
+                headers=headers
+            )
+            
+            if response.status_code == 200:
+                created_user = response.json()
+                created_user_id = created_user['id']
+                self.log_test(
+                    "Issue 1 - Test User Creation", 
+                    True, 
+                    f"Created test user for deletion: {created_user['username']}"
+                )
+            else:
+                self.log_test(
+                    "Issue 1 - Test User Creation", 
+                    False, 
+                    f"Failed to create test user: HTTP {response.status_code}: {response.text}"
+                )
+                
+        except Exception as e:
+            self.log_test("Issue 1 - Test User Creation", False, f"Request failed: {str(e)}")
+        
+        if created_user_id:
+            try:
+                # Delete the user
+                response = self.session.delete(
+                    f"{API_BASE}/users/{created_user_id}",
+                    headers=headers
+                )
+                
+                if response.status_code == 200:
+                    self.log_test(
+                        "Issue 1 - User Deletion API", 
+                        True, 
+                        "DELETE request successful"
+                    )
+                    
+                    # Verify user is actually deleted from database
+                    try:
+                        verify_response = self.session.get(
+                            f"{API_BASE}/users/{created_user_id}",
+                            headers=headers
+                        )
+                        
+                        if verify_response.status_code == 404:
+                            self.log_test(
+                                "Issue 1 - User Deletion Persistence", 
+                                True, 
+                                "✅ User successfully deleted from database permanently"
+                            )
+                        else:
+                            self.log_test(
+                                "Issue 1 - User Deletion Persistence", 
+                                False, 
+                                f"❌ User still exists after deletion: HTTP {verify_response.status_code}"
+                            )
+                            
+                    except Exception as e:
+                        self.log_test("Issue 1 - User Deletion Verification", False, f"Verification request failed: {str(e)}")
+                        
+                else:
+                    self.log_test(
+                        "Issue 1 - User Deletion API", 
+                        False, 
+                        f"DELETE request failed: HTTP {response.status_code}: {response.text}"
+                    )
+                    
+            except Exception as e:
+                self.log_test("Issue 1 - User Deletion API", False, f"Delete request failed: {str(e)}")
+        else:
+            self.log_test("Issue 1 - User Deletion Test", False, "No test user created for deletion test")
+        
+        # ISSUE 2: Event photo upload missing
+        print("\n--- Testing Issue 2: Event Photo Upload Functionality ---")
+        
+        try:
+            # Test event creation endpoint
+            test_event = {
+                "title": "Test Event for Photo Upload",
+                "description": "Testing event photo upload functionality",
+                "date": "2024-12-31T20:00:00Z",
+                "location": "Test Location"
+            }
+            
+            response = self.session.post(
+                f"{API_BASE}/events",
+                json=test_event,
+                headers=headers
+            )
+            
+            if response.status_code == 200:
+                created_event = response.json()
+                event_id = created_event.get('id')
+                
+                # Check if event has photos field
+                has_photos_field = 'photos' in created_event
+                photos_value = created_event.get('photos', None)
+                
+                self.log_test(
+                    "Issue 2 - Event Creation with Photos Field", 
+                    has_photos_field, 
+                    f"Event created {'with' if has_photos_field else 'without'} photos field. Photos: {photos_value}"
+                )
+                
+                # Test if there's a file upload endpoint available
+                try:
+                    upload_response = self.session.get(f"{API_BASE}/upload", headers=headers)
+                    upload_endpoint_exists = upload_response.status_code != 404
+                    
+                    self.log_test(
+                        "Issue 2 - File Upload Endpoint", 
+                        upload_endpoint_exists, 
+                        f"Upload endpoint {'exists' if upload_endpoint_exists else 'missing'} (HTTP {upload_response.status_code})"
+                    )
+                    
+                except Exception as e:
+                    self.log_test("Issue 2 - File Upload Endpoint Check", False, f"Upload endpoint check failed: {str(e)}")
+                
+                # Clean up test event
+                try:
+                    self.session.delete(f"{API_BASE}/events/{event_id}", headers=headers)
+                except:
+                    pass  # Ignore cleanup errors
+                    
+            else:
+                self.log_test(
+                    "Issue 2 - Event Creation", 
+                    False, 
+                    f"Failed to create test event: HTTP {response.status_code}: {response.text}"
+                )
+                
+        except Exception as e:
+            self.log_test("Issue 2 - Event Photo Upload Test", False, f"Event creation request failed: {str(e)}")
+        
+        # ISSUE 3: Login page test accounts section (Frontend issue - note for main agent)
+        print("\n--- Testing Issue 3: Login Page Test Accounts ---")
+        self.log_test(
+            "Issue 3 - Login Page Test Accounts", 
+            True, 
+            "⚠️ This is a FRONTEND issue - test accounts display section needs removal from login page. Backend testing not applicable."
+        )
+        
+        # ISSUE 4: Dues payment status not persisting
+        print("\n--- Testing Issue 4: Dues Payment Status Persistence ---")
+        
+        try:
+            # First, get a user to test dues with
+            users_response = self.session.get(f"{API_BASE}/users", headers=headers)
+            
+            if users_response.status_code == 200:
+                users = users_response.json()
+                test_user = None
+                
+                # Find a non-admin user for testing
+                for user in users:
+                    if not user.get('is_admin', False):
+                        test_user = user
+                        break
+                
+                if test_user:
+                    user_id = test_user['id']
+                    
+                    # Get user's dues
+                    dues_response = self.session.get(f"{API_BASE}/dues/{user_id}", headers=headers)
+                    
+                    if dues_response.status_code == 200:
+                        dues_list = dues_response.json()
+                        
+                        if dues_list:
+                            # Test marking a due as paid
+                            test_due = dues_list[0]
+                            due_id = test_due['id']
+                            original_status = test_due.get('is_paid', False)
+                            
+                            # Mark as paid
+                            pay_response = self.session.put(
+                                f"{API_BASE}/dues/{due_id}/pay",
+                                headers=headers
+                            )
+                            
+                            if pay_response.status_code == 200:
+                                self.log_test(
+                                    "Issue 4 - Mark Due as Paid", 
+                                    True, 
+                                    "Successfully marked due as paid"
+                                )
+                                
+                                # Verify persistence by fetching dues again
+                                verify_response = self.session.get(f"{API_BASE}/dues/{user_id}", headers=headers)
+                                
+                                if verify_response.status_code == 200:
+                                    updated_dues = verify_response.json()
+                                    updated_due = next((d for d in updated_dues if d['id'] == due_id), None)
+                                    
+                                    if updated_due and updated_due.get('is_paid', False):
+                                        self.log_test(
+                                            "Issue 4 - Dues Payment Status Persistence", 
+                                            True, 
+                                            "✅ Dues payment status persists correctly in database"
+                                        )
+                                    else:
+                                        self.log_test(
+                                            "Issue 4 - Dues Payment Status Persistence", 
+                                            False, 
+                                            f"❌ Dues payment status not persisted. Status: {updated_due.get('is_paid') if updated_due else 'Due not found'}"
+                                        )
+                                else:
+                                    self.log_test(
+                                        "Issue 4 - Dues Verification", 
+                                        False, 
+                                        f"Failed to verify dues status: HTTP {verify_response.status_code}"
+                                    )
+                                
+                                # Test unpay functionality as well
+                                unpay_response = self.session.put(
+                                    f"{API_BASE}/dues/{due_id}/unpay",
+                                    headers=headers
+                                )
+                                
+                                if unpay_response.status_code == 200:
+                                    # Verify unpay persistence
+                                    final_verify = self.session.get(f"{API_BASE}/dues/{user_id}", headers=headers)
+                                    if final_verify.status_code == 200:
+                                        final_dues = final_verify.json()
+                                        final_due = next((d for d in final_dues if d['id'] == due_id), None)
+                                        
+                                        if final_due and not final_due.get('is_paid', True):
+                                            self.log_test(
+                                                "Issue 4 - Dues Unpay Status Persistence", 
+                                                True, 
+                                                "✅ Dues unpay status also persists correctly"
+                                            )
+                                        else:
+                                            self.log_test(
+                                                "Issue 4 - Dues Unpay Status Persistence", 
+                                                False, 
+                                                "❌ Dues unpay status not persisted correctly"
+                                            )
+                                else:
+                                    self.log_test(
+                                        "Issue 4 - Dues Unpay API", 
+                                        False, 
+                                        f"Unpay request failed: HTTP {unpay_response.status_code}"
+                                    )
+                                    
+                            else:
+                                self.log_test(
+                                    "Issue 4 - Mark Due as Paid", 
+                                    False, 
+                                    f"Failed to mark due as paid: HTTP {pay_response.status_code}: {pay_response.text}"
+                                )
+                        else:
+                            self.log_test(
+                                "Issue 4 - Dues Payment Test", 
+                                False, 
+                                "No dues found for test user"
+                            )
+                    else:
+                        self.log_test(
+                            "Issue 4 - Get User Dues", 
+                            False, 
+                            f"Failed to get user dues: HTTP {dues_response.status_code}"
+                        )
+                else:
+                    self.log_test(
+                        "Issue 4 - Find Test User", 
+                        False, 
+                        "No non-admin user found for dues testing"
+                    )
+            else:
+                self.log_test(
+                    "Issue 4 - Get Users for Dues Test", 
+                    False, 
+                    f"Failed to get users: HTTP {users_response.status_code}"
+                )
+                
+        except Exception as e:
+            self.log_test("Issue 4 - Dues Payment Status Test", False, f"Dues test request failed: {str(e)}")
+
     def run_all_tests(self):
         """Run all tests"""
         print("🚀 Starting Actor Club Backend API Tests")
@@ -767,6 +1103,7 @@ class ActorClubAPITester:
         self.test_new_members_added()
         self.test_password_change()
         self.test_campaign_management()  # New comprehensive campaign tests
+        self.test_critical_user_issues()  # New critical issues tests
         
         # Summary
         print("=" * 60)
