@@ -636,7 +636,7 @@ async def get_users(current_user: User = Depends(get_current_user)):
         
         try:
             valid_users.append(User(**user))
-        except Exception as e:
+        except Exception:
             # Skip invalid users
             continue
     
