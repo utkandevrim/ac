@@ -753,10 +753,11 @@ async def mark_due_as_paid(due_id: str, current_user: User = Depends(get_admin_u
 
 @api_router.put("/dues/{due_id}/unpay")
 async def mark_due_as_unpaid(due_id: str, current_user: User = Depends(get_admin_user)):
-    await db.dues.update_one(
+    result = await db.dues.update_one(
         {"id": due_id},
         {"$set": {"is_paid": False, "payment_date": None}}
     )
+    print(f"DEBUG: Dues unpay update result - matched: {result.matched_count}, modified: {result.modified_count}")
     return {"message": "Aidat ödenmedi olarak işaretlendi"}
 
 # Events routes
