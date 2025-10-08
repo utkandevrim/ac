@@ -591,14 +591,16 @@ const AdminPanel = ({ user }) => {
                       <Button
                         size="sm"
                         variant="outline"
+                        className="touch-target text-xs sm:text-sm px-3 py-2"
                         onClick={() => openPhotoUploadDialog({
                           type: 'user',
                           id: user.id,
                           name: `${user.name} ${user.surname}`
                         })}
                       >
-                        <Upload className="h-4 w-4 mr-1" />
-                        {user.profile_photo ? 'Değiştir' : 'Ekle'}
+                        <Upload className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+                        <span className="hidden sm:inline">{user.profile_photo ? 'Değiştir' : 'Ekle'}</span>
+                        <span className="sm:hidden">{user.profile_photo ? 'Düzenle' : '+'}</span>
                       </Button>
                     </div>
                   ))}
