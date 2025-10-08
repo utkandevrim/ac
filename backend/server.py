@@ -123,7 +123,7 @@ class UserUpdate(BaseModel):
     is_approved: Optional[bool] = None
 
 class Dues(BaseModel):
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()), alias="_id")
     user_id: str
     month: str  # Eylül, Ekim, Kasım, Aralık, Ocak, Şubat, Mart, Nisan, Mayıs, Haziran
     year: int
@@ -131,6 +131,10 @@ class Dues(BaseModel):
     is_paid: bool = False
     payment_date: Optional[datetime] = None
     iban: str = "TR12 3456 7890 1234 5678 9012 34"
+    
+    class Config:
+        populate_by_name = True
+        allow_population_by_field_name = True
 
 class Event(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
