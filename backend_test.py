@@ -1067,6 +1067,10 @@ class ActorClubAPITester:
                             due_id = test_due['id']
                             original_status = test_due.get('is_paid', False)
                             
+                            print(f"   DEBUG: Original due status: {original_status}")
+                            print(f"   DEBUG: Due to mark as paid: {due_id}")
+                            print(f"   DEBUG: Due details: {test_due}")
+                            
                             # Mark as paid
                             pay_response = self.session.put(
                                 f"{API_BASE}/dues/{due_id}/pay",
