@@ -337,8 +337,7 @@ const AdminPanel = ({ user }) => {
         headers: { Authorization: `Bearer ${token}` }
       });
       
-      toast.success('Kampanya başarıyla oluşturuldu');
-      setShowCreateCampaignDialog(false);
+      // Reset form first
       setCampaignForm({
         title: '',
         description: '',
@@ -348,7 +347,15 @@ const AdminPanel = ({ user }) => {
         image_url: '',
         expires_at: ''
       });
-      fetchCampaigns();
+      
+      // Close dialog
+      setShowCreateCampaignDialog(false);
+      
+      // Fetch updated campaigns list  
+      await fetchCampaigns();
+      
+      // Show success message after list is updated
+      toast.success('Kampanya başarıyla oluşturuldu');
     } catch (error) {
       console.error('Error creating campaign:', error);
       toast.error('Kampanya oluşturulurken hata oluştu');
