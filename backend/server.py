@@ -732,19 +732,23 @@ async def get_user_dues(user_id: str, current_user: User = Depends(get_current_u
 
 @api_router.put("/dues/{due_id}/pay")
 async def mark_due_as_paid(due_id: str, current_user: User = Depends(get_admin_user)):
-    # Debug: Let's see what documents exist and their structure
-    print(f"DEBUG: Looking for due_id: {due_id}")
+    from bson import ObjectId
     
-    # Get all dues for debugging to see the actual structure
-    sample_docs = await db.dues.find({}).limit(2).to_list(2)
-    print(f"DEBUG: Sample documents structure: {sample_docs}")
-    
-    # Try the original query
-    result = await db.dues.update_one(
-        {"id": due_id},
-        {"$set": {"is_paid": True, "payment_date": datetime.now(timezone.utc)}}
-    )
-    print(f"DEBUG: Update result with 'id' field - matched: {result.matched_count}, modified: {result.modified_count}")
+    # Convert string ID to ObjectId for MongoDB query
+    try:
+        object_id = ObjectId(due_id)
+        result = await db.dues.update_one(
+            {"_id": object_id},
+            {"$set": {"is_paid": True, "payment_date": datetime.now(timezone.utc)}}
+        )
+        print(f"DEBUG: Dues payment update result - matched: {result.matched_count}, modified: {result.modified_count}")
+        
+        if result.matched_count == 0:
+            raise HTTPException(status_code=404, detail="Aidat bulunamadı")
+            
+    except Exception as e:
+        print(f"DEBUG: Error in dues payment: {e}")
+        raise HTTPException(status_code=400, detail="Geçersiz aidat ID")
     
     return {"message": "Aidat ödendi olarak işaretlendi"}
 
