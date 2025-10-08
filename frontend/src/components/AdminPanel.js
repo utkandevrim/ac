@@ -67,6 +67,20 @@ const AdminPanel = ({ user }) => {
     confirmPassword: ''
   });
   
+  // Campaign management states
+  const [campaigns, setCampaigns] = useState([]);
+  const [showCreateCampaignDialog, setShowCreateCampaignDialog] = useState(false);
+  const [editingCampaign, setEditingCampaign] = useState(null);
+  const [campaignForm, setCampaignForm] = useState({
+    title: '',
+    description: '',
+    company_name: '',
+    discount_details: '',
+    terms_conditions: '',
+    image_url: '',
+    expires_at: ''
+  });
+  
   // User form data
   const [userForm, setUserForm] = useState({
     username: '',
