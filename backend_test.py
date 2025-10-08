@@ -667,7 +667,7 @@ class ActorClubAPITester:
         
         # Test 7: Dues Eligibility Logic - Test with a regular user
         # First, try to login as a regular user to test dues eligibility
-        regular_user_creds = {"username": "test.kullanici", "password": "Test567!"}
+        regular_user_creds = {"username": "test.kullanıcı", "password": "Test567!"}  # Using Turkish ı
         
         try:
             response = self.session.post(
