@@ -413,30 +413,7 @@ const AboutUs = ({ user }) => {
                 </div>
               )}
 
-              {/* Photos Section */}
-              {(aboutData.photos && aboutData.photos.length > 0) && (
-                <div className="mt-8 pt-8 border-t border-gray-200">
-                  <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                    <ImageIcon className="h-5 w-5 mr-2 text-blue-600" />
-                    Fotoğraf Galerisi
-                  </h3>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    {aboutData.photos.map((photo, index) => (
-                      <div key={index} className="aspect-square rounded-lg overflow-hidden bg-gray-200">
-                        <img 
-                          src={photo} 
-                          alt={`Gallery ${index + 1}`}
-                          className="w-full h-full object-cover hover:scale-105 transition-transform cursor-pointer"
-                          onError={(e) => {
-                            e.target.src = 'https://via.placeholder.com/300x300?text=Görsel+Yüklenemedi';
-                          }}
-                          onClick={() => window.open(photo, '_blank')}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+              {/* Photo Gallery section removed as requested */}
             </Card>
           </div>
 
