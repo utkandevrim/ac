@@ -134,6 +134,8 @@ const AdminPanel = ({ user }) => {
   const fetchCampaigns = async () => {
     try {
       const response = await axios.get(`${API}/campaigns`);
+      console.log('Fetched campaigns:', response.data);
+      console.log('Number of campaigns:', response.data.length);
       setCampaigns(response.data);
     } catch (error) {
       console.error('Error fetching campaigns:', error);
