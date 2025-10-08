@@ -259,11 +259,17 @@ const Campaigns = ({ user }) => {
               
               {/* QR Code Display */}
               <div className="bg-gray-100 p-4 rounded-lg">
-                <img 
-                  src={generateQRCodeSVG(qrModal.qrUrl)}
-                  alt="QR Code"
-                  className="w-48 h-48 mx-auto"
-                />
+                {qrModal.qrImage ? (
+                  <img 
+                    src={qrModal.qrImage}
+                    alt="QR Code"
+                    className="w-48 h-48 mx-auto"
+                  />
+                ) : (
+                  <div className="w-48 h-48 mx-auto bg-gray-200 rounded flex items-center justify-center">
+                    <p className="text-gray-500">QR kod oluşturuluyor...</p>
+                  </div>
+                )}
               </div>
 
               {/* Expiry Info */}
