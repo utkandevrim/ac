@@ -46,7 +46,7 @@ class ActorClubAPITester:
         test_credentials = [
             {"username": "admin.yonetici", "password": "ActorClub2024!"},
             {"username": "muzaffer.isgoren", "password": "Founder123!"},
-            {"username": "test.kullanici", "password": "Test567!"}
+            {"username": "test.kullanıcı", "password": "Test567!"}  # Using Turkish ı
         ]
         
         successful_logins = 0
