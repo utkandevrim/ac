@@ -737,6 +737,18 @@ async def mark_due_as_paid(due_id: str, current_user: User = Depends(get_admin_u
         {"$set": {"is_paid": True, "payment_date": datetime.now(timezone.utc)}}
     )
     print(f"DEBUG: Dues payment update result - matched: {result.matched_count}, modified: {result.modified_count}")
+    
+    # If no match with 'id' field, let's check if the document exists with debugging
+    if result.matched_count == 0:
+        # Try to find the document to debug
+        doc = await db.dues.find_one({"id": due_id})
+        print(f"DEBUG: Document found with id query: {doc is not None}")
+        if doc is None:
+            # Try alternative queries to understand the structure
+            print(f"DEBUG: Searching for due_id: {due_id}")
+            alt_doc = await db.dues.find_one({"_id": due_id})
+            print(f"DEBUG: Document found with _id query: {alt_doc is not None}")
+    
     return {"message": "Aidat ödendi olarak işaretlendi"}
 
 @api_router.put("/dues/{due_id}/unpay")
