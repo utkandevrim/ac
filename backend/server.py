@@ -869,10 +869,19 @@ async def get_campaigns():
 @api_router.post("/campaigns")
 async def create_campaign(campaign_data: dict, current_user: User = Depends(get_admin_user)):
     """Create a new campaign (admin only)"""
+    print(f"DEBUG: Creating campaign with data: {campaign_data}")
+    print(f"DEBUG: Current user: {current_user}")
+    
     campaign_data["id"] = str(uuid.uuid4())
     campaign_data["created_at"] = datetime.now(timezone.utc)
-    await db.campaigns.insert_one(campaign_data)
-    return {"message": "Campaign created successfully", "campaign_id": campaign_data["id"]}
+    
+    try:
+        result = await db.campaigns.insert_one(campaign_data)
+        print(f"DEBUG: Insert result: {result.inserted_id}")
+        return {"message": "Campaign created successfully", "campaign_id": campaign_data["id"]}
+    except Exception as e:
+        print(f"DEBUG: Error inserting campaign: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to create campaign: {str(e)}")
 
 @api_router.put("/campaigns/{campaign_id}")
 async def update_campaign(campaign_id: str, campaign_data: dict, current_user: User = Depends(get_admin_user)):
