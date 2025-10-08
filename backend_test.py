@@ -1086,6 +1086,7 @@ class ActorClubAPITester:
                                 )
                                 
                                 # Verify persistence by fetching dues again
+                                print(f"   DEBUG: Verifying dues for same user_id: {user_id}")
                                 verify_response = self.session.get(f"{API_BASE}/dues/{user_id}", headers=headers)
                                 
                                 if verify_response.status_code == 200:
@@ -1095,10 +1096,14 @@ class ActorClubAPITester:
                                     # Debug information
                                     print(f"   DEBUG: Looking for due_id: {due_id}")
                                     print(f"   DEBUG: Found {len(updated_dues)} dues in response")
+                                    print(f"   DEBUG: First due user_id: {updated_dues[0].get('user_id') if updated_dues else 'No dues'}")
                                     if updated_due:
                                         print(f"   DEBUG: Found due with is_paid: {updated_due.get('is_paid')}")
                                     else:
                                         print(f"   DEBUG: Due not found. Available due IDs: {[d.get('id') for d in updated_dues[:3]]}")
+                                        # Check if any of the dues have the same user_id
+                                        matching_user_dues = [d for d in updated_dues if d.get('user_id') == user_id]
+                                        print(f"   DEBUG: Dues with matching user_id: {len(matching_user_dues)}")
                                     
                                     if updated_due and updated_due.get('is_paid', False):
                                         self.log_test(
