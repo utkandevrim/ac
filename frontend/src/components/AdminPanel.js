@@ -337,9 +337,12 @@ const AdminPanel = ({ user }) => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      await axios.post(`${API}/campaigns`, campaignForm, {
+      console.log('Creating campaign with data:', campaignForm);
+      
+      const response = await axios.post(`${API}/campaigns`, campaignForm, {
         headers: { Authorization: `Bearer ${token}` }
       });
+      console.log('Campaign creation response:', response.data);
       
       // Reset form first
       setCampaignForm({
@@ -355,10 +358,14 @@ const AdminPanel = ({ user }) => {
       // Close dialog
       setShowCreateCampaignDialog(false);
       
-      // Fetch updated campaigns list  
-      await fetchCampaigns();
+      // Add a small delay to ensure database consistency
+      setTimeout(async () => {
+        console.log('Fetching updated campaigns list...');
+        await fetchCampaigns();
+        console.log('Campaigns list updated');
+      }, 500);
       
-      // Show success message after list is updated
+      // Show success message
       toast.success('Kampanya başarıyla oluşturuldu');
     } catch (error) {
       console.error('Error creating campaign:', error);
