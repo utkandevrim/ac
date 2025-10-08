@@ -134,11 +134,7 @@ const AdminPanel = ({ user }) => {
   const fetchCampaigns = async () => {
     try {
       const response = await axios.get(`${API}/campaigns`);
-      console.log('Fetched campaigns:', response.data);
-      console.log('Number of campaigns:', response.data.length);
-      console.log('Campaign titles:', response.data.map(c => c.title));
       setCampaigns(response.data);
-      console.log('Campaigns state updated');
     } catch (error) {
       console.error('Error fetching campaigns:', error);
       toast.error('Kampanyalar yüklenirken hata oluştu');
