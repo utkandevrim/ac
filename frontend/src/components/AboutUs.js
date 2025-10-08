@@ -54,6 +54,7 @@ const AboutUs = ({ user }) => {
     address: '',
     website: ''
   });
+  const [leadership, setLeadership] = useState([]);
   const [newPhotoUrl, setNewPhotoUrl] = useState('');
   const [editPhotos, setEditPhotos] = useState([]);
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
