@@ -874,6 +874,7 @@ async def create_campaign(campaign_data: dict, current_user: User = Depends(get_
     
     campaign_data["id"] = str(uuid.uuid4())
     campaign_data["created_at"] = datetime.now(timezone.utc)
+    campaign_data["is_active"] = True  # FIX: Set is_active to True for new campaigns
     
     try:
         result = await db.campaigns.insert_one(campaign_data)
