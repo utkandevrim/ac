@@ -1312,20 +1312,17 @@ class ActorClubAPITester:
         # Step 2: Upload a photo to that event via POST /api/events/{event_id}/upload-photo
         print("\n--- Step 2: Upload Photo to Event ---")
         
-        # Create a simple test image file in memory
+        # Create a simple test image file in memory (without PIL dependency)
         import io
-        from PIL import Image
         
         try:
-            # Create a simple test image
-            img = Image.new('RGB', (100, 100), color='red')
-            img_bytes = io.BytesIO()
-            img.save(img_bytes, format='JPEG')
-            img_bytes.seek(0)
+            # Create a simple test file that mimics an image
+            # This creates a minimal JPEG-like header followed by test data
+            jpeg_header = b'\xff\xd8\xff\xe0\x00\x10JFIF\x00\x01\x01\x01\x00H\x00H\x00\x00'
+            test_content = jpeg_header + b"Test image data for photo upload testing" * 10
             
-            # Prepare multipart form data for file upload
             files = {
-                'file': ('test_photo.jpg', img_bytes, 'image/jpeg')
+                'file': ('test_photo.jpg', io.BytesIO(test_content), 'image/jpeg')
             }
             
             # Remove Content-Type header for multipart upload
@@ -1372,61 +1369,6 @@ class ActorClubAPITester:
                     f"Failed to upload photo: HTTP {response.status_code}: {response.text}"
                 )
                 
-        except ImportError:
-            # Fallback if PIL is not available - create a simple text file
-            try:
-                test_content = b"This is a test image file for photo upload testing"
-                files = {
-                    'file': ('test_photo.jpg', io.BytesIO(test_content), 'image/jpeg')
-                }
-                
-                upload_headers = {
-                    "Authorization": f"Bearer {admin_token}"
-                }
-                
-                response = self.session.post(
-                    f"{API_BASE}/events/{created_event_id}/upload-photo",
-                    files=files,
-                    headers=upload_headers
-                )
-                
-                uploaded_photo_url = None
-                
-                if response.status_code == 200:
-                    upload_data = response.json()
-                    uploaded_photo_url = upload_data.get('photo_url')
-                    
-                    self.log_test(
-                        "Step 2 - Upload Photo to Event (Fallback)", 
-                        True, 
-                        f"Photo uploaded successfully. URL: {uploaded_photo_url}"
-                    )
-                    
-                    # Step 3: Verify the photo URL is returned correctly
-                    if uploaded_photo_url and uploaded_photo_url.startswith('/api/uploads/'):
-                        self.log_test(
-                            "Step 3 - Photo URL Format", 
-                            True, 
-                            f"Photo URL format is correct: {uploaded_photo_url}"
-                        )
-                    else:
-                        self.log_test(
-                            "Step 3 - Photo URL Format", 
-                            False, 
-                            f"Photo URL format incorrect. Expected /api/uploads/..., got: {uploaded_photo_url}"
-                        )
-                        
-                else:
-                    self.log_test(
-                        "Step 2 - Upload Photo to Event (Fallback)", 
-                        False, 
-                        f"Failed to upload photo: HTTP {response.status_code}: {response.text}"
-                    )
-                    
-            except Exception as e:
-                self.log_test("Step 2 - Upload Photo to Event", False, f"Photo upload request failed: {str(e)}")
-                uploaded_photo_url = None
-        
         except Exception as e:
             self.log_test("Step 2 - Upload Photo to Event", False, f"Photo upload request failed: {str(e)}")
             uploaded_photo_url = None
