@@ -400,6 +400,18 @@ frontend:
         - agent: "main"
         - comment: "CAMPAIGNS SYSTEM IMPLEMENTATION COMPLETE: 1) BACKEND: Added Campaign and QRToken models, implemented comprehensive campaign management endpoints (/api/campaigns CRUD operations), QR code generation with 15-minute validity (/api/campaigns/{id}/generate-qr), QR verification endpoint for partners (/api/verify-qr/{token}), dues eligibility checking logic. 2) FRONTEND: Created Campaigns.js page with responsive campaign cards and QR code generation modal using qrcode.js library, QRVerification.js page for campaign partners, added 'Kampanyalar' navigation item with Gift icon. 3) FEATURES: 4 sample campaigns created (Kafe, Kitap, Spor, Fotoğraf), QR codes expire after 15 minutes, due payment verification (current month excluded), member photo/name display on valid QR, 'Kampanya Geçersiz' message for invalid cases. 4) UI: Mobile-responsive design, professional campaign cards, QR modal with countdown timer, verification page with member details. Campaign system fully functional and ready for use."
 
+  - task: "Add admin campaign management to AdminPanel"
+    implemented: false
+    working: false
+    file: "AdminPanel.js"
+    stuck_count: 0
+    priority: "high" 
+    needs_retesting: true
+    status_history:
+        - working: false
+        - agent: "main"
+        - comment: "User requests admin campaign management functionality in AdminPanel: 1) Add/delete campaigns, 2) Edit campaign terms/conditions, 3) Add/change campaign photos, 4) Full CRUD operations from admin panel interface. Need to add 'Kampanya Yönetimi' tab to AdminPanel with campaign management forms and photo upload functionality."
+
 metadata:
   created_by: "main_agent"
   version: "1.0"
