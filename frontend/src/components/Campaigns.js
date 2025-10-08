@@ -58,9 +58,13 @@ const Campaigns = ({ user }) => {
       const { qr_token, expires_at } = response.data;
       const qrUrl = `${BACKEND_URL}/api/verify-qr/${qr_token}`;
       
+      // Generate QR code image
+      const qrImage = await generateQRCodeImage(qrUrl);
+      
       setQrModal({
         campaignTitle,
         qrUrl,
+        qrImage,
         expiresAt: new Date(expires_at),
         token: qr_token
       });
