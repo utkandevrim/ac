@@ -766,6 +766,7 @@ class ActorClubAPITester:
         self.test_user_management()
         self.test_new_members_added()
         self.test_password_change()
+        self.test_campaign_management()  # New comprehensive campaign tests
         
         # Summary
         print("=" * 60)
