@@ -132,6 +132,13 @@ class Dues(BaseModel):
     payment_date: Optional[datetime] = None
     iban: str = "TR12 3456 7890 1234 5678 9012 34"
     
+    @field_validator('id', mode='before')
+    @classmethod
+    def validate_id(cls, v):
+        if isinstance(v, ObjectId):
+            return str(v)
+        return v
+    
     class Config:
         populate_by_name = True
         allow_population_by_field_name = True
