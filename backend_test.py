@@ -2049,6 +2049,10 @@ class ActorClubAPITester:
         # Run tests in order
         self.test_api_endpoints_availability()
         self.test_login_with_username()
+        
+        # PRIORITY: Run critical user deletion and duplicate tests first
+        self.test_user_deletion_and_duplicates()
+        
         self.test_user_management()
         self.test_new_members_added()
         self.test_password_change()
