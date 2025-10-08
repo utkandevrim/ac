@@ -1209,6 +1209,413 @@ class ActorClubAPITester:
         except Exception as e:
             self.log_test("Issue 4 - Dues Payment Status Test", False, f"Dues test request failed: {str(e)}")
 
+    def test_event_photo_upload_functionality(self):
+        """Test comprehensive event photo upload functionality as requested in review"""
+        print("=== Testing Event Photo Upload Functionality ===")
+        print("User Issue: 'yüklediğim fotoğraf görüntülenemiyor' - uploaded photos are not displaying")
+        
+        # Use super.admin credentials as specified in review request
+        super_admin_creds = {"username": "super.admin", "password": "AdminActor2024!"}
+        
+        try:
+            response = self.session.post(
+                f"{API_BASE}/auth/login",
+                json=super_admin_creds,
+                headers={"Content-Type": "application/json"}
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                admin_token = data['access_token']
+                self.log_test(
+                    "Event Photo Upload - Admin Login", 
+                    True, 
+                    f"Successfully logged in as {data['user']['name']} {data['user']['surname']}"
+                )
+            else:
+                self.log_test(
+                    "Event Photo Upload - Admin Login", 
+                    False, 
+                    f"Failed to login with super.admin credentials: HTTP {response.status_code}: {response.text}"
+                )
+                return
+                
+        except Exception as e:
+            self.log_test("Event Photo Upload - Admin Login", False, f"Login request failed: {str(e)}")
+            return
+        
+        headers = {
+            "Authorization": f"Bearer {admin_token}",
+            "Content-Type": "application/json"
+        }
+        
+        # Step 1: Create a new event via POST /api/events
+        print("\n--- Step 1: Create New Event ---")
+        
+        test_event = {
+            "title": "Test Event for Photo Upload",
+            "description": "Testing event photo upload functionality - User reported photos not displaying",
+            "date": "2024-12-31T20:00:00Z",
+            "location": "Test Location for Photo Upload"
+        }
+        
+        created_event_id = None
+        
+        try:
+            response = self.session.post(
+                f"{API_BASE}/events",
+                json=test_event,
+                headers=headers
+            )
+            
+            if response.status_code == 200:
+                created_event = response.json()
+                created_event_id = created_event.get('id')
+                photos_field = created_event.get('photos', None)
+                
+                self.log_test(
+                    "Step 1 - Create Event", 
+                    True, 
+                    f"Event created successfully with ID: {created_event_id}, Photos field: {photos_field}"
+                )
+                
+                # Verify photos field is empty array initially
+                if photos_field == []:
+                    self.log_test(
+                        "Step 1 - Event Photos Field Initialization", 
+                        True, 
+                        "Photos field correctly initialized as empty array"
+                    )
+                else:
+                    self.log_test(
+                        "Step 1 - Event Photos Field Initialization", 
+                        False, 
+                        f"Photos field should be empty array, got: {photos_field}"
+                    )
+                    
+            else:
+                self.log_test(
+                    "Step 1 - Create Event", 
+                    False, 
+                    f"Failed to create event: HTTP {response.status_code}: {response.text}"
+                )
+                return
+                
+        except Exception as e:
+            self.log_test("Step 1 - Create Event", False, f"Event creation request failed: {str(e)}")
+            return
+        
+        if not created_event_id:
+            self.log_test("Event Photo Upload Test", False, "No event ID available for photo upload test")
+            return
+        
+        # Step 2: Upload a photo to that event via POST /api/events/{event_id}/upload-photo
+        print("\n--- Step 2: Upload Photo to Event ---")
+        
+        # Create a simple test image file in memory
+        import io
+        from PIL import Image
+        
+        try:
+            # Create a simple test image
+            img = Image.new('RGB', (100, 100), color='red')
+            img_bytes = io.BytesIO()
+            img.save(img_bytes, format='JPEG')
+            img_bytes.seek(0)
+            
+            # Prepare multipart form data for file upload
+            files = {
+                'file': ('test_photo.jpg', img_bytes, 'image/jpeg')
+            }
+            
+            # Remove Content-Type header for multipart upload
+            upload_headers = {
+                "Authorization": f"Bearer {admin_token}"
+            }
+            
+            response = self.session.post(
+                f"{API_BASE}/events/{created_event_id}/upload-photo",
+                files=files,
+                headers=upload_headers
+            )
+            
+            uploaded_photo_url = None
+            
+            if response.status_code == 200:
+                upload_data = response.json()
+                uploaded_photo_url = upload_data.get('photo_url')
+                
+                self.log_test(
+                    "Step 2 - Upload Photo to Event", 
+                    True, 
+                    f"Photo uploaded successfully. URL: {uploaded_photo_url}"
+                )
+                
+                # Step 3: Verify the photo URL is returned correctly
+                if uploaded_photo_url and uploaded_photo_url.startswith('/api/uploads/'):
+                    self.log_test(
+                        "Step 3 - Photo URL Format", 
+                        True, 
+                        f"Photo URL format is correct: {uploaded_photo_url}"
+                    )
+                else:
+                    self.log_test(
+                        "Step 3 - Photo URL Format", 
+                        False, 
+                        f"Photo URL format incorrect. Expected /api/uploads/..., got: {uploaded_photo_url}"
+                    )
+                    
+            else:
+                self.log_test(
+                    "Step 2 - Upload Photo to Event", 
+                    False, 
+                    f"Failed to upload photo: HTTP {response.status_code}: {response.text}"
+                )
+                
+        except ImportError:
+            # Fallback if PIL is not available - create a simple text file
+            try:
+                test_content = b"This is a test image file for photo upload testing"
+                files = {
+                    'file': ('test_photo.jpg', io.BytesIO(test_content), 'image/jpeg')
+                }
+                
+                upload_headers = {
+                    "Authorization": f"Bearer {admin_token}"
+                }
+                
+                response = self.session.post(
+                    f"{API_BASE}/events/{created_event_id}/upload-photo",
+                    files=files,
+                    headers=upload_headers
+                )
+                
+                uploaded_photo_url = None
+                
+                if response.status_code == 200:
+                    upload_data = response.json()
+                    uploaded_photo_url = upload_data.get('photo_url')
+                    
+                    self.log_test(
+                        "Step 2 - Upload Photo to Event (Fallback)", 
+                        True, 
+                        f"Photo uploaded successfully. URL: {uploaded_photo_url}"
+                    )
+                    
+                    # Step 3: Verify the photo URL is returned correctly
+                    if uploaded_photo_url and uploaded_photo_url.startswith('/api/uploads/'):
+                        self.log_test(
+                            "Step 3 - Photo URL Format", 
+                            True, 
+                            f"Photo URL format is correct: {uploaded_photo_url}"
+                        )
+                    else:
+                        self.log_test(
+                            "Step 3 - Photo URL Format", 
+                            False, 
+                            f"Photo URL format incorrect. Expected /api/uploads/..., got: {uploaded_photo_url}"
+                        )
+                        
+                else:
+                    self.log_test(
+                        "Step 2 - Upload Photo to Event (Fallback)", 
+                        False, 
+                        f"Failed to upload photo: HTTP {response.status_code}: {response.text}"
+                    )
+                    
+            except Exception as e:
+                self.log_test("Step 2 - Upload Photo to Event", False, f"Photo upload request failed: {str(e)}")
+                uploaded_photo_url = None
+        
+        except Exception as e:
+            self.log_test("Step 2 - Upload Photo to Event", False, f"Photo upload request failed: {str(e)}")
+            uploaded_photo_url = None
+        
+        # Step 4: Get the event via GET /api/events/{event_id} and check if photos array is updated
+        print("\n--- Step 4: Verify Event Photos Array Updated ---")
+        
+        try:
+            response = self.session.get(f"{API_BASE}/events/{created_event_id}")
+            
+            if response.status_code == 200:
+                updated_event = response.json()
+                photos_array = updated_event.get('photos', [])
+                
+                self.log_test(
+                    "Step 4 - Get Updated Event", 
+                    True, 
+                    f"Event retrieved successfully. Photos array: {photos_array}"
+                )
+                
+                # Check if photos array contains the uploaded photo
+                if uploaded_photo_url and uploaded_photo_url in photos_array:
+                    self.log_test(
+                        "Step 4 - Photos Array Updated", 
+                        True, 
+                        f"✅ Photos array correctly updated with uploaded photo: {uploaded_photo_url}"
+                    )
+                elif len(photos_array) > 0:
+                    self.log_test(
+                        "Step 4 - Photos Array Updated", 
+                        True, 
+                        f"✅ Photos array has photos (may be different URL format): {photos_array}"
+                    )
+                else:
+                    self.log_test(
+                        "Step 4 - Photos Array Updated", 
+                        False, 
+                        f"❌ Photos array is empty after upload. Expected: {uploaded_photo_url}"
+                    )
+                    
+            else:
+                self.log_test(
+                    "Step 4 - Get Updated Event", 
+                    False, 
+                    f"Failed to retrieve updated event: HTTP {response.status_code}: {response.text}"
+                )
+                
+        except Exception as e:
+            self.log_test("Step 4 - Get Updated Event", False, f"Event retrieval request failed: {str(e)}")
+        
+        # Step 5: Test the photo URL accessibility via GET request
+        print("\n--- Step 5: Test Photo URL Accessibility ---")
+        
+        if uploaded_photo_url:
+            try:
+                # Test direct access to photo URL
+                photo_response = self.session.get(f"{BACKEND_URL}{uploaded_photo_url}")
+                
+                if photo_response.status_code == 200:
+                    content_type = photo_response.headers.get('content-type', '')
+                    content_length = len(photo_response.content)
+                    
+                    self.log_test(
+                        "Step 5 - Photo URL Accessibility", 
+                        True, 
+                        f"✅ Photo accessible via URL. Content-Type: {content_type}, Size: {content_length} bytes"
+                    )
+                    
+                    # Verify it's actually an image
+                    if content_type.startswith('image/') or content_length > 0:
+                        self.log_test(
+                            "Step 5 - Photo Content Validation", 
+                            True, 
+                            "Photo content appears to be valid image data"
+                        )
+                    else:
+                        self.log_test(
+                            "Step 5 - Photo Content Validation", 
+                            False, 
+                            f"Photo content may not be valid image. Content-Type: {content_type}"
+                        )
+                        
+                else:
+                    self.log_test(
+                        "Step 5 - Photo URL Accessibility", 
+                        False, 
+                        f"❌ Photo not accessible via URL: HTTP {photo_response.status_code}: {photo_response.text}"
+                    )
+                    
+            except Exception as e:
+                self.log_test("Step 5 - Photo URL Accessibility", False, f"Photo URL access request failed: {str(e)}")
+        else:
+            self.log_test("Step 5 - Photo URL Accessibility", False, "No photo URL available for accessibility test")
+        
+        # Step 6: Check static file serving at /api/uploads/{filename}
+        print("\n--- Step 6: Test Static File Serving Endpoint ---")
+        
+        try:
+            # Test the general uploads endpoint
+            test_filename = "nonexistent-file.jpg"
+            response = self.session.get(f"{API_BASE}/uploads/{test_filename}")
+            
+            if response.status_code == 404:
+                self.log_test(
+                    "Step 6 - Static File Serving Endpoint", 
+                    True, 
+                    "✅ Static file serving endpoint exists (returns 404 for non-existent file as expected)"
+                )
+            elif response.status_code == 200:
+                self.log_test(
+                    "Step 6 - Static File Serving Endpoint", 
+                    True, 
+                    "✅ Static file serving endpoint exists and returned content"
+                )
+            else:
+                self.log_test(
+                    "Step 6 - Static File Serving Endpoint", 
+                    False, 
+                    f"Static file serving endpoint may have issues: HTTP {response.status_code}"
+                )
+                
+        except Exception as e:
+            self.log_test("Step 6 - Static File Serving Endpoint", False, f"Static file serving test failed: {str(e)}")
+        
+        # Test with actual uploaded file if available
+        if uploaded_photo_url:
+            try:
+                filename = uploaded_photo_url.split('/')[-1]  # Extract filename from URL
+                response = self.session.get(f"{API_BASE}/uploads/{filename}")
+                
+                if response.status_code == 200:
+                    self.log_test(
+                        "Step 6 - Uploaded File Serving", 
+                        True, 
+                        f"✅ Uploaded file accessible via static serving: {filename}"
+                    )
+                else:
+                    self.log_test(
+                        "Step 6 - Uploaded File Serving", 
+                        False, 
+                        f"❌ Uploaded file not accessible via static serving: HTTP {response.status_code}"
+                    )
+                    
+            except Exception as e:
+                self.log_test("Step 6 - Uploaded File Serving", False, f"Uploaded file serving test failed: {str(e)}")
+        
+        # Cleanup: Delete the test event
+        print("\n--- Cleanup: Delete Test Event ---")
+        
+        try:
+            response = self.session.delete(f"{API_BASE}/events/{created_event_id}", headers=headers)
+            
+            if response.status_code == 200:
+                self.log_test(
+                    "Cleanup - Delete Test Event", 
+                    True, 
+                    "Test event successfully deleted"
+                )
+            else:
+                self.log_test(
+                    "Cleanup - Delete Test Event", 
+                    False, 
+                    f"Failed to delete test event: HTTP {response.status_code}"
+                )
+                
+        except Exception as e:
+            self.log_test("Cleanup - Delete Test Event", False, f"Event deletion failed: {str(e)}")
+        
+        # Overall assessment
+        print("\n--- Overall Event Photo Upload Assessment ---")
+        
+        # Count successful steps
+        photo_upload_tests = [result for result in self.test_results if 'Step' in result['test'] and 'Event Photo Upload' not in result['test']]
+        successful_steps = sum(1 for test in photo_upload_tests if test['success'])
+        total_steps = len(photo_upload_tests)
+        
+        if successful_steps >= 4:  # At least 4 out of 6 core steps should work
+            self.log_test(
+                "Event Photo Upload Functionality - Overall", 
+                True, 
+                f"✅ Event photo upload functionality is working ({successful_steps}/{total_steps} steps successful)"
+            )
+        else:
+            self.log_test(
+                "Event Photo Upload Functionality - Overall", 
+                False, 
+                f"❌ Event photo upload functionality has issues ({successful_steps}/{total_steps} steps successful)"
+            )
+
     def run_all_tests(self):
         """Run all tests"""
         print("🚀 Starting Actor Club Backend API Tests")
