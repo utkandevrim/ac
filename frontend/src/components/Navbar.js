@@ -28,6 +28,7 @@ const Navbar = ({ user, onLogout }) => {
   const navigationItems = [
     { name: 'Anasayfa', href: '/', icon: Home },
     { name: 'Üyelerimiz', href: '/members', icon: Users },
+    { name: 'Kampanyalar', href: '/campaigns', icon: Gift },
     { name: 'Etkinlikler', href: '/events', icon: Calendar },
     { name: 'Biz Kimiz', href: '/about', icon: Info },
     { name: 'Profilim', href: '/profile', icon: User },
