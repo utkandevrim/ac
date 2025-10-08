@@ -39,7 +39,8 @@ import {
   Upload,
   Camera,
   Image,
-  Gift
+  Gift,
+  Plus
 } from 'lucide-react';
 import { toast } from 'sonner';
 
