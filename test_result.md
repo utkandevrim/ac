@@ -402,9 +402,9 @@ frontend:
 
   - task: "Fix AdminPanel loading error and test campaign management"
     implemented: true
-    working: true
+    working: false
     file: "AdminPanel.js"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high" 
     needs_retesting: false
     status_history:
@@ -417,6 +417,9 @@ frontend:
         - working: true
         - agent: "testing"
         - comment: "✅ COMPREHENSIVE CAMPAIGN MANAGEMENT TESTING COMPLETE: Conducted extensive testing of all campaign functionality as requested. Results: 100% SUCCESS RATE (10/10 tests passed). 1) ADMIN AUTHENTICATION: super.admin / AdminActor2024! login working perfectly, 2) CAMPAIGN CRUD ENDPOINTS: All operations working - GET /api/campaigns (retrieved 4 campaigns), POST /api/campaigns (created test campaign), PUT /api/campaigns/{id} (updated campaign), DELETE /api/campaigns/{id} (deleted campaign), 3) ADMIN AUTHENTICATION: Correctly blocks non-admin users from campaign operations (HTTP 403), 4) QR CODE GENERATION: /api/campaigns/{id}/generate-qr working with 15-minute expiry, 5) QR CODE VERIFICATION: /api/verify-qr/{token} working - valid tokens show member details and campaign info, invalid tokens correctly return 'Kampanya Geçersiz', 6) DUES ELIGIBILITY: Logic working correctly - admin user passed eligibility check for QR generation. Fixed backend datetime comparison bug in QR verification. All campaign management features are fully functional and ready for production use."
+        - working: false
+        - agent: "testing"
+        - comment: "❌ CRITICAL ISSUE FOUND: User-reported bug confirmed. Campaign creation works in backend but newly added campaigns do NOT appear in the frontend list. DETAILED FINDINGS: 1) BACKEND API: Fully functional - POST /api/campaigns creates campaigns successfully, GET /api/campaigns returns all campaigns including newly created ones, 2) FRONTEND DIALOG: Campaign creation form opens, accepts input, submits successfully with 'Kampanya başarıyla oluşturuldu' toast notification, 3) CORE ISSUE: After successful campaign creation, the campaigns list in AdminPanel does not refresh to show the new campaign. The fetchCampaigns() function is called after creation (line 351 in AdminPanel.js) but the UI state is not updating, 4) MANUAL REFRESH: Switching between tabs manually refreshes the list and shows new campaigns, 5) ROOT CAUSE: Frontend state management issue - campaigns state is not being updated after successful API call despite fetchCampaigns() being called. This confirms the exact user-reported issue: 'when I click add campaign and add a new campaign, the added campaign doesn't appear in the list'."
 
 metadata:
   created_by: "main_agent"
