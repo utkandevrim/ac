@@ -796,13 +796,15 @@ class ActorClubAPITester:
         # ISSUE 1: User deletion not persistent
         print("\n--- Testing Issue 1: User Deletion Persistence ---")
         
-        # First, create a test user to delete
+        # First, create a test user to delete (use timestamp to ensure uniqueness)
+        import time
+        timestamp = str(int(time.time()))
         test_user_for_deletion = {
-            "username": "delete.testuser",
-            "email": "delete.testuser@actorclub.com",
+            "username": f"delete.testuser{timestamp}",
+            "email": f"delete.testuser{timestamp}@actorclub.com",
             "password": "DeleteTest123!",
             "name": "Delete",
-            "surname": "TestUser"
+            "surname": f"TestUser{timestamp}"
         }
         
         created_user_id = None
