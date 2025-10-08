@@ -787,6 +787,87 @@ const AdminPanel = ({ user }) => {
             </Card>
           </TabsContent>
 
+          {/* Campaigns Tab */}
+          <TabsContent value="campaigns" className="mt-6">
+            <Card className="card p-6">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold text-gray-900">Kampanya Yönetimi ({campaigns.length})</h2>
+                <Button 
+                  onClick={() => setShowCreateCampaignDialog(true)}
+                  className="btn-primary"
+                  data-testid="create-campaign-btn"
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  Kampanya Ekle
+                </Button>
+              </div>
+
+              {campaigns.length === 0 ? (
+                <div className="text-center py-12">
+                  <Gift className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Henüz Kampanya Yok</h3>
+                  <p className="text-gray-600 mb-4">İlk kampanyanızı oluşturmak için yukarıdaki butona tıklayın.</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {campaigns.map((campaign) => (
+                    <Card key={campaign.id} className="p-4 hover:shadow-lg transition-shadow">
+                      {/* Campaign Image */}
+                      {campaign.image_url && (
+                        <div className="mb-4 rounded-lg overflow-hidden">
+                          <img 
+                            src={campaign.image_url}
+                            alt={campaign.title}
+                            className="w-full h-32 object-cover"
+                            onError={(e) => {
+                              e.target.style.display = 'none';
+                            }}
+                          />
+                        </div>
+                      )}
+
+                      {/* Campaign Info */}
+                      <div className="space-y-3">
+                        <div>
+                          <h3 className="font-bold text-lg text-gray-900">{campaign.title}</h3>
+                          <p className="text-sm text-blue-600 font-medium">{campaign.company_name}</p>
+                        </div>
+
+                        <p className="text-gray-600 text-sm line-clamp-2">{campaign.description}</p>
+
+                        <div className="bg-green-50 p-2 rounded">
+                          <p className="text-green-800 text-sm font-medium">🎁 {campaign.discount_details}</p>
+                        </div>
+
+                        {/* Admin Actions */}
+                        <div className="flex gap-2 pt-3 border-t border-gray-200">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="flex-1 touch-target"
+                            onClick={() => openEditCampaign(campaign)}
+                          >
+                            <Edit3 className="h-3 w-3 mr-1" />
+                            Düzenle
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="flex-1 touch-target text-red-600 hover:text-red-700 hover:border-red-300"
+                            onClick={() => handleDeleteCampaign(campaign.id, campaign.title)}
+                          >
+                            <Trash2 className="h-3 w-3 mr-1" />
+                            Sil
+                          </Button>
+                        </div>
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+              )}
+            </Card>
+          </TabsContent>
+
           {/* Events Tab */}
           <TabsContent value="events" className="mt-6">
             <Card className="card p-6">
