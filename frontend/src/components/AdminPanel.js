@@ -117,6 +117,8 @@ const AdminPanel = ({ user }) => {
     } else if (activeTab === 'photos') {
       fetchUsers();
       fetchLeadership();
+    } else if (activeTab === 'campaigns') {
+      fetchCampaigns();
     }
   }, [activeTab]);
 
