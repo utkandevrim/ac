@@ -732,9 +732,27 @@ async def get_user_dues(user_id: str, current_user: User = Depends(get_current_u
 
 @api_router.put("/dues/{due_id}/pay")
 async def mark_due_as_paid(due_id: str, current_user: User = Depends(get_admin_user)):
-    # Use UUID-based id field (not ObjectId _id)
+    # Debug: Let's examine the due document structure more carefully
+    print(f"DEBUG: Looking for due_id: {due_id}")
+    
+    # Try to find this exact due first with various possible field names
+    due_with_id = await db.dues.find_one({"id": due_id})
+    print(f"DEBUG: Document found with 'id' field: {due_with_id is not None}")
+    
+    if due_with_id:
+        print(f"DEBUG: Found document with 'id': {due_with_id}")
+    else:
+        # Try alternative field names
+        due_alt1 = await db.dues.find_one({"_id": due_id})
+        print(f"DEBUG: Document found with '_id' field: {due_alt1 is not None}")
+        
+        # Get a sample document to check the actual field structure
+        sample_due = await db.dues.find_one()
+        print(f"DEBUG: Sample due document structure: {sample_due}")
+    
+    # Proceed with the update using 'id' field
     result = await db.dues.update_one(
-        {"id": due_id},  # Use 'id' field with UUID string
+        {"id": due_id},
         {"$set": {"is_paid": True, "payment_date": datetime.now(timezone.utc)}}
     )
     print(f"DEBUG: Dues payment update result - matched: {result.matched_count}, modified: {result.modified_count}")
