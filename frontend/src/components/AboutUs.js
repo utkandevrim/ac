@@ -444,7 +444,7 @@ const AboutUs = ({ user }) => {
                     <Star className="h-5 w-5 text-red-600 mr-2" />
                     <span className="text-gray-600">Kuruluş</span>
                   </div>
-                  <span className="font-bold text-gray-900">2024</span>
+                  <span className="font-bold text-gray-900">2014</span>
                 </div>
               </div>
             </Card>
