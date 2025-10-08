@@ -10,7 +10,7 @@ import uuid
 # MongoDB connection
 MONGO_URL = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
 client = AsyncIOMotorClient(MONGO_URL)
-db = client.actorclub
+db = client.test_database
 
 async def create_dues_for_users():
     """Create dues for all users who don't have dues"""
