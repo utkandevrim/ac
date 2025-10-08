@@ -363,6 +363,9 @@ frontend:
         - working: false
         - agent: "main"
         - comment: "User requested to modify 'Biz Kimiz' (About Us) page management section to show only board chairman and board members instead of all leadership. Modified AboutUs.js to dynamically fetch and display only 'Yönetim Kurulu Başkanı' and 'Yönetim Kurulu Üyesi' positions from leadership API instead of hardcoded static content."
+        - working: true
+        - agent: "main"
+        - comment: "ADDITIONAL ABOUT US PAGE UPDATES: User requested further modifications: 1) Removed hero section with background photo and 'Ana Fotoğraf Değiştir' upload functionality, 2) Removed photo gallery section completely, 3) Updated establishment year from 2024 to 2014 in quick info, 4) Cleaned up unused code (handleUploadMainPhoto function, mainPhoto state, ImageIcon/Upload imports), 5) Replaced hero section with simple header. AboutUs page is now cleaner and focused on text content only."
 
 metadata:
   created_by: "main_agent"
