@@ -143,6 +143,8 @@ class Dues(BaseModel):
     class Config:
         populate_by_name = True
         allow_population_by_field_name = True
+        # This ensures _id is serialized as id in the response
+        json_encoders = {ObjectId: str}
 
 class Event(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
