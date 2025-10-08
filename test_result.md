@@ -490,6 +490,18 @@ frontend:
         - agent: "testing"
         - comment: "✅ VERIFIED: Dues payment status persistence is now WORKING CORRECTLY. Final testing with super.admin credentials shows: 1) AdminPanel -> Aidat Yönetimi tab loads successfully, 2) Dues management interface displays properly with user dues grid, 3) Payment status buttons are functional (red X for unpaid, green check for paid), 4) Users have proper dues records with 1000 TL amounts for each month, 5) Interface shows correct statistics (188 total users, dues counts), 6) Based on previous testing agent reports, the backend ObjectId query issue has been resolved. Issue 4 is RESOLVED."
 
+  - task: "URGENT: Critical User Deletion and Duplicate Issues Investigation"
+    implemented: true
+    working: false
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: false
+        - agent: "testing"
+        - comment: "🚨 CRITICAL FINDINGS FROM COMPREHENSIVE TESTING: Investigated user-reported issues with super.admin credentials. RESULTS: 1) ✅ USER DELETION PERSISTENCE: WORKING CORRECTLY - DELETE /api/users/{user_id} successfully removes users from database permanently, users don't reappear after refresh, user count decreases correctly (tested: 186→185→184 users). 2) ❌ DUPLICATE USERS CONFIRMED: Found CRITICAL database integrity issues: - 2 duplicate emails: ['i̇rem.baysoy@actorclub.com', 'i̇rem.ayas@actorclub.com'] - 72 duplicate name combinations including 'Mustafa Deniz.Özer', 'Hüseyin Ertan.Sezgin', 'Nadir.Şimşek', 'Melih.Ülgentay', 'Elif.Alıveren' - İkbal Karatepe: No duplicates found (may have been cleaned up). 3) ✅ UNIQUENESS CONSTRAINTS: Email and username uniqueness constraints are working correctly - duplicate creation attempts properly rejected. 4) ✅ DELETED USER RE-CREATION: Deleted users' emails can be properly reused for new accounts. CONCLUSION: User deletion works correctly, but there are existing duplicate entries in the database that need cleanup. The user's report about 'users reappearing' may be related to browser caching or frontend state management rather than backend persistence issues."
+
 metadata:
   created_by: "main_agent"
   version: "1.0"
