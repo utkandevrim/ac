@@ -38,7 +38,9 @@ import {
   Clock,
   Upload,
   Camera,
-  Image
+  Image,
+  Gift,
+  Edit3
 } from 'lucide-react';
 import { toast } from 'sonner';
 
