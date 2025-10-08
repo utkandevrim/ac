@@ -98,8 +98,7 @@ const AboutUs = ({ user }) => {
         mission: editMission,
         vision: editVision,
         contact: editContact,
-        photos: editPhotos,
-        mainPhoto: aboutData.mainPhoto
+        photos: editPhotos
       };
 
       await axios.put(`${API}/about`, updatedData, {
