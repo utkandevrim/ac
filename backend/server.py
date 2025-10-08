@@ -748,7 +748,15 @@ async def get_user_dues(user_id: str, current_user: User = Depends(get_current_u
         raise HTTPException(status_code=403, detail="Yetkisiz erişim")
     
     dues = await db.dues.find({"user_id": user_id}).to_list(1000)
-    return [Dues(**due) for due in dues]
+    
+    # Convert MongoDB _id to id for frontend
+    processed_dues = []
+    for due in dues:
+        due['id'] = str(due['_id'])
+        del due['_id']
+        processed_dues.append(Dues(**due))
+    
+    return processed_dues
 
 @api_router.put("/dues/{due_id}/pay")
 async def mark_due_as_paid(due_id: str, current_user: User = Depends(get_admin_user)):
