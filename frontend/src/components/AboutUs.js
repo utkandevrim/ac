@@ -80,6 +80,15 @@ const AboutUs = ({ user }) => {
     }
   };
 
+  const fetchLeadership = async () => {
+    try {
+      const response = await axios.get(`${API}/leadership`);
+      setLeadership(response.data);
+    } catch (error) {
+      console.error('Error fetching leadership:', error);
+    }
+  };
+
   const handleUploadMainPhoto = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
