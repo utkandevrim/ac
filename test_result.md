@@ -480,9 +480,10 @@ metadata:
 
 test_plan:
   current_focus: 
-    - "Fix AdminPanel loading error and test campaign management"
+    - "Critical Issue 4: Dues payment status persistence"
+    - "Critical Issue 3: Login page test accounts section"
   stuck_tasks:
-    - "Fix AdminPanel loading error and test campaign management"
+    - "Critical Issue 4: Dues payment status persistence"
   test_all: false
   test_priority: "high_first"
 
