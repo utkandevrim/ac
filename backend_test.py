@@ -1558,6 +1558,488 @@ class ActorClubAPITester:
                 f"❌ Event photo upload functionality has issues ({successful_steps}/{total_steps} steps successful)"
             )
 
+    def test_user_deletion_and_duplicates(self):
+        """Test critical user deletion and duplicate issues as reported in review request"""
+        print("=== CRITICAL TESTING: User Deletion and Duplicate Issues ===")
+        print("User Reports:")
+        print("1. Super admin deleted users keep reappearing after page refresh")
+        print("2. Duplicate users appearing (İkbal Karatepe mentioned as example)")
+        print("=" * 60)
+        
+        # Use super.admin credentials as specified in review request
+        super_admin_creds = {"username": "super.admin", "password": "AdminActor2024!"}
+        
+        try:
+            response = self.session.post(
+                f"{API_BASE}/auth/login",
+                json=super_admin_creds,
+                headers={"Content-Type": "application/json"}
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                admin_token = data['access_token']
+                self.log_test(
+                    "CRITICAL - Super Admin Login", 
+                    True, 
+                    f"Successfully logged in as {data['user']['name']} {data['user']['surname']}"
+                )
+            else:
+                self.log_test(
+                    "CRITICAL - Super Admin Login", 
+                    False, 
+                    f"Failed to login with super.admin credentials: HTTP {response.status_code}: {response.text}"
+                )
+                return
+                
+        except Exception as e:
+            self.log_test("CRITICAL - Super Admin Login", False, f"Login request failed: {str(e)}")
+            return
+        
+        headers = {
+            "Authorization": f"Bearer {admin_token}",
+            "Content-Type": "application/json"
+        }
+        
+        # TEST 1: Check for duplicate users in database
+        print("\n--- TEST 1: Database Duplicate User Analysis ---")
+        
+        try:
+            response = self.session.get(f"{API_BASE}/users", headers=headers)
+            
+            if response.status_code == 200:
+                users = response.json()
+                total_users = len(users)
+                
+                self.log_test(
+                    "Get All Users", 
+                    True, 
+                    f"Retrieved {total_users} users from database"
+                )
+                
+                # Check for duplicate emails
+                emails = [user.get('email', '') for user in users if user.get('email')]
+                duplicate_emails = []
+                seen_emails = set()
+                
+                for email in emails:
+                    if email in seen_emails:
+                        duplicate_emails.append(email)
+                    else:
+                        seen_emails.add(email)
+                
+                # Check for duplicate usernames
+                usernames = [user.get('username', '') for user in users if user.get('username')]
+                duplicate_usernames = []
+                seen_usernames = set()
+                
+                for username in usernames:
+                    if username in seen_usernames:
+                        duplicate_usernames.append(username)
+                    else:
+                        seen_usernames.add(username)
+                
+                # Check for duplicate names (same first name + surname combination)
+                name_combinations = []
+                duplicate_names = []
+                
+                for user in users:
+                    name_combo = f"{user.get('name', '')}.{user.get('surname', '')}"
+                    if name_combo in name_combinations:
+                        duplicate_names.append(name_combo)
+                    else:
+                        name_combinations.append(name_combo)
+                
+                # Look specifically for İkbal Karatepe duplicates
+                ikbal_users = [user for user in users if 
+                              user.get('name', '').lower() == 'ikbal' and 
+                              user.get('surname', '').lower() == 'karatepe']
+                
+                # Report findings
+                if duplicate_emails:
+                    self.log_test(
+                        "CRITICAL - Duplicate Email Detection", 
+                        False, 
+                        f"❌ Found {len(duplicate_emails)} duplicate emails: {duplicate_emails[:5]}"
+                    )
+                else:
+                    self.log_test(
+                        "CRITICAL - Duplicate Email Detection", 
+                        True, 
+                        "✅ No duplicate emails found"
+                    )
+                
+                if duplicate_usernames:
+                    self.log_test(
+                        "CRITICAL - Duplicate Username Detection", 
+                        False, 
+                        f"❌ Found {len(duplicate_usernames)} duplicate usernames: {duplicate_usernames[:5]}"
+                    )
+                else:
+                    self.log_test(
+                        "CRITICAL - Duplicate Username Detection", 
+                        True, 
+                        "✅ No duplicate usernames found"
+                    )
+                
+                if duplicate_names:
+                    self.log_test(
+                        "CRITICAL - Duplicate Name Combinations", 
+                        False, 
+                        f"❌ Found {len(duplicate_names)} duplicate name combinations: {duplicate_names[:5]}"
+                    )
+                else:
+                    self.log_test(
+                        "CRITICAL - Duplicate Name Combinations", 
+                        True, 
+                        "✅ No duplicate name combinations found"
+                    )
+                
+                # Specific İkbal Karatepe check
+                if len(ikbal_users) > 1:
+                    self.log_test(
+                        "CRITICAL - İkbal Karatepe Duplicates", 
+                        False, 
+                        f"❌ Found {len(ikbal_users)} İkbal Karatepe entries: {[u.get('id') for u in ikbal_users]}"
+                    )
+                    # Print details of duplicate İkbal entries
+                    for i, user in enumerate(ikbal_users):
+                        print(f"   İkbal #{i+1}: ID={user.get('id')}, Email={user.get('email')}, Username={user.get('username')}")
+                elif len(ikbal_users) == 1:
+                    self.log_test(
+                        "CRITICAL - İkbal Karatepe Duplicates", 
+                        True, 
+                        f"✅ Found exactly 1 İkbal Karatepe entry (ID: {ikbal_users[0].get('id')})"
+                    )
+                else:
+                    self.log_test(
+                        "CRITICAL - İkbal Karatepe Check", 
+                        True, 
+                        "No İkbal Karatepe entries found (may have been deleted)"
+                    )
+                
+            else:
+                self.log_test(
+                    "Get All Users", 
+                    False, 
+                    f"Failed to retrieve users: HTTP {response.status_code}: {response.text}"
+                )
+                return
+                
+        except Exception as e:
+            self.log_test("Database Duplicate Analysis", False, f"Request failed: {str(e)}")
+            return
+        
+        # TEST 2: Test user deletion persistence
+        print("\n--- TEST 2: User Deletion Persistence Test ---")
+        
+        # Find a suitable test user to delete (non-admin, not critical)
+        test_user_for_deletion = None
+        
+        for user in users:
+            if (not user.get('is_admin', False) and 
+                user.get('username', '') not in ['test.kullanici', 'test.kullanıcı'] and
+                user.get('name', '').lower() not in ['muzaffer', 'super']):
+                test_user_for_deletion = user
+                break
+        
+        if test_user_for_deletion:
+            user_id = test_user_for_deletion['id']
+            username = test_user_for_deletion.get('username', 'unknown')
+            
+            self.log_test(
+                "Found Test User for Deletion", 
+                True, 
+                f"Using user: {username} (ID: {user_id})"
+            )
+            
+            # Step 1: Verify user exists before deletion
+            try:
+                verify_before = self.session.get(f"{API_BASE}/users/{user_id}", headers=headers)
+                
+                if verify_before.status_code == 200:
+                    self.log_test(
+                        "User Exists Before Deletion", 
+                        True, 
+                        f"User {username} confirmed to exist before deletion"
+                    )
+                else:
+                    self.log_test(
+                        "User Exists Before Deletion", 
+                        False, 
+                        f"User not found before deletion: HTTP {verify_before.status_code}"
+                    )
+                    test_user_for_deletion = None
+                    
+            except Exception as e:
+                self.log_test("Pre-deletion Verification", False, f"Request failed: {str(e)}")
+                test_user_for_deletion = None
+            
+            if test_user_for_deletion:
+                # Step 2: Delete the user
+                try:
+                    delete_response = self.session.delete(f"{API_BASE}/users/{user_id}", headers=headers)
+                    
+                    if delete_response.status_code == 200:
+                        self.log_test(
+                            "CRITICAL - User Deletion API Call", 
+                            True, 
+                            f"DELETE /api/users/{user_id} returned success"
+                        )
+                        
+                        # Step 3: Verify user is actually deleted from database
+                        import time
+                        time.sleep(0.5)  # Small delay for database consistency
+                        
+                        try:
+                            verify_after = self.session.get(f"{API_BASE}/users/{user_id}", headers=headers)
+                            
+                            if verify_after.status_code == 404:
+                                self.log_test(
+                                    "CRITICAL - User Deletion Persistence (Individual GET)", 
+                                    True, 
+                                    f"✅ User {username} successfully deleted - GET /api/users/{user_id} returns 404"
+                                )
+                            else:
+                                self.log_test(
+                                    "CRITICAL - User Deletion Persistence (Individual GET)", 
+                                    False, 
+                                    f"❌ User {username} still exists after deletion - GET returns HTTP {verify_after.status_code}"
+                                )
+                                
+                        except Exception as e:
+                            self.log_test("Post-deletion Individual Verification", False, f"Request failed: {str(e)}")
+                        
+                        # Step 4: Check if user appears in users list (this tests the main issue)
+                        try:
+                            users_list_response = self.session.get(f"{API_BASE}/users", headers=headers)
+                            
+                            if users_list_response.status_code == 200:
+                                updated_users = users_list_response.json()
+                                deleted_user_in_list = next((u for u in updated_users if u['id'] == user_id), None)
+                                
+                                if deleted_user_in_list is None:
+                                    self.log_test(
+                                        "CRITICAL - User Deletion Persistence (Users List)", 
+                                        True, 
+                                        f"✅ User {username} correctly removed from users list"
+                                    )
+                                else:
+                                    self.log_test(
+                                        "CRITICAL - User Deletion Persistence (Users List)", 
+                                        False, 
+                                        f"❌ CRITICAL BUG: User {username} still appears in users list after deletion!"
+                                    )
+                                    
+                                # Check if total user count decreased
+                                new_total = len(updated_users)
+                                if new_total == total_users - 1:
+                                    self.log_test(
+                                        "User Count After Deletion", 
+                                        True, 
+                                        f"User count correctly decreased from {total_users} to {new_total}"
+                                    )
+                                else:
+                                    self.log_test(
+                                        "User Count After Deletion", 
+                                        False, 
+                                        f"User count issue: was {total_users}, now {new_total} (expected {total_users - 1})"
+                                    )
+                                    
+                            else:
+                                self.log_test(
+                                    "Post-deletion Users List Check", 
+                                    False, 
+                                    f"Failed to get users list: HTTP {users_list_response.status_code}"
+                                )
+                                
+                        except Exception as e:
+                            self.log_test("Post-deletion Users List Check", False, f"Request failed: {str(e)}")
+                        
+                    else:
+                        self.log_test(
+                            "CRITICAL - User Deletion API Call", 
+                            False, 
+                            f"DELETE request failed: HTTP {delete_response.status_code}: {delete_response.text}"
+                        )
+                        
+                except Exception as e:
+                    self.log_test("User Deletion API Call", False, f"Delete request failed: {str(e)}")
+        else:
+            self.log_test(
+                "User Deletion Test", 
+                False, 
+                "No suitable test user found for deletion test"
+            )
+        
+        # TEST 3: Test email uniqueness constraints
+        print("\n--- TEST 3: Email Uniqueness Constraint Test ---")
+        
+        try:
+            # Try to create a user with an existing email
+            existing_user = users[0] if users else None
+            
+            if existing_user and existing_user.get('email'):
+                duplicate_email_user = {
+                    "username": "test.duplicate",
+                    "email": existing_user['email'],  # Use existing email
+                    "password": "TestDupe123!",
+                    "name": "Test",
+                    "surname": "Duplicate"
+                }
+                
+                response = self.session.post(
+                    f"{API_BASE}/users",
+                    json=duplicate_email_user,
+                    headers=headers
+                )
+                
+                if response.status_code == 400:
+                    response_text = response.text.lower()
+                    if 'email' in response_text and ('kayıtlı' in response_text or 'exists' in response_text):
+                        self.log_test(
+                            "CRITICAL - Email Uniqueness Constraint", 
+                            True, 
+                            "✅ Email uniqueness constraint working - duplicate email rejected"
+                        )
+                    else:
+                        self.log_test(
+                            "CRITICAL - Email Uniqueness Constraint", 
+                            False, 
+                            f"Wrong error message for duplicate email: {response.text}"
+                        )
+                else:
+                    self.log_test(
+                        "CRITICAL - Email Uniqueness Constraint", 
+                        False, 
+                        f"❌ CRITICAL BUG: Duplicate email allowed! HTTP {response.status_code}: {response.text}"
+                    )
+            else:
+                self.log_test(
+                    "Email Uniqueness Test", 
+                    False, 
+                    "No existing user email found for uniqueness test"
+                )
+                
+        except Exception as e:
+            self.log_test("Email Uniqueness Test", False, f"Request failed: {str(e)}")
+        
+        # TEST 4: Test username uniqueness constraints
+        print("\n--- TEST 4: Username Uniqueness Constraint Test ---")
+        
+        try:
+            # Try to create a user with an existing username
+            existing_user = users[0] if users else None
+            
+            if existing_user and existing_user.get('username'):
+                duplicate_username_user = {
+                    "username": existing_user['username'],  # Use existing username
+                    "email": "test.duplicate.username@actorclub.com",
+                    "password": "TestDupe123!",
+                    "name": "Test",
+                    "surname": "Duplicate Username"
+                }
+                
+                response = self.session.post(
+                    f"{API_BASE}/users",
+                    json=duplicate_username_user,
+                    headers=headers
+                )
+                
+                if response.status_code == 400:
+                    response_text = response.text.lower()
+                    if 'username' in response_text or 'kullanıcı adı' in response_text:
+                        self.log_test(
+                            "CRITICAL - Username Uniqueness Constraint", 
+                            True, 
+                            "✅ Username uniqueness constraint working - duplicate username rejected"
+                        )
+                    else:
+                        self.log_test(
+                            "CRITICAL - Username Uniqueness Constraint", 
+                            False, 
+                            f"Wrong error message for duplicate username: {response.text}"
+                        )
+                else:
+                    self.log_test(
+                        "CRITICAL - Username Uniqueness Constraint", 
+                        False, 
+                        f"❌ CRITICAL BUG: Duplicate username allowed! HTTP {response.status_code}: {response.text}"
+                    )
+            else:
+                self.log_test(
+                    "Username Uniqueness Test", 
+                    False, 
+                    "No existing username found for uniqueness test"
+                )
+                
+        except Exception as e:
+            self.log_test("Username Uniqueness Test", False, f"Request failed: {str(e)}")
+        
+        # TEST 5: Test if deleted users can be re-created with same email
+        print("\n--- TEST 5: Deleted User Re-creation Test ---")
+        
+        if test_user_for_deletion:
+            deleted_user_email = test_user_for_deletion.get('email', '')
+            deleted_user_username = test_user_for_deletion.get('username', '')
+            
+            if deleted_user_email and deleted_user_username:
+                try:
+                    # Try to create a new user with the same email as the deleted user
+                    recreate_user = {
+                        "username": "test.recreated",
+                        "email": deleted_user_email,
+                        "password": "Recreated123!",
+                        "name": "Test",
+                        "surname": "Recreated"
+                    }
+                    
+                    response = self.session.post(
+                        f"{API_BASE}/users",
+                        json=recreate_user,
+                        headers=headers
+                    )
+                    
+                    if response.status_code == 200:
+                        self.log_test(
+                            "CRITICAL - Deleted User Email Re-use", 
+                            True, 
+                            f"✅ Deleted user's email can be reused for new user creation"
+                        )
+                        
+                        # Clean up the recreated user
+                        try:
+                            created_user = response.json()
+                            self.session.delete(f"{API_BASE}/users/{created_user['id']}", headers=headers)
+                        except:
+                            pass
+                            
+                    elif response.status_code == 400 and 'email' in response.text.lower():
+                        self.log_test(
+                            "CRITICAL - Deleted User Email Re-use", 
+                            False, 
+                            f"❌ CRITICAL BUG: Deleted user's email still blocked for reuse: {response.text}"
+                        )
+                    else:
+                        self.log_test(
+                            "CRITICAL - Deleted User Email Re-use", 
+                            False, 
+                            f"Unexpected response: HTTP {response.status_code}: {response.text}"
+                        )
+                        
+                except Exception as e:
+                    self.log_test("Deleted User Re-creation Test", False, f"Request failed: {str(e)}")
+            else:
+                self.log_test(
+                    "Deleted User Re-creation Test", 
+                    False, 
+                    "No deleted user email/username available for re-creation test"
+                )
+        
+        print("\n" + "=" * 60)
+        print("CRITICAL TESTING COMPLETE")
+        print("=" * 60)
+
     def run_all_tests(self):
         """Run all tests"""
         print("🚀 Starting Actor Club Backend API Tests")
