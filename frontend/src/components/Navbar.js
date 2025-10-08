@@ -16,7 +16,8 @@ import {
   LogOut,
   Home,
   Menu,
-  X
+  X,
+  Gift
 } from 'lucide-react';
 
 const Navbar = ({ user, onLogout }) => {
