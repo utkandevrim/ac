@@ -319,6 +319,29 @@ async def initialize_default_data():
             "is_admin": True,
             "is_approved": True,
             "created_at": datetime.now(timezone.utc)
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "username": "super.admin",
+            "email": "super.admin@actorclub.com",
+            "password": hash_password("AdminActor2024!"),
+            "name": "Super",
+            "surname": "Admin",
+            "phone": None,
+            "birth_date": None,
+            "address": None,
+            "workplace": None,
+            "job_title": None,
+            "hobbies": None,
+            "skills": None,
+            "height": None,
+            "weight": None,
+            "profile_photo": None,
+            "projects": [],
+            "board_member": None,
+            "is_admin": True,
+            "is_approved": True,
+            "created_at": datetime.now(timezone.utc)
         }
     ]
     
