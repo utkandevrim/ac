@@ -577,7 +577,14 @@ async def initialize_default_data():
 @api_router.post("/auth/login")
 async def login(user_data: UserLogin):
     user = await db.users.find_one({"username": user_data.username})
-    if not user or not verify_password(user_data.password, user["password"]):
+    if not user:
+        raise HTTPException(status_code=401, detail="Kullanıcı adı veya şifre hatalı")
+    
+    # Check if user has password field
+    if "password" not in user:
+        raise HTTPException(status_code=401, detail="Kullanıcı adı veya şifre hatalı")
+    
+    if not verify_password(user_data.password, user["password"]):
         raise HTTPException(status_code=401, detail="Kullanıcı adı veya şifre hatalı")
     
     if not user["is_approved"]:
