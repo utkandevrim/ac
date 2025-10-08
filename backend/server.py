@@ -848,9 +848,7 @@ async def upload_event_photo(event_id: str, file: UploadFile = File(...), curren
     # Save file
     file_extension = file.filename.split('.')[-1].lower()
     filename = f"event_{event_id}_{uuid.uuid4()}.{file_extension}"
-    file_path = f"uploads/{filename}"
-    
-    os.makedirs("uploads", exist_ok=True)
+    file_path = UPLOAD_DIR / filename
     
     # Save the uploaded file
     with open(file_path, "wb") as buffer:
