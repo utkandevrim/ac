@@ -66,13 +66,38 @@ const Events = ({ user }) => {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.post(`${API}/events`, formData, {
+      
+      // Create event first
+      const eventResponse = await axios.post(`${API}/events`, formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
+      
+      const eventId = eventResponse.data.id;
+      
+      // Upload photos if any selected
+      if (selectedFiles.length > 0) {
+        for (const file of selectedFiles) {
+          const fileFormData = new FormData();
+          fileFormData.append('file', file);
+          
+          try {
+            await axios.post(`${API}/events/${eventId}/upload-photo`, fileFormData, {
+              headers: { 
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data'
+              }
+            });
+          } catch (photoError) {
+            console.warn('Error uploading photo:', photoError);
+            // Continue with other photos even if one fails
+          }
+        }
+      }
       
       toast.success('Etkinlik başarıyla oluşturuldu');
       setShowCreateDialog(false);
       setFormData({ title: '', description: '', date: '', location: '' });
+      setSelectedFiles([]);
       fetchEvents();
     } catch (error) {
       console.error('Error creating event:', error);
