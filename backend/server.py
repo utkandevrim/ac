@@ -921,6 +921,9 @@ async def verify_qr_code(qr_token: str):
     
     if isinstance(expires_at, str):
         expires_at = datetime.fromisoformat(expires_at.replace('Z', '+00:00'))
+    elif isinstance(expires_at, datetime) and expires_at.tzinfo is None:
+        # If datetime is naive, assume it's UTC
+        expires_at = expires_at.replace(tzinfo=timezone.utc)
     
     if current_time > expires_at:
         return {
