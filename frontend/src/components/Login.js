@@ -124,17 +124,6 @@ const Login = ({ onLogin }) => {
               {loading ? 'Giriş yapılıyor...' : 'Giriş Yap'}
             </Button>
           </form>
-
-          <div className="mt-8 pt-6 border-t border-gray-200">
-            <div className="text-center text-sm text-gray-600">
-              <p className="mb-4">Test için hesaplar:</p>
-              <div className="space-y-2 text-xs bg-gray-50 p-4 rounded-lg">
-                <p><strong>Admin:</strong> admin.yonetici / ActorClub2024!</p>
-                <p><strong>Kurucu:</strong> muzaffer.isgoren / Founder123!</p>
-                <p><strong>Test Kullanıcı:</strong> test.kullanici / Test567!</p>
-              </div>
-            </div>
-          </div>
         </Card>
       </div>
     </div>
