@@ -827,6 +827,163 @@ async def update_about(about_data: dict, current_user: User = Depends(get_admin_
     
     return {"message": "About bilgileri güncellendi"}
 
+# Campaign routes
+@api_router.get("/campaigns")
+async def get_campaigns():
+    """Get all active campaigns"""
+    campaigns = await db.campaigns.find({"is_active": True}).to_list(length=None)
+    for campaign in campaigns:
+        campaign.pop('_id', None)
+    return campaigns
+
+@api_router.post("/campaigns")
+async def create_campaign(campaign_data: dict, current_user: User = Depends(get_admin_user)):
+    """Create a new campaign (admin only)"""
+    campaign_data["id"] = str(uuid.uuid4())
+    campaign_data["created_at"] = datetime.now(timezone.utc)
+    await db.campaigns.insert_one(campaign_data)
+    return {"message": "Campaign created successfully", "campaign_id": campaign_data["id"]}
+
+@api_router.put("/campaigns/{campaign_id}")
+async def update_campaign(campaign_id: str, campaign_data: dict, current_user: User = Depends(get_admin_user)):
+    """Update campaign (admin only)"""
+    campaign_data["last_updated"] = datetime.now(timezone.utc)
+    result = await db.campaigns.update_one(
+        {"id": campaign_id},
+        {"$set": campaign_data}
+    )
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Campaign not found")
+    return {"message": "Campaign updated successfully"}
+
+@api_router.delete("/campaigns/{campaign_id}")
+async def delete_campaign(campaign_id: str, current_user: User = Depends(get_admin_user)):
+    """Delete campaign (admin only)"""
+    result = await db.campaigns.update_one(
+        {"id": campaign_id},
+        {"$set": {"is_active": False}}
+    )
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Campaign not found")
+    return {"message": "Campaign deleted successfully"}
+
+@api_router.post("/campaigns/{campaign_id}/generate-qr")
+async def generate_campaign_qr(campaign_id: str, current_user: User = Depends(get_current_user)):
+    """Generate QR code for campaign if user is eligible"""
+    # Check if campaign exists
+    campaign = await db.campaigns.find_one({"id": campaign_id, "is_active": True})
+    if not campaign:
+        raise HTTPException(status_code=404, detail="Campaign not found")
+    
+    # Check if user has paid dues eligibility
+    is_eligible = await check_member_dues_eligibility(current_user.id)
+    if not is_eligible:
+        raise HTTPException(status_code=403, detail="Aidat ödemeleriniz eksik. Kampanyaya katılamıyorsunuz.")
+    
+    # Generate QR token
+    qr_token = generate_qr_token()
+    expires_at = datetime.now(timezone.utc) + timedelta(minutes=15)
+    
+    # Save QR token to database
+    qr_data = {
+        "id": str(uuid.uuid4()),
+        "token": qr_token,
+        "user_id": current_user.id,
+        "campaign_id": campaign_id,
+        "created_at": datetime.now(timezone.utc),
+        "expires_at": expires_at,
+        "is_used": False
+    }
+    await db.qr_tokens.insert_one(qr_data)
+    
+    return {
+        "qr_token": qr_token,
+        "expires_at": expires_at.isoformat(),
+        "campaign_title": campaign.get("title")
+    }
+
+@api_router.get("/verify-qr/{qr_token}")
+async def verify_qr_code(qr_token: str):
+    """Verify QR code and return member eligibility (public endpoint for campaign partners)"""
+    # Find QR token
+    qr_data = await db.qr_tokens.find_one({"token": qr_token})
+    
+    if not qr_data:
+        return {
+            "valid": False,
+            "message": "Kampanya Geçersiz",
+            "reason": "QR kod bulunamadı"
+        }
+    
+    # Check if token has expired
+    current_time = datetime.now(timezone.utc)
+    expires_at = qr_data.get("expires_at")
+    
+    if isinstance(expires_at, str):
+        expires_at = datetime.fromisoformat(expires_at.replace('Z', '+00:00'))
+    
+    if current_time > expires_at:
+        return {
+            "valid": False,
+            "message": "Kampanya Geçersiz",
+            "reason": "QR kod süresi dolmuş"
+        }
+    
+    # Check if already used
+    if qr_data.get("is_used"):
+        return {
+            "valid": False,
+            "message": "Kampanya Geçersiz",
+            "reason": "QR kod daha önce kullanılmış"
+        }
+    
+    # Get user details
+    user = await db.users.find_one({"id": qr_data.get("user_id")})
+    if not user:
+        return {
+            "valid": False,
+            "message": "Kampanya Geçersiz",
+            "reason": "Üye bulunamadı"
+        }
+    
+    # Double-check dues eligibility
+    is_eligible = await check_member_dues_eligibility(user.get("id"))
+    if not is_eligible:
+        return {
+            "valid": False,
+            "message": "Kampanya Geçersiz",
+            "reason": "Aidat ödemeleri eksik"
+        }
+    
+    # Get campaign details
+    campaign = await db.campaigns.find_one({"id": qr_data.get("campaign_id")})
+    
+    # Mark QR as used
+    await db.qr_tokens.update_one(
+        {"token": qr_token},
+        {
+            "$set": {
+                "is_used": True,
+                "used_at": current_time
+            }
+        }
+    )
+    
+    return {
+        "valid": True,
+        "message": "Kampanyaya Katılabilir",
+        "member": {
+            "name": user.get("name"),
+            "surname": user.get("surname"),
+            "photo": user.get("profile_photo"),
+            "username": user.get("username")
+        },
+        "campaign": {
+            "title": campaign.get("title") if campaign else "Kampanya",
+            "company": campaign.get("company_name") if campaign else "Şirket"
+        }
+    }
+
 # File serving endpoint instead of StaticFiles
 @api_router.get("/uploads/{file_name}")
 async def get_uploaded_file(file_name: str):
