@@ -787,6 +787,298 @@ html, body {
   }
 }
 
+/* ===========================================
+   ENHANCED MOBILE OPTIMIZATION
+   ========================================== */
+
+/* Touch-optimized buttons and interactive elements */
+@media (max-width: 768px) {
+  /* Minimum touch target size (44px recommended by Apple/Google) */
+  button, .btn-modern-primary, .btn-modern-secondary, input[type="submit"], 
+  input[type="button"], .touch-target {
+    min-height: 44px !important;
+    min-width: 44px !important;
+    padding: 12px 16px !important;
+    font-size: 16px !important; /* Prevents zoom on iOS */
+  }
+  
+  /* Form inputs optimized for mobile */
+  input, textarea, select {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+    padding: 12px 16px !important;
+    line-height: 1.5 !important;
+    border-radius: 8px !important;
+  }
+  
+  /* Better text sizing for mobile readability */
+  body {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+  }
+  
+  h1, .title-hero {
+    font-size: 2rem !important;
+    line-height: 1.2 !important;
+    font-weight: 700 !important;
+  }
+  
+  h2, .title-section {
+    font-size: 1.75rem !important;
+    line-height: 1.3 !important;
+    font-weight: 600 !important;
+  }
+  
+  h3 {
+    font-size: 1.5rem !important;
+    line-height: 1.4 !important;
+  }
+  
+  /* Mobile navigation improvements */
+  .navbar-modern {
+    padding: 12px 16px !important;
+    min-height: 60px !important;
+  }
+  
+  /* Card improvements for mobile */
+  .modern-card {
+    margin: 0 8px 16px 8px !important;
+    padding: 16px !important;
+    border-radius: 12px !important;
+  }
+  
+  .modern-card-lg {
+    padding: 20px !important;
+  }
+  
+  /* Grid improvements */
+  .grid-modern-2, .grid-modern-3, .grid-modern-4 {
+    gap: 12px !important;
+  }
+  
+  /* Table/list improvements for mobile */
+  .space-y-4 > * + * {
+    margin-top: 12px !important;
+  }
+  
+  .space-y-6 > * + * {
+    margin-top: 16px !important;
+  }
+  
+  /* Modal improvements for mobile */
+  .max-w-md, .max-w-lg, .max-w-xl, .max-w-2xl, .max-w-4xl {
+    max-width: calc(100vw - 32px) !important;
+    margin: 16px !important;
+  }
+  
+  /* Better scroll areas for mobile */
+  .max-h-96 {
+    max-height: 50vh !important;
+  }
+  
+  .overflow-y-auto {
+    -webkit-overflow-scrolling: touch !important;
+  }
+}
+
+/* Extra small mobile devices (320px-375px) */
+@media (max-width: 375px) {
+  .container-modern, .container-narrow {
+    padding: 0 12px !important;
+  }
+  
+  .title-hero {
+    font-size: 1.75rem !important;
+  }
+  
+  .title-section {
+    font-size: 1.5rem !important;
+  }
+  
+  .modern-card {
+    margin: 0 4px 12px 4px !important;
+    padding: 12px !important;
+  }
+  
+  button, .btn-modern-primary, .btn-modern-secondary {
+    font-size: 14px !important;
+    padding: 10px 12px !important;
+  }
+}
+
+/* ===========================================
+   ENHANCED DARK MODE FOR MOBILE
+   ========================================== */
+
+@media (prefers-color-scheme: dark) and (max-width: 768px) {
+  /* Enhanced contrast for mobile dark mode */
+  :root {
+    --text-primary: #ffffff !important;
+    --text-secondary: #e5e7eb !important;
+    --bg-primary: #111827 !important;
+    --bg-secondary: #1f2937 !important;
+    --primary-blue: #60a5fa !important;
+    --border-color: rgba(255, 255, 255, 0.15) !important;
+  }
+  
+  /* Mobile-specific dark mode improvements */
+  body {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+  }
+  
+  /* Card enhancements for mobile dark mode */
+  .modern-card, .card {
+    background-color: var(--bg-primary) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  }
+  
+  /* Form elements with better contrast */
+  input, textarea, select {
+    background-color: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+    border: 2px solid var(--border-color) !important;
+  }
+  
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--primary-blue) !important;
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1) !important;
+  }
+  
+  /* Button improvements for mobile dark mode */
+  .btn-modern-primary {
+    background-color: var(--primary-blue) !important;
+    color: #000000 !important;
+    font-weight: 600 !important;
+  }
+  
+  .btn-modern-secondary {
+    background-color: transparent !important;
+    color: var(--primary-blue) !important;
+    border: 2px solid var(--primary-blue) !important;
+    font-weight: 600 !important;
+  }
+  
+  /* Navigation for mobile dark mode */
+  .navbar-modern {
+    background-color: var(--bg-primary) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+  }
+  
+  /* Text contrast improvements */
+  h1, h2, h3, h4, h5, h6, .title-hero, .title-section {
+    color: var(--text-primary) !important;
+  }
+  
+  p, span, div {
+    color: var(--text-secondary) !important;
+  }
+  
+  .text-gray-900 {
+    color: var(--text-primary) !important;
+  }
+  
+  .text-gray-700, .text-gray-600, .text-gray-500 {
+    color: var(--text-secondary) !important;
+  }
+  
+  /* Link improvements for mobile dark mode */
+  a {
+    color: var(--primary-blue) !important;
+  }
+  
+  a:hover {
+    color: #93c5fd !important;
+  }
+  
+  /* Modal enhancements for mobile dark mode */
+  .fixed.inset-0 {
+    background-color: rgba(0, 0, 0, 0.85) !important;
+  }
+  
+  /* List and table improvements */
+  .bg-gray-50 {
+    background-color: var(--bg-secondary) !important;
+  }
+  
+  .bg-gray-100 {
+    background-color: var(--bg-primary) !important;
+  }
+  
+  .border-gray-200, .border-gray-300 {
+    border-color: var(--border-color) !important;
+  }
+}
+
+/* ===========================================
+   MOBILE ACCESSIBILITY IMPROVEMENTS
+   ========================================== */
+
+@media (max-width: 768px) {
+  /* Focus indicators for mobile */
+  button:focus, input:focus, textarea:focus, select:focus, 
+  .btn-modern-primary:focus, .btn-modern-secondary:focus {
+    outline: 3px solid var(--primary-blue) !important;
+    outline-offset: 2px !important;
+  }
+  
+  /* Improved tap highlighting */
+  button, .btn-modern-primary, .btn-modern-secondary, 
+  input[type="submit"], input[type="button"], a {
+    -webkit-tap-highlight-color: rgba(96, 165, 250, 0.2) !important;
+  }
+  
+  /* Better scroll behavior */
+  html {
+    scroll-behavior: smooth !important;
+  }
+  
+  /* Prevent horizontal scroll */
+  body, html {
+    overflow-x: hidden !important;
+  }
+  
+  /* Safe area handling for mobile devices with notches */
+  .container-modern, .container-narrow {
+    padding-left: max(16px, env(safe-area-inset-left)) !important;
+    padding-right: max(16px, env(safe-area-inset-right)) !important;
+  }
+}
+
+/* ===========================================
+   MOBILE TYPOGRAPHY OPTIMIZATION
+   ========================================== */
+
+@media (max-width: 768px) {
+  /* Optimized font sizes for mobile reading */
+  .subtitle, .subtitle-section {
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+  }
+  
+  .text-sm {
+    font-size: 0.9rem !important;
+  }
+  
+  .text-xs {
+    font-size: 0.8rem !important;
+  }
+  
+  /* Better spacing for mobile reading */
+  p {
+    margin-bottom: 16px !important;
+  }
+  
+  /* Improved list spacing */
+  ul, ol {
+    padding-left: 20px !important;
+  }
+  
+  li {
+    margin-bottom: 8px !important;
+  }
+}
+
 /* Dark theme support */
 @media (prefers-color-scheme: dark) {
   .modern-card {
