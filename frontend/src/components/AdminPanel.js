@@ -328,6 +328,91 @@ const AdminPanel = ({ user }) => {
     }
   };
 
+  // Campaign Management Functions
+  const handleCreateCampaign = async (e) => {
+    e.preventDefault();
+    try {
+      const token = localStorage.getItem('token');
+      await axios.post(`${API}/campaigns`, campaignForm, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      
+      toast.success('Kampanya başarıyla oluşturuldu');
+      setShowCreateCampaignDialog(false);
+      setCampaignForm({
+        title: '',
+        description: '',
+        company_name: '',
+        discount_details: '',
+        terms_conditions: '',
+        image_url: '',
+        expires_at: ''
+      });
+      fetchCampaigns();
+    } catch (error) {
+      console.error('Error creating campaign:', error);
+      toast.error('Kampanya oluşturulurken hata oluştu');
+    }
+  };
+
+  const handleUpdateCampaign = async (e) => {
+    e.preventDefault();
+    try {
+      const token = localStorage.getItem('token');
+      await axios.put(`${API}/campaigns/${editingCampaign.id}`, campaignForm, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      
+      toast.success('Kampanya başarıyla güncellendi');
+      setEditingCampaign(null);
+      setCampaignForm({
+        title: '',
+        description: '',
+        company_name: '',
+        discount_details: '',
+        terms_conditions: '',
+        image_url: '',
+        expires_at: ''
+      });
+      fetchCampaigns();
+    } catch (error) {
+      console.error('Error updating campaign:', error);
+      toast.error('Kampanya güncellenirken hata oluştu');
+    }
+  };
+
+  const handleDeleteCampaign = async (campaignId, campaignTitle) => {
+    if (!window.confirm(`"${campaignTitle}" kampanyasını silmek istediğinizden emin misiniz?`)) {
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem('token');
+      await axios.delete(`${API}/campaigns/${campaignId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      
+      toast.success('Kampanya silindi');
+      fetchCampaigns();
+    } catch (error) {
+      console.error('Error deleting campaign:', error);
+      toast.error('Kampanya silinirken hata oluştu');
+    }
+  };
+
+  const openEditCampaign = (campaign) => {
+    setEditingCampaign(campaign);
+    setCampaignForm({
+      title: campaign.title || '',
+      description: campaign.description || '',
+      company_name: campaign.company_name || '',
+      discount_details: campaign.discount_details || '',
+      terms_conditions: campaign.terms_conditions || '',
+      image_url: campaign.image_url || '',
+      expires_at: campaign.expires_at ? campaign.expires_at.split('T')[0] : ''
+    });
+  };
+
   const handleChangePassword = async (e) => {
     e.preventDefault();
     
