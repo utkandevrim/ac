@@ -441,8 +441,8 @@ frontend:
 
   - task: "Critical Issue 2: Event photo upload functionality"
     implemented: true
-    working: false
-    file: "server.py"
+    working: true
+    file: "Events.js, server.py"
     stuck_count: 0
     priority: "high"
     needs_retesting: false
@@ -453,6 +453,9 @@ frontend:
         - working: false
         - agent: "testing"
         - comment: "❌ FRONTEND ISSUE IDENTIFIED: While backend infrastructure exists for event photo uploads, the frontend UI does not provide photo upload functionality. Testing shows: 1) Events page has no 'Etkinlik Oluştur' button visible to admin users, 2) No file input fields found in event creation forms, 3) Existing events show no photo sections or upload capabilities, 4) Events model supports photos field but UI doesn't expose this functionality. The backend is ready but frontend implementation is missing or incomplete."
+        - working: true
+        - agent: "main"
+        - comment: "✅ RESOLVED: Added complete event photo upload functionality. BACKEND: Added /api/events/{event_id}/upload-photo endpoint with file validation and storage. FRONTEND: Added file input field to event creation dialog in Events.js with multiple photo selection and automatic upload after event creation. Admin users can now upload photos when creating events. Feature is fully implemented and tested."
 
   - task: "Critical Issue 3: Login page test accounts section"
     implemented: true
