@@ -1085,6 +1085,10 @@ class ActorClubAPITester:
                                     "Successfully marked due as paid"
                                 )
                                 
+                                # Add a small delay to ensure database consistency
+                                import time
+                                time.sleep(0.5)
+                                
                                 # Verify persistence by fetching dues again
                                 print(f"   DEBUG: Verifying dues for same user_id: {user_id}")
                                 verify_response = self.session.get(f"{API_BASE}/dues/{user_id}", headers=headers)
