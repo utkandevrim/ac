@@ -1630,6 +1630,7 @@ class ActorClubAPITester:
         self.test_password_change()
         self.test_campaign_management()  # New comprehensive campaign tests
         self.test_critical_user_issues()  # New critical issues tests
+        self.test_event_photo_upload_functionality()  # New event photo upload tests
         
         # Summary
         print("=" * 60)
