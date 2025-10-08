@@ -61,6 +61,7 @@ const AboutUs = ({ user }) => {
 
   useEffect(() => {
     fetchAboutData();
+    fetchLeadership();
   }, []);
 
   const fetchAboutData = async () => {
