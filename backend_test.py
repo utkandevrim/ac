@@ -1049,6 +1049,14 @@ class ActorClubAPITester:
                                     updated_dues = verify_response.json()
                                     updated_due = next((d for d in updated_dues if d['id'] == due_id), None)
                                     
+                                    # Debug information
+                                    print(f"   DEBUG: Looking for due_id: {due_id}")
+                                    print(f"   DEBUG: Found {len(updated_dues)} dues in response")
+                                    if updated_due:
+                                        print(f"   DEBUG: Found due with is_paid: {updated_due.get('is_paid')}")
+                                    else:
+                                        print(f"   DEBUG: Due not found. Available due IDs: {[d.get('id') for d in updated_dues[:3]]}")
+                                    
                                     if updated_due and updated_due.get('is_paid', False):
                                         self.log_test(
                                             "Issue 4 - Dues Payment Status Persistence", 
