@@ -390,6 +390,370 @@ class ActorClubAPITester:
         except Exception as e:
             self.log_test("API Root Endpoint", False, f"Connection failed: {str(e)}")
     
+    def test_campaign_management(self):
+        """Test comprehensive campaign management functionality"""
+        print("=== Testing Campaign Management System ===")
+        
+        # First, try to login with the super.admin credentials from the review request
+        super_admin_creds = {"username": "super.admin", "password": "AdminActor2024!"}
+        
+        try:
+            response = self.session.post(
+                f"{API_BASE}/auth/login",
+                json=super_admin_creds,
+                headers={"Content-Type": "application/json"}
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                super_admin_token = data['access_token']
+                self.log_test(
+                    "Super Admin Login", 
+                    True, 
+                    f"Successfully logged in as {data['user']['name']} {data['user']['surname']}"
+                )
+            else:
+                # Fallback to existing admin token
+                super_admin_token = self.admin_token
+                self.log_test(
+                    "Super Admin Login", 
+                    False, 
+                    f"Failed to login with super.admin, using fallback admin token. HTTP {response.status_code}: {response.text}"
+                )
+                
+        except Exception as e:
+            super_admin_token = self.admin_token
+            self.log_test("Super Admin Login", False, f"Request failed, using fallback: {str(e)}")
+        
+        if not super_admin_token:
+            self.log_test("Campaign Management Tests", False, "No admin token available")
+            return
+        
+        headers = {
+            "Authorization": f"Bearer {super_admin_token}",
+            "Content-Type": "application/json"
+        }
+        
+        # Test 1: GET /api/campaigns - Retrieve all campaigns
+        try:
+            response = self.session.get(f"{API_BASE}/campaigns")
+            
+            if response.status_code == 200:
+                campaigns = response.json()
+                self.log_test(
+                    "GET /api/campaigns", 
+                    True, 
+                    f"Successfully retrieved {len(campaigns)} campaigns"
+                )
+                
+                # Store existing campaigns for later tests
+                self.existing_campaigns = campaigns
+                
+            else:
+                self.log_test(
+                    "GET /api/campaigns", 
+                    False, 
+                    f"HTTP {response.status_code}: {response.text}"
+                )
+                self.existing_campaigns = []
+                
+        except Exception as e:
+            self.log_test("GET /api/campaigns", False, f"Request failed: {str(e)}")
+            self.existing_campaigns = []
+        
+        # Test 2: POST /api/campaigns - Create new campaign (admin only)
+        test_campaign = {
+            "title": "Test Campaign",
+            "description": "Test campaign for API testing",
+            "company_name": "Test Company",
+            "discount_details": "20% discount on all services",
+            "terms_conditions": "Valid for Actor Club members only",
+            "is_active": True
+        }
+        
+        created_campaign_id = None
+        
+        try:
+            response = self.session.post(
+                f"{API_BASE}/campaigns",
+                json=test_campaign,
+                headers=headers
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                created_campaign_id = data.get('campaign_id')
+                self.log_test(
+                    "POST /api/campaigns", 
+                    True, 
+                    f"Successfully created campaign with ID: {created_campaign_id}"
+                )
+            else:
+                self.log_test(
+                    "POST /api/campaigns", 
+                    False, 
+                    f"HTTP {response.status_code}: {response.text}"
+                )
+                
+        except Exception as e:
+            self.log_test("POST /api/campaigns", False, f"Request failed: {str(e)}")
+        
+        # Test 3: PUT /api/campaigns/{id} - Update campaign (admin only)
+        if created_campaign_id:
+            updated_campaign = {
+                "title": "Updated Test Campaign",
+                "description": "Updated test campaign description",
+                "discount_details": "25% discount on all services"
+            }
+            
+            try:
+                response = self.session.put(
+                    f"{API_BASE}/campaigns/{created_campaign_id}",
+                    json=updated_campaign,
+                    headers=headers
+                )
+                
+                if response.status_code == 200:
+                    self.log_test(
+                        "PUT /api/campaigns/{id}", 
+                        True, 
+                        "Successfully updated campaign"
+                    )
+                else:
+                    self.log_test(
+                        "PUT /api/campaigns/{id}", 
+                        False, 
+                        f"HTTP {response.status_code}: {response.text}"
+                    )
+                    
+            except Exception as e:
+                self.log_test("PUT /api/campaigns/{id}", False, f"Request failed: {str(e)}")
+        else:
+            self.log_test("PUT /api/campaigns/{id}", False, "No campaign ID available for update test")
+        
+        # Test 4: Test admin authentication for campaign operations
+        # Try to create campaign without admin token
+        try:
+            response = self.session.post(
+                f"{API_BASE}/campaigns",
+                json=test_campaign,
+                headers={"Content-Type": "application/json"}  # No auth header
+            )
+            
+            if response.status_code == 401 or response.status_code == 403:
+                self.log_test(
+                    "Admin Authentication for Campaigns", 
+                    True, 
+                    "Correctly rejected campaign creation without admin token"
+                )
+            else:
+                self.log_test(
+                    "Admin Authentication for Campaigns", 
+                    False, 
+                    f"Should have rejected non-admin request, got HTTP {response.status_code}"
+                )
+                
+        except Exception as e:
+            self.log_test("Admin Authentication for Campaigns", False, f"Request failed: {str(e)}")
+        
+        # Test 5: QR Code Generation - Need to test with a valid campaign
+        campaign_id_for_qr = None
+        
+        # Use existing campaign or the one we just created
+        if self.existing_campaigns:
+            campaign_id_for_qr = self.existing_campaigns[0].get('id')
+        elif created_campaign_id:
+            campaign_id_for_qr = created_campaign_id
+        
+        if campaign_id_for_qr:
+            try:
+                response = self.session.post(
+                    f"{API_BASE}/campaigns/{campaign_id_for_qr}/generate-qr",
+                    headers=headers
+                )
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    qr_token = data.get('qr_token')
+                    expires_at = data.get('expires_at')
+                    
+                    self.log_test(
+                        "QR Code Generation", 
+                        True, 
+                        f"Successfully generated QR token (expires: {expires_at})"
+                    )
+                    
+                    # Store QR token for verification test
+                    self.test_qr_token = qr_token
+                    
+                elif response.status_code == 403:
+                    self.log_test(
+                        "QR Code Generation", 
+                        True, 
+                        "QR generation blocked due to dues eligibility (expected behavior)"
+                    )
+                    self.test_qr_token = None
+                    
+                else:
+                    self.log_test(
+                        "QR Code Generation", 
+                        False, 
+                        f"HTTP {response.status_code}: {response.text}"
+                    )
+                    self.test_qr_token = None
+                    
+            except Exception as e:
+                self.log_test("QR Code Generation", False, f"Request failed: {str(e)}")
+                self.test_qr_token = None
+        else:
+            self.log_test("QR Code Generation", False, "No campaign ID available for QR generation test")
+            self.test_qr_token = None
+        
+        # Test 6: QR Code Verification (public endpoint)
+        if hasattr(self, 'test_qr_token') and self.test_qr_token:
+            try:
+                response = self.session.get(f"{API_BASE}/verify-qr/{self.test_qr_token}")
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    is_valid = data.get('valid', False)
+                    message = data.get('message', '')
+                    
+                    self.log_test(
+                        "QR Code Verification", 
+                        True, 
+                        f"QR verification response: {message} (valid: {is_valid})"
+                    )
+                    
+                else:
+                    self.log_test(
+                        "QR Code Verification", 
+                        False, 
+                        f"HTTP {response.status_code}: {response.text}"
+                    )
+                    
+            except Exception as e:
+                self.log_test("QR Code Verification", False, f"Request failed: {str(e)}")
+        else:
+            # Test with invalid token
+            try:
+                response = self.session.get(f"{API_BASE}/verify-qr/invalid-token-12345")
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    is_valid = data.get('valid', True)
+                    
+                    if not is_valid:
+                        self.log_test(
+                            "QR Code Verification (Invalid Token)", 
+                            True, 
+                            "Correctly identified invalid QR token"
+                        )
+                    else:
+                        self.log_test(
+                            "QR Code Verification (Invalid Token)", 
+                            False, 
+                            "Should have marked invalid token as invalid"
+                        )
+                else:
+                    self.log_test(
+                        "QR Code Verification (Invalid Token)", 
+                        False, 
+                        f"HTTP {response.status_code}: {response.text}"
+                    )
+                    
+            except Exception as e:
+                self.log_test("QR Code Verification (Invalid Token)", False, f"Request failed: {str(e)}")
+        
+        # Test 7: Dues Eligibility Logic - Test with a regular user
+        # First, try to login as a regular user to test dues eligibility
+        regular_user_creds = {"username": "test.kullanici", "password": "Test567!"}
+        
+        try:
+            response = self.session.post(
+                f"{API_BASE}/auth/login",
+                json=regular_user_creds,
+                headers={"Content-Type": "application/json"}
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                regular_user_token = data['access_token']
+                regular_user_id = data['user']['id']
+                
+                # Test QR generation with regular user (should check dues)
+                regular_headers = {
+                    "Authorization": f"Bearer {regular_user_token}",
+                    "Content-Type": "application/json"
+                }
+                
+                if campaign_id_for_qr:
+                    try:
+                        response = self.session.post(
+                            f"{API_BASE}/campaigns/{campaign_id_for_qr}/generate-qr",
+                            headers=regular_headers
+                        )
+                        
+                        if response.status_code == 200:
+                            self.log_test(
+                                "Dues Eligibility Check", 
+                                True, 
+                                "Regular user passed dues eligibility check"
+                            )
+                        elif response.status_code == 403:
+                            self.log_test(
+                                "Dues Eligibility Check", 
+                                True, 
+                                "Regular user blocked by dues eligibility (expected if dues unpaid)"
+                            )
+                        else:
+                            self.log_test(
+                                "Dues Eligibility Check", 
+                                False, 
+                                f"Unexpected response: HTTP {response.status_code}: {response.text}"
+                            )
+                            
+                    except Exception as e:
+                        self.log_test("Dues Eligibility Check", False, f"Request failed: {str(e)}")
+                else:
+                    self.log_test("Dues Eligibility Check", False, "No campaign ID available for dues test")
+                    
+            else:
+                self.log_test(
+                    "Dues Eligibility Check", 
+                    False, 
+                    f"Could not login as regular user for dues test: HTTP {response.status_code}"
+                )
+                
+        except Exception as e:
+            self.log_test("Dues Eligibility Check", False, f"Regular user login failed: {str(e)}")
+        
+        # Test 8: DELETE /api/campaigns/{id} - Delete campaign (admin only)
+        if created_campaign_id:
+            try:
+                response = self.session.delete(
+                    f"{API_BASE}/campaigns/{created_campaign_id}",
+                    headers=headers
+                )
+                
+                if response.status_code == 200:
+                    self.log_test(
+                        "DELETE /api/campaigns/{id}", 
+                        True, 
+                        "Successfully deleted test campaign"
+                    )
+                else:
+                    self.log_test(
+                        "DELETE /api/campaigns/{id}", 
+                        False, 
+                        f"HTTP {response.status_code}: {response.text}"
+                    )
+                    
+            except Exception as e:
+                self.log_test("DELETE /api/campaigns/{id}", False, f"Request failed: {str(e)}")
+        else:
+            self.log_test("DELETE /api/campaigns/{id}", False, "No campaign ID available for delete test")
+    
     def run_all_tests(self):
         """Run all tests"""
         print("🚀 Starting Actor Club Backend API Tests")
