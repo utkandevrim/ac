@@ -390,7 +390,7 @@ metadata:
 
 test_plan:
   current_focus: 
-    - "Update About Us page management section to show only board members"
+    - "Enhanced mobile optimization and dark mode improvements"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
