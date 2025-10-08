@@ -10,12 +10,10 @@ import {
   Edit3,
   Save,
   X,
-  ImageIcon,
   Plus,
   Users,
   Award,
   Star,
-  Upload,
   Trash2
 } from 'lucide-react';
 import {
