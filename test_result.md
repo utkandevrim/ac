@@ -443,6 +443,8 @@ agent_communication:
     - message: "Starting implementation to fix authentication system and add new members. Need to update backend login logic and frontend form."
     - agent: "testing"
     - message: "✅ BACKEND TESTING COMPLETE: All authentication and user management features are working correctly. Successfully tested username-based login, password policies, user creation, and verified 216 members across 4 teams. Fixed database issues with missing username fields. All 14 test cases passed (100% success rate). Backend API is fully functional and ready for production use."
+    - agent: "testing"
+    - message: "🔍 CRITICAL ISSUES TESTING COMPLETE: Tested 4 user-reported critical issues with super.admin credentials. FINDINGS: 1) ✅ User deletion persistence WORKING - users are permanently deleted from database, 2) ✅ Event photo upload functionality EXISTS - events have photos field and upload endpoint available, 3) ⚠️ Login page test accounts is FRONTEND issue - backend testing not applicable, 4) ❌ CRITICAL BUG FOUND: Dues payment status NOT persisting - MongoDB update returns matched:0, modified:0, indicating database query issue with due IDs. This is a serious backend bug affecting dues payment functionality."
     - agent: "main"
     - message: "Updated HomePage.js to remove membership application buttons and corrected founder information as requested by user. Changes: Removed 'Üyelik Başvurusu' and 'Daha Fazla Bilgi' buttons, updated founder name to 'Muzaffer Çağlar İşgören' and title to 'Kurucu-Onursal Başkan'. Ready for frontend testing."
     - agent: "testing"
