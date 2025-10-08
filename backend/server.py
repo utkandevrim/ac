@@ -746,22 +746,15 @@ async def mark_due_as_paid(due_id: str, current_user: User = Depends(get_admin_u
 
 @api_router.put("/dues/{due_id}/unpay")
 async def mark_due_as_unpaid(due_id: str, current_user: User = Depends(get_admin_user)):
-    from bson import ObjectId
+    # Use UUID-based id field (not ObjectId _id)
+    result = await db.dues.update_one(
+        {"id": due_id},  # Use 'id' field with UUID string
+        {"$set": {"is_paid": False, "payment_date": None}}
+    )
+    print(f"DEBUG: Dues unpay update result - matched: {result.matched_count}, modified: {result.modified_count}")
     
-    try:
-        object_id = ObjectId(due_id)
-        result = await db.dues.update_one(
-            {"_id": object_id},
-            {"$set": {"is_paid": False, "payment_date": None}}
-        )
-        print(f"DEBUG: Dues unpay update result - matched: {result.matched_count}, modified: {result.modified_count}")
-        
-        if result.matched_count == 0:
-            raise HTTPException(status_code=404, detail="Aidat bulunamadı")
-            
-    except Exception as e:
-        print(f"DEBUG: Error in dues unpay: {e}")
-        raise HTTPException(status_code=400, detail="Geçersiz aidat ID")
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Aidat bulunamadı")
         
     return {"message": "Aidat ödenmedi olarak işaretlendi"}
 
