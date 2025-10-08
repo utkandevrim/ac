@@ -430,7 +430,8 @@ metadata:
 test_plan:
   current_focus: 
     - "Fix AdminPanel loading error and test campaign management"
-  stuck_tasks: []
+  stuck_tasks:
+    - "Fix AdminPanel loading error and test campaign management"
   test_all: false
   test_priority: "high_first"
 
