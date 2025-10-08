@@ -207,37 +207,31 @@ const HomePage = () => {
         </div>
       )}
 
-      {/* Modern Navigation */}
-      <nav className="modern-nav">
-        <div className="container-modern">
-          <div className="flex items-center justify-between py-4">
-            {/* Logo */}
-            <div className="flex items-center">
-              <img 
-                src="https://customer-assets.emergentagent.com/job_actorclub/artifacts/4gypiwpr_ac%20logo.png" 
-                alt="Actor Club Logo" 
-                className="h-10 w-auto"
-              />
-              <span className="ml-3 text-xl font-bold text-gray-900">Actor Club</span>
+      {/* Modern Navigation - Mobile Optimized */}
+      <nav className="navbar-modern sticky top-0 z-30 backdrop-blur-sm">
+        <div className="container-modern flex items-center justify-between py-3">
+          <div className="flex items-center">
+            <img 
+              src="https://customer-assets.emergentagent.com/job_actorclub/artifacts/4gypiwpr_ac%20logo.png" 
+              alt="Actor Club Logo" 
+              className="h-8 sm:h-10 w-auto mr-2 sm:mr-3"
+            />
+            <div>
+              <h1 className="text-lg sm:text-xl font-bold text-gray-900">Actor Club</h1>
+              <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">Üye Portalı</p>
             </div>
-            
-            {/* Navigation Links */}
-            <div className="hidden md:flex items-center space-x-2">
-              <a href="/" className="nav-link active">Ana Sayfa</a>
-              <a href="/members" className="nav-link">Üyelerimiz</a>
-              <a href="/events" className="nav-link">Etkinlikler</a>
-              <a href="/about" className="nav-link">Biz Kimiz</a>
-            </div>
-            
+          </div>
+          
+          <div className="flex items-center">
             {/* Login Button / User Info */}
             {user ? (
-              <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3">
-                <span className="text-gray-700 font-medium text-center sm:text-left text-sm sm:text-base">
+              <div className="flex flex-col sm:flex-row items-end sm:items-center gap-1 sm:gap-3">
+                <span className="text-gray-700 font-medium text-xs sm:text-base text-right">
                   {user.name} {user.surname}
                 </span>
                 <button 
                   onClick={() => navigate('/dashboard')}
-                  className="btn-modern-secondary text-sm sm:text-base px-3 py-2 sm:px-4 sm:py-2"
+                  className="btn-modern-secondary text-xs sm:text-base px-3 py-2 whitespace-nowrap touch-target"
                 >
                   Dashboard
                 </button>
@@ -245,7 +239,7 @@ const HomePage = () => {
             ) : (
               <button 
                 onClick={() => navigate('/login')}
-                className="btn-modern-primary text-sm sm:text-base px-4 py-2 sm:px-6 sm:py-3"
+                className="btn-modern-primary text-sm sm:text-base px-4 py-3 touch-target"
                 data-testid="member-login-btn"
               >
                 Üye Girişi
