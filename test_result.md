@@ -385,6 +385,18 @@ frontend:
         - agent: "testing"
         - comment: "✅ COMPREHENSIVE MOBILE & DARK MODE TESTING COMPLETE: Conducted extensive testing across all requested requirements and confirmed EXCELLENT mobile optimization. Key findings: 1) MOBILE RESPONSIVE DESIGN: Perfect sticky navigation with backdrop blur, responsive typography scaling (clamp functions working), no horizontal scrolling on any viewport (320px-768px), responsive grid layouts adapt correctly, mobile-safe containers implemented. 2) DARK MODE MOBILE: Excellent contrast ratios achieved (#ffffff text on #111827 backgrounds), form elements properly themed with visible borders, button visibility and contrast perfect, modal overlays work flawlessly in dark mode, focus indicators clearly visible. 3) TOUCH INTERACTIONS: All interactive elements meet 44px minimum touch targets, form inputs use 16px font-size preventing iOS zoom, tap highlighting works correctly, smooth scroll behavior implemented. 4) CROSS-DEVICE COMPATIBILITY: Tested iPhone SE (375x667), small mobile (320px), iPhone Pro (414px), and tablet (768px) - all display perfectly responsive with no layout breaking. 5) ACCESSIBILITY: Focus management works with keyboard navigation, touch interactions don't interfere with accessibility, proper tap highlighting implemented. 6) COMPONENT-SPECIFIC: HomePage displays beautifully with side-by-side founder cards on mobile, Login page optimized with touch-friendly form elements, navigation stacks appropriately. The mobile experience is now professional-grade with excellent readability and usability in both light and dark modes. All 24 comprehensive testing requirements have been met successfully."
 
+  - task: "Implement Campaigns page with QR code discount system"
+    implemented: false
+    working: false
+    file: "server.py, new components"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: false
+        - agent: "main"
+        - comment: "User requests comprehensive campaign system: 1) New 'Kampanyalar' page with member discount details, 2) Due payment verification system (current month excluded, all previous months must be paid), 3) QR code generation for eligible members with 15-minute validity, 4) QR verification page for campaign partners showing member photo/name or 'invalid campaign', 5) Backend endpoints for campaign management, QR token system, and due verification logic."
+
 metadata:
   created_by: "main_agent"
   version: "1.0"
