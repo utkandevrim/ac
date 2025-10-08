@@ -461,27 +461,6 @@ const EventCard = ({ event, isUpcoming, isAdmin, onDelete }) => {
           {event.description}
         </p>
 
-        {/* Photos Section */}
-        {event.photos && event.photos.length > 0 && (
-          <div className="mb-4">
-            <p className="text-sm font-medium text-gray-700 mb-2">Fotoğraflar:</p>
-            <div className="grid grid-cols-3 gap-2">
-              {event.photos.slice(0, 3).map((photo, index) => (
-                <div key={index} className="aspect-square bg-gray-200 rounded-lg overflow-hidden">
-                  <img 
-                    src={photo} 
-                    alt={`Event photo ${index + 1}`}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-            {event.photos.length > 3 && (
-              <p className="text-xs text-gray-500 mt-1">+{event.photos.length - 3} fotoğraf daha</p>
-            )}
-          </div>
-        )}
-
         {/* Footer */}
         <div className="flex items-center justify-between pt-4 border-t border-gray-200">
           <span className="text-xs text-gray-500" data-testid={`event-created-${event.id}`}>
