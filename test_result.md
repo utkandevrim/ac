@@ -374,7 +374,8 @@ metadata:
   run_ui: false
 
 test_plan:
-  current_focus: []
+  current_focus: 
+    - "Update About Us page management section to show only board members"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
