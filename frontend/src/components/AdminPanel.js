@@ -129,6 +129,16 @@ const AdminPanel = ({ user }) => {
     }
   };
 
+  const fetchCampaigns = async () => {
+    try {
+      const response = await axios.get(`${API}/campaigns`);
+      setCampaigns(response.data);
+    } catch (error) {
+      console.error('Error fetching campaigns:', error);
+      toast.error('Kampanyalar yüklenirken hata oluştu');
+    }
+  };
+
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem('token');
