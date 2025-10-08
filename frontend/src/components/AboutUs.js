@@ -88,47 +88,7 @@ const AboutUs = ({ user }) => {
     }
   };
 
-  const handleUploadMainPhoto = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    if (!file.type.startsWith('image/')) {
-      toast.error('Lütfen sadece resim dosyası seçin');
-      return;
-    }
-
-    const maxSize = 5 * 1024 * 1024; // 5MB
-    if (file.size > maxSize) {
-      toast.error('Dosya boyutu 5MB\'den küçük olmalıdır');
-      return;
-    }
-
-    setUploadingPhoto(true);
-    try {
-      const token = localStorage.getItem('token');
-      const formData = new FormData();
-      formData.append('file', file);
-
-      const uploadResponse = await axios.post(`${API}/upload`, formData, {
-        headers: { 
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-
-      const photoUrl = uploadResponse.data.file_url;
-      
-      // Update aboutData immediately
-      setAboutData(prev => ({ ...prev, mainPhoto: photoUrl }));
-      
-      toast.success('Ana fotoğraf başarıyla yüklendi');
-    } catch (error) {
-      console.error('Error uploading photo:', error);
-      toast.error('Fotoğraf yüklenirken hata oluştu');
-    } finally {
-      setUploadingPhoto(false);
-    }
-  };
+  // Main photo upload functionality removed as requested
 
   const handleSave = async () => {
     try {
