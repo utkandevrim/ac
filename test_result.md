@@ -367,6 +367,18 @@ frontend:
         - agent: "main"
         - comment: "ADDITIONAL ABOUT US PAGE UPDATES: User requested further modifications: 1) Removed hero section with background photo and 'Ana Fotoğraf Değiştir' upload functionality, 2) Removed photo gallery section completely, 3) Updated establishment year from 2024 to 2014 in quick info, 4) Cleaned up unused code (handleUploadMainPhoto function, mainPhoto state, ImageIcon/Upload imports), 5) Replaced hero section with simple header. AboutUs page is now cleaner and focused on text content only."
 
+  - task: "Enhanced mobile optimization and dark mode improvements"
+    implemented: false
+    working: false
+    file: "App.css, all components"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: false
+        - agent: "main"
+        - comment: "User requests much better mobile experience and improved dark mode readability for mobile users. Need to implement comprehensive mobile-first design, better touch interfaces, improved typography for small screens, and enhanced dark mode contrast specifically for mobile devices."
+
 metadata:
   created_by: "main_agent"
   version: "1.0"
