@@ -125,11 +125,11 @@ const QRVerification = () => {
             </div>
 
             {/* Success Message */}
-            <div className="bg-green-50 border border-green-200 p-4 rounded-lg">
-              <p className="text-green-800 font-semibold text-center">
-                ✅ Bu üye kampanyadan yararlanabilir
+            <div className="bg-gradient-to-r from-green-400 to-emerald-500 text-white p-6 rounded-xl shadow-lg border-4 border-green-300">
+              <p className="text-xl font-black text-center mb-2">
+                🎉 KAMPANYAYA KATILABİLİR 🎉
               </p>
-              <p className="text-green-700 text-sm text-center mt-1">
+              <p className="text-green-100 font-semibold text-center">
                 Aidat ödemeleri güncel ve şartları sağlıyor
               </p>
             </div>
