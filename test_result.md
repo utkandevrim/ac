@@ -502,6 +502,21 @@ frontend:
         - agent: "testing"
         - comment: "🚨 CRITICAL FINDINGS FROM COMPREHENSIVE TESTING: Investigated user-reported issues with super.admin credentials. RESULTS: 1) ✅ USER DELETION PERSISTENCE: WORKING CORRECTLY - DELETE /api/users/{user_id} successfully removes users from database permanently, users don't reappear after refresh, user count decreases correctly (tested: 186→185→184 users). 2) ❌ DUPLICATE USERS CONFIRMED: Found CRITICAL database integrity issues: - 2 duplicate emails: ['i̇rem.baysoy@actorclub.com', 'i̇rem.ayas@actorclub.com'] - 72 duplicate name combinations including 'Mustafa Deniz.Özer', 'Hüseyin Ertan.Sezgin', 'Nadir.Şimşek', 'Melih.Ülgentay', 'Elif.Alıveren' - İkbal Karatepe: No duplicates found (may have been cleaned up). 3) ✅ UNIQUENESS CONSTRAINTS: Email and username uniqueness constraints are working correctly - duplicate creation attempts properly rejected. 4) ✅ DELETED USER RE-CREATION: Deleted users' emails can be properly reused for new accounts. CONCLUSION: User deletion works correctly, but there are existing duplicate entries in the database that need cleanup. The user's report about 'users reappearing' may be related to browser caching or frontend state management rather than backend persistence issues."
 
+  - task: "URGENT: Fix QR Code Verification Issue for Eligible Users"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: false
+        - agent: "testing"
+        - comment: "❌ CRITICAL BUG IDENTIFIED: User-reported issue 'kullanıcı tüm aidatlarını ödemiş olsa bile kampanya QR kodu okuttuğunda kampanya geçersiz yazıp hata veriyor' confirmed. Root cause found in check_member_dues_eligibility() function - comparing string month names ('Ekim') with integer month numbers (10), causing current month exclusion logic to fail. All months including current month were being checked, making eligible users appear ineligible."
+        - working: true
+        - agent: "testing"
+        - comment: "✅ BUG FIXED: Implemented proper Turkish month name mapping in check_member_dues_eligibility() function. Added month_names dictionary to convert current month number to Turkish name for correct comparison. Fixed line 255 comparison from (due_month == current_month) to (due_month == current_month_name). Comprehensive testing confirms fix works - users with paid eligible dues can now successfully generate and verify QR codes. QR generation returns HTTP 200, verification returns 'Kampanyaya Katılabilir' with member details. Critical QR verification issue completely resolved."
+
 metadata:
   created_by: "main_agent"
   version: "1.0"
