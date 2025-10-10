@@ -252,7 +252,7 @@ async def check_member_dues_eligibility(user_id: str) -> bool:
         }
         current_month_name = month_names.get(current_month_num)
         
-        # Check if all previous months are paid
+        # Check if all PAST months are paid (not future months)
         for due in dues:
             due_month = due.get('month')
             due_year = due.get('year')
@@ -261,8 +261,24 @@ async def check_member_dues_eligibility(user_id: str) -> bool:
             # Skip current month (compare month names correctly)
             if due_year == current_year and due_month == current_month_name:
                 continue
+            
+            # Skip future months (only check past months)
+            if due_year > current_year:
+                continue
+            
+            if due_year == current_year:
+                # Get month number for comparison
+                month_num = None
+                for num, name in month_names.items():
+                    if name == due_month:
+                        month_num = num
+                        break
                 
-            # If any previous month is unpaid, not eligible
+                # Skip future months in current year
+                if month_num and month_num > current_month_num:
+                    continue
+                    
+            # If any PAST month is unpaid, not eligible
             if not is_paid:
                 return False
                 
