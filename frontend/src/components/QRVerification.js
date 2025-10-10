@@ -53,8 +53,8 @@ const QRVerification = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <Card className="card p-8 max-w-md w-full">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 flex items-center justify-center p-4">
+      <Card className="card p-8 max-w-2xl w-full shadow-2xl border-2 border-green-200">
         {verification?.valid ? (
           // Valid Campaign
           <div className="text-center space-y-6">
