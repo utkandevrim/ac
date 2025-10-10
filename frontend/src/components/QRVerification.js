@@ -59,8 +59,8 @@ const QRVerification = () => {
           // Valid Campaign
           <div className="text-center space-y-6">
             <div className="flex justify-center">
-              <div className="bg-green-100 rounded-full p-4">
-                <CheckCircle className="h-12 w-12 text-green-600" />
+              <div className="bg-green-100 rounded-full p-6 shadow-lg border-4 border-green-300">
+                <CheckCircle className="h-20 w-20 text-green-600 animate-pulse" />
               </div>
             </div>
 
