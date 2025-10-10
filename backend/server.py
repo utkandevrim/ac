@@ -1086,13 +1086,8 @@ async def verify_qr_code(qr_token: str):
             "reason": "QR kod süresi dolmuş"
         }
     
-    # Check if already used
-    if qr_data.get("is_used"):
-        return {
-            "valid": False,
-            "message": "Kampanya Geçersiz",
-            "reason": "QR kod daha önce kullanılmış"
-        }
+    # QR codes can be verified multiple times within the 15-minute window
+    # No need to mark as "used" since expiry time provides the control
     
     # Get user details
     user = await db.users.find_one({"id": qr_data.get("user_id")})
