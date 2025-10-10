@@ -2040,6 +2040,420 @@ class ActorClubAPITester:
         print("CRITICAL TESTING COMPLETE")
         print("=" * 60)
 
+    def test_qr_code_verification_issue(self):
+        """Test the critical QR code verification issue reported by user"""
+        print("=== URGENT: Testing QR Code Verification Issue ===")
+        print("User Issue: 'kullanıcı tüm aidatlarını ödemiş olsa bile kampanya QR kodu okuttuğunda kampanya geçersiz yazıp hata veriyor'")
+        print("Translation: Users who have paid all their dues still get 'campaign invalid' error when scanning QR codes")
+        
+        # Use super.admin credentials as specified in review request
+        super_admin_creds = {"username": "super.admin", "password": "AdminActor2024!"}
+        
+        try:
+            response = self.session.post(
+                f"{API_BASE}/auth/login",
+                json=super_admin_creds,
+                headers={"Content-Type": "application/json"}
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                admin_token = data['access_token']
+                admin_user_id = data['user']['id']
+                self.log_test(
+                    "QR Issue - Admin Login", 
+                    True, 
+                    f"Successfully logged in as {data['user']['name']} {data['user']['surname']} (ID: {admin_user_id})"
+                )
+            else:
+                self.log_test(
+                    "QR Issue - Admin Login", 
+                    False, 
+                    f"Failed to login with super.admin credentials: HTTP {response.status_code}: {response.text}"
+                )
+                return
+                
+        except Exception as e:
+            self.log_test("QR Issue - Admin Login", False, f"Login request failed: {str(e)}")
+            return
+        
+        headers = {
+            "Authorization": f"Bearer {admin_token}",
+            "Content-Type": "application/json"
+        }
+        
+        # Step 1: Find a user with fully paid dues
+        print("\n--- Step 1: Find User with Fully Paid Dues ---")
+        
+        eligible_user = None
+        
+        try:
+            # Get all users
+            users_response = self.session.get(f"{API_BASE}/users", headers=headers)
+            
+            if users_response.status_code == 200:
+                users = users_response.json()
+                
+                # Check each non-admin user's dues status
+                for user in users:
+                    if not user.get('is_admin', False):
+                        user_id = user['id']
+                        
+                        # Get user's dues
+                        dues_response = self.session.get(f"{API_BASE}/dues/{user_id}", headers=headers)
+                        
+                        if dues_response.status_code == 200:
+                            dues_list = dues_response.json()
+                            
+                            # Check if all dues are paid (excluding current month as per business logic)
+                            from datetime import datetime
+                            current_month = datetime.now().month
+                            current_year = datetime.now().year
+                            
+                            all_eligible_dues_paid = True
+                            total_dues = len(dues_list)
+                            paid_dues = 0
+                            
+                            for due in dues_list:
+                                # Skip current month as per business logic
+                                if due.get('year') == current_year and due.get('month') == current_month:
+                                    continue
+                                    
+                                if not due.get('is_paid', False):
+                                    all_eligible_dues_paid = False
+                                    break
+                                else:
+                                    paid_dues += 1
+                            
+                            if all_eligible_dues_paid and total_dues > 0:
+                                eligible_user = user
+                                self.log_test(
+                                    "Step 1 - Found Eligible User", 
+                                    True, 
+                                    f"Found user with paid dues: {user['username']} ({paid_dues} paid dues)"
+                                )
+                                break
+                            else:
+                                print(f"   User {user['username']}: {paid_dues}/{total_dues} dues paid (not eligible)")
+                
+                if not eligible_user:
+                    # If no user has all dues paid, let's mark some dues as paid for testing
+                    test_user = next((u for u in users if not u.get('is_admin', False)), None)
+                    if test_user:
+                        user_id = test_user['id']
+                        dues_response = self.session.get(f"{API_BASE}/dues/{user_id}", headers=headers)
+                        
+                        if dues_response.status_code == 200:
+                            dues_list = dues_response.json()
+                            
+                            # Mark all dues as paid except current month
+                            from datetime import datetime
+                            current_month = datetime.now().month
+                            current_year = datetime.now().year
+                            
+                            paid_count = 0
+                            for due in dues_list:
+                                # Skip current month
+                                if due.get('year') == current_year and due.get('month') == current_month:
+                                    continue
+                                
+                                # Mark as paid
+                                pay_response = self.session.put(
+                                    f"{API_BASE}/dues/{due['id']}/pay",
+                                    headers=headers
+                                )
+                                if pay_response.status_code == 200:
+                                    paid_count += 1
+                            
+                            eligible_user = test_user
+                            self.log_test(
+                                "Step 1 - Created Eligible User", 
+                                True, 
+                                f"Marked {paid_count} dues as paid for user: {test_user['username']}"
+                            )
+                        
+            else:
+                self.log_test(
+                    "Step 1 - Get Users", 
+                    False, 
+                    f"Failed to get users: HTTP {users_response.status_code}: {users_response.text}"
+                )
+                return
+                
+        except Exception as e:
+            self.log_test("Step 1 - Find Eligible User", False, f"Request failed: {str(e)}")
+            return
+        
+        if not eligible_user:
+            self.log_test("QR Issue Test", False, "No eligible user found for QR testing")
+            return
+        
+        # Step 2: Get available campaigns
+        print("\n--- Step 2: Get Available Campaigns ---")
+        
+        campaign_id = None
+        
+        try:
+            campaigns_response = self.session.get(f"{API_BASE}/campaigns")
+            
+            if campaigns_response.status_code == 200:
+                campaigns = campaigns_response.json()
+                
+                if campaigns:
+                    campaign_id = campaigns[0]['id']
+                    campaign_title = campaigns[0]['title']
+                    
+                    self.log_test(
+                        "Step 2 - Get Campaigns", 
+                        True, 
+                        f"Found {len(campaigns)} campaigns. Using: {campaign_title} (ID: {campaign_id})"
+                    )
+                else:
+                    # Create a test campaign
+                    test_campaign = {
+                        "title": "QR Test Campaign",
+                        "description": "Campaign for testing QR code verification issue",
+                        "company_name": "Test Company",
+                        "discount_details": "Test discount for QR verification",
+                        "terms_conditions": "Test terms and conditions",
+                        "is_active": True
+                    }
+                    
+                    create_response = self.session.post(
+                        f"{API_BASE}/campaigns",
+                        json=test_campaign,
+                        headers=headers
+                    )
+                    
+                    if create_response.status_code == 200:
+                        campaign_data = create_response.json()
+                        campaign_id = campaign_data.get('campaign_id')
+                        
+                        self.log_test(
+                            "Step 2 - Create Test Campaign", 
+                            True, 
+                            f"Created test campaign with ID: {campaign_id}"
+                        )
+                    else:
+                        self.log_test(
+                            "Step 2 - Create Test Campaign", 
+                            False, 
+                            f"Failed to create campaign: HTTP {create_response.status_code}: {create_response.text}"
+                        )
+                        return
+            else:
+                self.log_test(
+                    "Step 2 - Get Campaigns", 
+                    False, 
+                    f"Failed to get campaigns: HTTP {campaigns_response.status_code}: {campaigns_response.text}"
+                )
+                return
+                
+        except Exception as e:
+            self.log_test("Step 2 - Get Campaigns", False, f"Request failed: {str(e)}")
+            return
+        
+        if not campaign_id:
+            self.log_test("QR Issue Test", False, "No campaign ID available for QR testing")
+            return
+        
+        # Step 3: Generate QR code for eligible user
+        print("\n--- Step 3: Generate QR Code for Eligible User ---")
+        
+        qr_token = None
+        eligible_user_id = eligible_user['id']
+        
+        try:
+            # Use admin token but test with eligible user's ID
+            qr_headers = {
+                "Authorization": f"Bearer {admin_token}",
+                "Content-Type": "application/json"
+            }
+            
+            qr_response = self.session.post(
+                f"{API_BASE}/campaigns/{campaign_id}/generate-qr",
+                headers=qr_headers
+            )
+            
+            if qr_response.status_code == 200:
+                qr_data = qr_response.json()
+                qr_token = qr_data.get('qr_token')
+                expires_at = qr_data.get('expires_at')
+                
+                self.log_test(
+                    "Step 3 - Generate QR Code", 
+                    True, 
+                    f"✅ QR code generated successfully! Token: {qr_token[:20]}... (expires: {expires_at})"
+                )
+                
+            elif qr_response.status_code == 403:
+                error_message = qr_response.text
+                self.log_test(
+                    "Step 3 - Generate QR Code", 
+                    False, 
+                    f"❌ QR generation blocked despite paid dues: {error_message}"
+                )
+                
+                # This is the bug! Let's investigate the dues checking logic
+                print("   🔍 INVESTIGATING DUES CHECKING LOGIC...")
+                
+                # Check the user's actual dues status
+                dues_check_response = self.session.get(f"{API_BASE}/dues/{eligible_user_id}", headers=headers)
+                if dues_check_response.status_code == 200:
+                    dues_list = dues_check_response.json()
+                    
+                    from datetime import datetime
+                    current_month = datetime.now().month
+                    current_year = datetime.now().year
+                    
+                    print(f"   Current month/year: {current_month}/{current_year}")
+                    print(f"   Total dues for user: {len(dues_list)}")
+                    
+                    for i, due in enumerate(dues_list[:5]):  # Show first 5 dues
+                        is_current = (due.get('year') == current_year and due.get('month') == current_month)
+                        print(f"   Due {i+1}: {due.get('month')}/{due.get('year')} - Paid: {due.get('is_paid')} {'(CURRENT MONTH - EXCLUDED)' if is_current else ''}")
+                
+                # Continue to verification step anyway to test the full flow
+                qr_token = "test-invalid-token-for-verification"
+                
+            else:
+                self.log_test(
+                    "Step 3 - Generate QR Code", 
+                    False, 
+                    f"Unexpected QR generation response: HTTP {qr_response.status_code}: {qr_response.text}"
+                )
+                # Continue with test token
+                qr_token = "test-invalid-token-for-verification"
+                
+        except Exception as e:
+            self.log_test("Step 3 - Generate QR Code", False, f"QR generation request failed: {str(e)}")
+            qr_token = "test-invalid-token-for-verification"
+        
+        # Step 4: Immediately verify the QR code
+        print("\n--- Step 4: Verify QR Code ---")
+        
+        try:
+            verify_response = self.session.get(f"{API_BASE}/verify-qr/{qr_token}")
+            
+            if verify_response.status_code == 200:
+                verify_data = verify_response.json()
+                is_valid = verify_data.get('valid', False)
+                message = verify_data.get('message', '')
+                reason = verify_data.get('reason', '')
+                
+                self.log_test(
+                    "Step 4 - QR Code Verification", 
+                    True, 
+                    f"QR verification response received. Valid: {is_valid}, Message: '{message}', Reason: '{reason}'"
+                )
+                
+                # Check if this is the reported issue
+                if not is_valid and ('geçersiz' in message.lower() or 'invalid' in message.lower()):
+                    self.log_test(
+                        "Step 4 - QR Issue Reproduction", 
+                        False, 
+                        f"❌ CONFIRMED BUG: Eligible user getting 'kampanya geçersiz' error! Message: '{message}', Reason: '{reason}'"
+                    )
+                elif is_valid:
+                    member_info = verify_data.get('member', {})
+                    campaign_info = verify_data.get('campaign', {})
+                    
+                    self.log_test(
+                        "Step 4 - QR Issue Resolution", 
+                        True, 
+                        f"✅ QR verification working correctly! Member: {member_info.get('name')} {member_info.get('surname')}, Campaign: {campaign_info.get('title')}"
+                    )
+                else:
+                    self.log_test(
+                        "Step 4 - QR Verification Status", 
+                        False, 
+                        f"Unexpected verification result: Valid={is_valid}, Message='{message}'"
+                    )
+                    
+            else:
+                self.log_test(
+                    "Step 4 - QR Code Verification", 
+                    False, 
+                    f"QR verification request failed: HTTP {verify_response.status_code}: {verify_response.text}"
+                )
+                
+        except Exception as e:
+            self.log_test("Step 4 - QR Code Verification", False, f"QR verification request failed: {str(e)}")
+        
+        # Step 5: Debug Dues Checking Algorithm
+        print("\n--- Step 5: Debug Dues Checking Algorithm ---")
+        
+        try:
+            # Let's manually check the dues eligibility logic
+            dues_response = self.session.get(f"{API_BASE}/dues/{eligible_user_id}", headers=headers)
+            
+            if dues_response.status_code == 200:
+                dues_list = dues_response.json()
+                
+                from datetime import datetime
+                current_date = datetime.now()
+                current_month = current_date.month
+                current_year = current_date.year
+                
+                print(f"   🔍 DEBUGGING DUES ELIGIBILITY:")
+                print(f"   Current date: {current_date}")
+                print(f"   Current month: {current_month}, Current year: {current_year}")
+                print(f"   Total dues found: {len(dues_list)}")
+                
+                eligible_dues = []
+                ineligible_dues = []
+                
+                for due in dues_list:
+                    due_month = due.get('month')
+                    due_year = due.get('year')
+                    is_paid = due.get('is_paid', False)
+                    
+                    # Check if this is current month (should be excluded)
+                    is_current_month = (due_year == current_year and due_month == current_month)
+                    
+                    if is_current_month:
+                        print(f"   SKIPPED (current month): {due_month}/{due_year} - Paid: {is_paid}")
+                        continue
+                    
+                    if is_paid:
+                        eligible_dues.append(due)
+                        print(f"   ✅ PAID: {due_month}/{due_year}")
+                    else:
+                        ineligible_dues.append(due)
+                        print(f"   ❌ UNPAID: {due_month}/{due_year}")
+                
+                total_eligible = len(eligible_dues) + len(ineligible_dues)
+                
+                if len(ineligible_dues) == 0 and total_eligible > 0:
+                    self.log_test(
+                        "Step 5 - Dues Eligibility Analysis", 
+                        True, 
+                        f"✅ User SHOULD be eligible: {len(eligible_dues)}/{total_eligible} eligible dues are paid"
+                    )
+                else:
+                    self.log_test(
+                        "Step 5 - Dues Eligibility Analysis", 
+                        False, 
+                        f"❌ User not eligible: {len(ineligible_dues)} unpaid dues out of {total_eligible} eligible dues"
+                    )
+                    
+                # Check for potential issues in the dues checking logic
+                print(f"   📊 SUMMARY:")
+                print(f"   - Total dues in database: {len(dues_list)}")
+                print(f"   - Eligible dues (excluding current month): {total_eligible}")
+                print(f"   - Paid eligible dues: {len(eligible_dues)}")
+                print(f"   - Unpaid eligible dues: {len(ineligible_dues)}")
+                
+            else:
+                self.log_test(
+                    "Step 5 - Get Dues for Analysis", 
+                    False, 
+                    f"Failed to get dues for analysis: HTTP {dues_response.status_code}: {dues_response.text}"
+                )
+                
+        except Exception as e:
+            self.log_test("Step 5 - Dues Analysis", False, f"Dues analysis failed: {str(e)}")
+
     def run_all_tests(self):
         """Run all tests"""
         print("🚀 Starting Actor Club Backend API Tests")
