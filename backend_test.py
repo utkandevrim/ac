@@ -2464,7 +2464,10 @@ class ActorClubAPITester:
         self.test_api_endpoints_availability()
         self.test_login_with_username()
         
-        # PRIORITY: Run critical user deletion and duplicate tests first
+        # URGENT: Run QR code verification issue test first
+        self.test_qr_code_verification_issue()
+        
+        # PRIORITY: Run critical user deletion and duplicate tests
         self.test_user_deletion_and_duplicates()
         
         self.test_user_management()
