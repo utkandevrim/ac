@@ -65,9 +65,12 @@ const QRVerification = () => {
             </div>
 
             <div>
-              <h1 className="text-2xl font-bold text-green-800 mb-2">
+              <h1 className="text-4xl md:text-5xl font-black text-green-600 mb-4 leading-tight">
                 {verification.message}
               </h1>
+              <div className="text-2xl font-bold text-green-500 mb-6 animate-pulse">
+                ✅ ONAYLANDI ✅
+              </div>
               
               {verification.campaign && (
                 <div className="bg-blue-50 p-4 rounded-lg mb-4">
