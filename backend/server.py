@@ -1110,13 +1110,12 @@ async def verify_qr_code(qr_token: str):
     # Get campaign details
     campaign = await db.campaigns.find_one({"id": qr_data.get("campaign_id")})
     
-    # Mark QR as used
+    # Log verification attempt (optional for analytics)
     await db.qr_tokens.update_one(
         {"token": qr_token},
         {
             "$set": {
-                "is_used": True,
-                "used_at": current_time
+                "last_verified_at": current_time
             }
         }
     )
