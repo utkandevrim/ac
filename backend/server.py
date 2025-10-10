@@ -242,8 +242,15 @@ async def check_member_dues_eligibility(user_id: str) -> bool:
         
         # Get current month/year
         current_date = datetime.now()
-        current_month = current_date.month
+        current_month_num = current_date.month
         current_year = current_date.year
+        
+        # Map month numbers to Turkish month names used in the database
+        month_names = {
+            9: "Eylül", 10: "Ekim", 11: "Kasım", 12: "Aralık",
+            1: "Ocak", 2: "Şubat", 3: "Mart", 4: "Nisan", 5: "Mayıs", 6: "Haziran"
+        }
+        current_month_name = month_names.get(current_month_num)
         
         # Check if all previous months are paid
         for due in dues:
@@ -251,8 +258,8 @@ async def check_member_dues_eligibility(user_id: str) -> bool:
             due_year = due.get('year')
             is_paid = due.get('is_paid', False)
             
-            # Skip current month
-            if due_year == current_year and due_month == current_month:
+            # Skip current month (compare month names correctly)
+            if due_year == current_year and due_month == current_month_name:
                 continue
                 
             # If any previous month is unpaid, not eligible
