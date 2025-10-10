@@ -1402,9 +1402,12 @@ logger = logging.getLogger(__name__)
 
 @app.on_event("startup")
 async def startup_event():
-    # Temporarily disabled to avoid duplicate key errors during testing
-    # await initialize_default_data()
-    pass
+    try:
+        await initialize_default_data()
+    except Exception as e:
+        # Log initialization errors but don't crash the server
+        print(f"Warning: Initialization error (likely duplicate data): {e}")
+        pass
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
