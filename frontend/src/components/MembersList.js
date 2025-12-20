@@ -248,7 +248,7 @@ const MembersList = ({ user }) => {
           {filteredMembers.map((member) => (
             <Card 
               key={member.id} 
-              className="card hover-lift cursor-pointer p-6"
+              className="theme-card hover-lift cursor-pointer p-6"
               onClick={() => handleMemberClick(member.id)}
               data-testid={`member-card-${member.id}`}
             >
@@ -267,10 +267,10 @@ const MembersList = ({ user }) => {
                   </div>
                 )}
                 <div className="flex-1">
-                  <h3 className="text-xl font-bold text-gray-900 mb-1" data-testid={`member-name-${member.id}`}>
+                  <h3 className="text-xl font-bold theme-text mb-1" data-testid={`member-name-${member.id}`}>
                     {member.name} {member.surname}
                   </h3>
-                  <p className="text-sm text-gray-600" data-testid={`member-email-${member.id}`}>{member.email}</p>
+                  <p className="text-sm theme-text-secondary" data-testid={`member-email-${member.id}`}>{member.email}</p>
                 </div>
               </div>
 
