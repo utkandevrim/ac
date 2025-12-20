@@ -190,26 +190,26 @@ const MembersList = ({ user }) => {
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card className="card p-6">
+          <Card className="theme-card p-6">
             <div className="flex items-center">
               <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
                 <Users className="h-6 w-6 text-white" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Toplam Üye</p>
-                <p className="text-2xl font-bold text-gray-900" data-testid="total-members-count">{members.length}</p>
+                <p className="text-sm font-medium theme-text-secondary">Toplam Üye</p>
+                <p className="text-2xl font-bold theme-text" data-testid="total-members-count">{members.length}</p>
               </div>
             </div>
           </Card>
 
-          <Card className="card p-6">
+          <Card className="theme-card p-6">
             <div className="flex items-center">
               <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
                 <User className="h-6 w-6 text-white" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Tuğba Çakı Grubu</p>
-                <p className="text-2xl font-bold text-gray-900" data-testid="tugba-group-count">
+                <p className="text-sm font-medium theme-text-secondary">Tuğba Çakı Grubu</p>
+                <p className="text-2xl font-bold theme-text" data-testid="tugba-group-count">
                   {members.filter(m => m.board_member === 'Tuğba Çakı').length}
                 </p>
               </div>
