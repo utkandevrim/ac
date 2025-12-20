@@ -43,13 +43,18 @@ const Login = ({ onLogin }) => {
 
   return (
     <div 
-      className="min-h-screen flex items-center justify-center py-8 px-4 sm:py-12 sm:px-6 lg:px-8"
+      className="min-h-screen flex items-center justify-center py-8 px-4 sm:py-12 sm:px-6 lg:px-8 theme-bg"
       style={{
         backgroundImage: `linear-gradient(rgba(139, 38, 53, 0.9), rgba(201, 48, 44, 0.9)), url('https://images.unsplash.com/photo-1539964604210-db87088e0c2c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Nzd8MHwxfHNlYXJjaHwzfHx0aGVhdGVyJTIwcGVyZm9ybWFuY2V8ZW58MHx8fHwxNzU4NzMzNzc5fDA&ixlib=rb-4.1.0&q=85')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       }}
     >
+      {/* Theme Toggle - Top Right */}
+      <div className="fixed top-4 right-4 z-50">
+        <ThemeToggle size="default" />
+      </div>
+
       <div className="max-w-md w-full space-y-6 sm:space-y-8">
         <div className="text-center">
           <img 
