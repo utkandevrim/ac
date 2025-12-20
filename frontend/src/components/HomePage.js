@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
+import ThemeToggle from './ThemeToggle';
 import axios from 'axios';
 import { AuthContext } from '../App';
 
