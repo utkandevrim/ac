@@ -160,20 +160,20 @@ const MembersList = ({ user }) => {
         {/* Search and Filter */}
         <div className="mb-8 flex flex-col sm:flex-row gap-4">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 theme-text-muted" />
             <Input
               type="text"
               placeholder="Üye ara... (ad, soyad, e-posta, telefon, işyeri, pozisyon, hobiler, yetenekler, adres, projeler)"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 form-input"
+              className="pl-10 theme-input"
               data-testid="member-search-input"
             />
           </div>
           
           <Select value={boardMemberFilter} onValueChange={setBoardMemberFilter}>
-            <SelectTrigger className="w-full sm:w-48" data-testid="board-filter">
-              <Filter className="h-4 w-4 mr-2" />
+            <SelectTrigger className="w-full sm:w-48 theme-input" data-testid="board-filter">
+              <Filter className="h-4 w-4 mr-2 theme-text-muted" />
               <SelectValue placeholder="Grup Filtrele" />
             </SelectTrigger>
             <SelectContent>
