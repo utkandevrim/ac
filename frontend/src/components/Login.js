@@ -91,7 +91,7 @@ const Login = ({ onLogin }) => {
             </div>
 
             <div>
-              <Label htmlFor="password" className="form-label text-gray-700">
+              <Label htmlFor="password" className="form-label theme-text">
                 Şifre
               </Label>
               <div className="relative">
@@ -102,7 +102,7 @@ const Login = ({ onLogin }) => {
                   required
                   value={formData.password}
                   onChange={handleChange}
-                  className="form-input pr-10"
+                  className="theme-input pr-10"
                   placeholder="Şifrenizi girin"
                   data-testid="password-input"
                 />
