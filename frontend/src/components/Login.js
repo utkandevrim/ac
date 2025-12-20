@@ -71,10 +71,10 @@ const Login = ({ onLogin }) => {
           </p>
         </div>
 
-        <Card className="card-glass p-4 sm:p-6 md:p-8 backdrop-blur-xl shadow-2xl border border-white/20">
+        <Card className="theme-card p-4 sm:p-6 md:p-8 backdrop-blur-xl shadow-2xl border border-white/20">
           <form className="space-y-4 sm:space-y-6" onSubmit={handleSubmit} data-testid="login-form">
             <div>
-              <Label htmlFor="username" className="form-label text-gray-700">
+              <Label htmlFor="username" className="form-label theme-text">
                 Kullanıcı Adı
               </Label>
               <Input
@@ -84,7 +84,7 @@ const Login = ({ onLogin }) => {
                 required
                 value={formData.username}
                 onChange={handleChange}
-                className="form-input"
+                className="theme-input"
                 placeholder="isim.soyisim"
                 data-testid="username-input"
               />
