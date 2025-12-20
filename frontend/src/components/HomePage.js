@@ -218,8 +218,8 @@ const HomePage = () => {
               className="h-8 sm:h-10 w-auto mr-2 sm:mr-3"
             />
             <div>
-              <h1 className="text-lg sm:text-xl font-bold text-gray-900">Actor Club</h1>
-              <p className="text-xs sm:text-sm text-gray-600 hidden sm:block">Üye Portalı</p>
+              <h1 className="theme-text text-lg sm:text-xl font-bold">Actor Club</h1>
+              <p className="theme-text-secondary text-xs sm:text-sm hidden sm:block">Üye Portalı</p>
             </div>
           </div>
           
