@@ -124,7 +124,7 @@ const Login = ({ onLogin }) => {
             <Button
               type="submit"
               disabled={loading}
-              className="btn-primary w-full text-lg py-3 touch-target min-h-12"
+              className="theme-button w-full text-lg py-3 touch-target min-h-12"
               data-testid="login-submit-btn"
             >
               {loading ? 'Giriş yapılıyor...' : 'Giriş Yap'}
