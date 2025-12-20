@@ -2648,6 +2648,9 @@ class ActorClubAPITester:
         print(f"Testing against: {API_BASE}")
         print("=" * 60)
         
+        # Run deployment health check first
+        self.test_deployment_health_check()
+        
         # Run tests in order
         self.test_api_endpoints_availability()
         self.test_login_with_username()
