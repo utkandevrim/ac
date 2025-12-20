@@ -2454,6 +2454,194 @@ class ActorClubAPITester:
         except Exception as e:
             self.log_test("Step 5 - Dues Analysis", False, f"Dues analysis failed: {str(e)}")
 
+    def test_deployment_health_check(self):
+        """Comprehensive deployment health check as requested in review"""
+        print("=== DEPLOYMENT HEALTH CHECK ===")
+        print("Testing critical endpoints and functionality for production readiness")
+        
+        # Use credentials from review request
+        admin_creds = {"username": "super.admin", "password": "AdminActor2024!"}
+        regular_creds = {"username": "abdullah.baş", "password": "2ExYJJo!R8"}
+        
+        # Test admin login
+        admin_token = None
+        try:
+            response = self.session.post(
+                f"{API_BASE}/auth/login",
+                json=admin_creds,
+                headers={"Content-Type": "application/json"}
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                admin_token = data['access_token']
+                self.log_test(
+                    "DEPLOYMENT - Admin Authentication", 
+                    True, 
+                    f"Admin login successful: {data['user']['name']} {data['user']['surname']}"
+                )
+            else:
+                self.log_test(
+                    "DEPLOYMENT - Admin Authentication", 
+                    False, 
+                    f"Admin login failed: HTTP {response.status_code}: {response.text}"
+                )
+        except Exception as e:
+            self.log_test("DEPLOYMENT - Admin Authentication", False, f"Admin login error: {str(e)}")
+        
+        # Test regular user login
+        regular_token = None
+        try:
+            response = self.session.post(
+                f"{API_BASE}/auth/login",
+                json=regular_creds,
+                headers={"Content-Type": "application/json"}
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                regular_token = data['access_token']
+                self.log_test(
+                    "DEPLOYMENT - Regular User Authentication", 
+                    True, 
+                    f"Regular user login successful: {data['user']['name']} {data['user']['surname']}"
+                )
+            else:
+                self.log_test(
+                    "DEPLOYMENT - Regular User Authentication", 
+                    False, 
+                    f"Regular user login failed: HTTP {response.status_code}: {response.text}"
+                )
+        except Exception as e:
+            self.log_test("DEPLOYMENT - Regular User Authentication", False, f"Regular user login error: {str(e)}")
+        
+        if not admin_token:
+            self.log_test("DEPLOYMENT - Health Check", False, "Cannot proceed without admin authentication")
+            return
+        
+        admin_headers = {
+            "Authorization": f"Bearer {admin_token}",
+            "Content-Type": "application/json"
+        }
+        
+        # Test database connectivity
+        try:
+            response = self.session.get(f"{API_BASE}/users", headers=admin_headers)
+            if response.status_code == 200:
+                users = response.json()
+                self.log_test(
+                    "DEPLOYMENT - Database Connectivity", 
+                    True, 
+                    f"Database accessible, {len(users)} users retrieved"
+                )
+            else:
+                self.log_test(
+                    "DEPLOYMENT - Database Connectivity", 
+                    False, 
+                    f"Database access failed: HTTP {response.status_code}"
+                )
+        except Exception as e:
+            self.log_test("DEPLOYMENT - Database Connectivity", False, f"Database error: {str(e)}")
+        
+        # Test CORS configuration
+        try:
+            response = self.session.options(f"{API_BASE}/")
+            cors_headers = {
+                'access-control-allow-origin': response.headers.get('access-control-allow-origin'),
+                'access-control-allow-methods': response.headers.get('access-control-allow-methods'),
+                'access-control-allow-headers': response.headers.get('access-control-allow-headers')
+            }
+            
+            has_cors = any(cors_headers.values())
+            self.log_test(
+                "DEPLOYMENT - CORS Configuration", 
+                has_cors, 
+                f"CORS headers {'present' if has_cors else 'missing'}: {cors_headers}"
+            )
+        except Exception as e:
+            self.log_test("DEPLOYMENT - CORS Configuration", False, f"CORS test error: {str(e)}")
+        
+        # Test static file serving
+        try:
+            # Test if uploads endpoint exists
+            response = self.session.get(f"{API_BASE}/uploads/nonexistent.jpg")
+            if response.status_code == 404:
+                self.log_test(
+                    "DEPLOYMENT - Static File Serving", 
+                    True, 
+                    "Static file endpoint accessible (returns 404 for missing files as expected)"
+                )
+            else:
+                self.log_test(
+                    "DEPLOYMENT - Static File Serving", 
+                    response.status_code in [200, 403], 
+                    f"Static file endpoint response: HTTP {response.status_code}"
+                )
+        except Exception as e:
+            self.log_test("DEPLOYMENT - Static File Serving", False, f"Static file test error: {str(e)}")
+        
+        # Test API response times
+        import time
+        try:
+            start_time = time.time()
+            response = self.session.get(f"{API_BASE}/", timeout=5)
+            response_time = (time.time() - start_time) * 1000  # Convert to milliseconds
+            
+            self.log_test(
+                "DEPLOYMENT - API Response Time", 
+                response_time < 2000, 
+                f"API response time: {response_time:.0f}ms {'(GOOD)' if response_time < 1000 else '(ACCEPTABLE)' if response_time < 2000 else '(SLOW)'}"
+            )
+        except Exception as e:
+            self.log_test("DEPLOYMENT - API Response Time", False, f"Response time test error: {str(e)}")
+        
+        # Test security headers
+        try:
+            response = self.session.get(f"{API_BASE}/")
+            security_headers = {
+                'x-frame-options': response.headers.get('x-frame-options'),
+                'x-content-type-options': response.headers.get('x-content-type-options'),
+                'x-xss-protection': response.headers.get('x-xss-protection'),
+                'strict-transport-security': response.headers.get('strict-transport-security')
+            }
+            
+            present_headers = sum(1 for v in security_headers.values() if v)
+            self.log_test(
+                "DEPLOYMENT - Security Headers", 
+                present_headers >= 1, 
+                f"Security headers present: {present_headers}/4 - {security_headers}"
+            )
+        except Exception as e:
+            self.log_test("DEPLOYMENT - Security Headers", False, f"Security headers test error: {str(e)}")
+        
+        # Test error handling
+        try:
+            response = self.session.get(f"{API_BASE}/nonexistent-endpoint")
+            self.log_test(
+                "DEPLOYMENT - Error Handling", 
+                response.status_code == 404, 
+                f"404 error handling: HTTP {response.status_code}"
+            )
+        except Exception as e:
+            self.log_test("DEPLOYMENT - Error Handling", False, f"Error handling test error: {str(e)}")
+        
+        # Test data validation
+        try:
+            invalid_login = {"username": "", "password": ""}
+            response = self.session.post(
+                f"{API_BASE}/auth/login",
+                json=invalid_login,
+                headers={"Content-Type": "application/json"}
+            )
+            
+            self.log_test(
+                "DEPLOYMENT - Data Validation", 
+                response.status_code in [400, 401, 422], 
+                f"Invalid data rejection: HTTP {response.status_code}"
+            )
+        except Exception as e:
+            self.log_test("DEPLOYMENT - Data Validation", False, f"Data validation test error: {str(e)}")
+
     def run_all_tests(self):
         """Run all tests"""
         print("🚀 Starting Actor Club Backend API Tests")
