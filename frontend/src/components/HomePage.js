@@ -223,16 +223,19 @@ const HomePage = () => {
             </div>
           </div>
           
-          <div className="flex items-center">
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Theme Toggle */}
+            <ThemeToggle size="default" className="flex-shrink-0" />
+            
             {/* Login Button / User Info */}
             {user ? (
               <div className="flex flex-col sm:flex-row items-end sm:items-center gap-1 sm:gap-3">
-                <span className="text-gray-700 font-medium text-xs sm:text-base text-right">
+                <span className="theme-text font-medium text-xs sm:text-base text-right">
                   {user.name} {user.surname}
                 </span>
                 <button 
                   onClick={() => navigate('/dashboard')}
-                  className="btn-modern-secondary text-xs sm:text-base px-3 py-2 whitespace-nowrap touch-target"
+                  className="theme-button-secondary text-xs sm:text-base px-3 py-2 whitespace-nowrap touch-target rounded-md"
                 >
                   Dashboard
                 </button>
@@ -240,7 +243,7 @@ const HomePage = () => {
             ) : (
               <button 
                 onClick={() => navigate('/login')}
-                className="btn-modern-primary text-sm sm:text-base px-4 py-3 touch-target"
+                className="theme-button text-sm sm:text-base px-4 py-3 touch-target rounded-md"
                 data-testid="member-login-btn"
               >
                 Üye Girişi
