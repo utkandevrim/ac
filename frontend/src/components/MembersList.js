@@ -216,28 +216,28 @@ const MembersList = ({ user }) => {
             </div>
           </Card>
 
-          <Card className="card p-6">
+          <Card className="theme-card p-6">
             <div className="flex items-center">
               <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
                 <User className="h-6 w-6 text-white" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Duygu Aksoy Grubu</p>
-                <p className="text-2xl font-bold text-gray-900" data-testid="duygu-group-count">
+                <p className="text-sm font-medium theme-text-secondary">Duygu Aksoy Grubu</p>
+                <p className="text-2xl font-bold theme-text" data-testid="duygu-group-count">
                   {members.filter(m => m.board_member === 'Duygu Asker Aksoy').length}
                 </p>
               </div>
             </div>
           </Card>
 
-          <Card className="card p-6">
+          <Card className="theme-card p-6">
             <div className="flex items-center">
               <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center">
                 <User className="h-6 w-6 text-white" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Filtrelenen</p>
-                <p className="text-2xl font-bold text-gray-900" data-testid="filtered-count">{filteredMembers.length}</p>
+                <p className="text-sm font-medium theme-text-secondary">Filtrelenen</p>
+                <p className="text-2xl font-bold theme-text" data-testid="filtered-count">{filteredMembers.length}</p>
               </div>
             </div>
           </Card>
