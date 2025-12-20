@@ -82,7 +82,10 @@ const Navbar = ({ user, onLogout }) => {
           </div>
 
           {/* User Menu / Login Button */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3">
+            {/* Theme Toggle */}
+            <ThemeToggle size="default" />
+            
             {user ? (
               <>
                 {/* User Dropdown */}
