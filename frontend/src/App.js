@@ -95,15 +95,15 @@ const ProtectedRoute = ({ children, user, requireAdmin = false }) => {
 
 function App() {
   return (
-    <div className="App">
-      <ThemeProvider>
+    <ThemeProvider>
+      <div className="App theme-bg">
         <BrowserRouter>
           <AuthProvider>
             <AppContent />
           </AuthProvider>
         </BrowserRouter>
-      </ThemeProvider>
-    </div>
+      </div>
+    </ThemeProvider>
   );
 }
 
