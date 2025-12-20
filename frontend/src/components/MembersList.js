@@ -297,7 +297,7 @@ const MembersList = ({ user }) => {
               </div>
 
               {/* Quick Info */}
-              <div className="space-y-2 text-sm text-gray-600">
+              <div className="space-y-2 text-sm theme-text-secondary">
                 {member.phone && (
                   <div className="flex items-center">
                     <Phone className="h-4 w-4 mr-2" />
