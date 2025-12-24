@@ -235,7 +235,7 @@ const Dashboard = ({ user }) => {
         {!user.is_admin && myDues.length > 0 && (
           <div className="modern-card modern-card-md">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-bold text-gray-900">Aidat Durumum</h3>
+              <h3 className="text-xl font-bold theme-text-h1">Aidat Durumum</h3>
               <CreditCard className="w-5 h-5" style={{ color: 'var(--primary-blue)' }} />
             </div>
             
