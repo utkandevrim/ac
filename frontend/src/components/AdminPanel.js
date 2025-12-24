@@ -126,6 +126,8 @@ const AdminPanel = ({ user }) => {
       fetchLeadership();
     } else if (activeTab === 'campaigns') {
       fetchCampaigns();
+    } else if (activeTab === 'settings') {
+      fetchSiteSettings();
     }
   }, [activeTab]);
 
