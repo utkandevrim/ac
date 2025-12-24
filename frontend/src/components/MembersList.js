@@ -202,6 +202,7 @@ const MembersList = ({ user }) => {
             {teamLeaders.map((leader) => {
               const teamMemberCount = members.filter(m => m.board_member === leader.team).length;
               const isSelected = selectedTeamLeader === leader.team;
+              const leaderPhoto = leaderPhotos[leader.name];
               
               return (
                 <Card 
@@ -213,9 +214,17 @@ const MembersList = ({ user }) => {
                   data-testid={`team-leader-${leader.team}`}
                 >
                   <div className="text-center">
-                    <div className={`w-16 h-16 bg-gradient-to-br ${leader.color} rounded-full mx-auto mb-3 flex items-center justify-center text-white text-xl font-bold shadow-lg`}>
-                      {leader.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
-                    </div>
+                    {leaderPhoto ? (
+                      <img 
+                        src={`${BACKEND_URL}${leaderPhoto}`}
+                        alt={leader.name}
+                        className="w-16 h-16 rounded-full mx-auto mb-3 object-cover border-2 border-white shadow-lg"
+                      />
+                    ) : (
+                      <div className={`w-16 h-16 bg-gradient-to-br ${leader.color} rounded-full mx-auto mb-3 flex items-center justify-center text-white text-xl font-bold shadow-lg`}>
+                        {leader.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                      </div>
+                    )}
                     <h3 className="font-bold theme-text text-sm mb-1">{leader.name}</h3>
                     <p className="text-xs theme-text-secondary mb-2">{leader.teamName} Takımı</p>
                     <Badge className="bg-amber-100 text-amber-800">
