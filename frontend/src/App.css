@@ -20,8 +20,9 @@
   --bg-secondary: #f8fafc;
   --bg-tertiary: #f1f5f9;
   --text-primary: #1f2937;
-  --text-secondary: #6b7280;
-  --text-muted: #9ca3af;
+  --text-secondary: #4b5563;
+  --text-muted: #6b7280;
+  --text-dark: #111827;
   --border-color: rgba(0, 0, 0, 0.1);
   --border-hover: rgba(0, 0, 0, 0.2);
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -34,6 +35,11 @@
   --card-bg: #ffffff;
   --input-bg: #ffffff;
   --input-border: #d1d5db;
+  
+  /* Navigation link colors */
+  --nav-link-color: #374151;
+  --nav-link-hover-bg: rgba(59, 130, 246, 0.1);
+  --nav-link-hover-color: #2563eb;
 }
 
 /* Dark mode */
