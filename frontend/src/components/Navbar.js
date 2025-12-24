@@ -51,7 +51,7 @@ const Navbar = ({ user, onLogout }) => {
               alt="Actor Club Logo" 
               className="h-10 w-auto"
             />
-            <span className="ml-3 text-xl font-bold" style={{ color: 'var(--text-dark)' }}>
+            <span className="ml-3 text-xl font-bold" style={{ color: 'var(--text-primary)' }}>
               Actor Club
             </span>
           </Link>
