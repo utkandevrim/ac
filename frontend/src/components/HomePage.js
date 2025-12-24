@@ -292,7 +292,7 @@ const HomePage = () => {
                     </div>
                   )}
                   <div className="text-center">
-                    <h3 className="text-lg font-bold text-gray-900 mb-2">
+                    <h3 className="text-lg font-bold theme-text-h1 mb-2">
                       Muzaffer Çağlar İşgören
                     </h3>
                     <p className="font-semibold mb-3" style={{ color: 'var(--primary-blue)' }}>
@@ -319,7 +319,7 @@ const HomePage = () => {
                     </div>
                   )}
                   <div className="text-center">
-                    <h3 className="text-lg font-bold text-gray-900 mb-2">
+                    <h3 className="text-lg font-bold theme-text-h1 mb-2">
                       {honorary.length > 0 ? honorary[0].name : 'Göksel Kortay'}
                     </h3>
                     <p className="font-semibold mb-3" style={{ color: 'var(--primary-blue)' }}>
