@@ -81,6 +81,13 @@ const AdminPanel = ({ user }) => {
     expires_at: ''
   });
   
+  // Site settings states
+  const [siteSettings, setSiteSettings] = useState({
+    logo_url: 'https://customer-assets.emergentagent.com/job_actorclub/artifacts/4gypiwpr_ac%20logo.png',
+    site_name: 'Actor Club'
+  });
+  const [logoUploading, setLogoUploading] = useState(false);
+  
   // User form data
   const [userForm, setUserForm] = useState({
     username: '',
