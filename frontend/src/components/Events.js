@@ -272,8 +272,8 @@ const Events = ({ user }) => {
                 <Calendar className="h-6 w-6 text-white" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Yaklaşan</p>
-                <p className="text-2xl font-bold text-gray-900" data-testid="upcoming-events-count">{upcomingEvents.length}</p>
+                <p className="text-sm font-medium theme-text-body">Yaklaşan</p>
+                <p className="text-2xl font-bold theme-text-h1" data-testid="upcoming-events-count">{upcomingEvents.length}</p>
               </div>
             </div>
           </Card>
@@ -284,8 +284,8 @@ const Events = ({ user }) => {
                 <Clock className="h-6 w-6 text-white" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Geçmiş</p>
-                <p className="text-2xl font-bold text-gray-900" data-testid="past-events-count">{pastEvents.length}</p>
+                <p className="text-sm font-medium theme-text-body">Geçmiş</p>
+                <p className="text-2xl font-bold theme-text-h1" data-testid="past-events-count">{pastEvents.length}</p>
               </div>
             </div>
           </Card>
@@ -296,8 +296,8 @@ const Events = ({ user }) => {
                 <Users className="h-6 w-6 text-white" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Toplam</p>
-                <p className="text-2xl font-bold text-gray-900" data-testid="total-events-count">{events.length}</p>
+                <p className="text-sm font-medium theme-text-body">Toplam</p>
+                <p className="text-2xl font-bold theme-text-h1" data-testid="total-events-count">{events.length}</p>
               </div>
             </div>
           </Card>
@@ -306,7 +306,7 @@ const Events = ({ user }) => {
         {/* Upcoming Events */}
         {upcomingEvents.length > 0 && (
           <section className="mb-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+            <h2 className="text-2xl font-bold theme-text-h1 mb-6 flex items-center">
               <Calendar className="h-6 w-6 mr-3 text-green-600" />
               Yaklaşan Etkinlikler
             </h2>
