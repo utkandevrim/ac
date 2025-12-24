@@ -178,8 +178,8 @@ const Campaigns = ({ user }) => {
 
                   {/* Terms */}
                   {campaign.terms_conditions && (
-                    <div className="bg-gray-50 p-3 rounded-lg">
-                      <p className="text-gray-600 text-xs">
+                    <div className="p-3 rounded-lg theme-bg-secondary">
+                      <p className="theme-text-body text-xs">
                         <strong>Şartlar:</strong> {campaign.terms_conditions}
                       </p>
                     </div>
