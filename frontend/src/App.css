@@ -248,9 +248,9 @@ html, body {
 
 /* Modern Navigation */
 .modern-nav {
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--navbar-bg);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -275,7 +275,25 @@ html, body {
 
 .nav-link.active {
   background: var(--primary-blue);
-  color: white;
+  color: white !important;
+}
+
+/* Dark mode specific nav styles */
+[data-theme="dark"] .modern-nav {
+  background: rgba(17, 24, 39, 0.98);
+}
+
+[data-theme="dark"] .nav-link {
+  color: #f3f4f6 !important;
+}
+
+[data-theme="dark"] .nav-link:hover {
+  color: #93c5fd !important;
+  background: rgba(59, 130, 246, 0.2);
+}
+
+[data-theme="dark"] .nav-link.active {
+  color: white !important;
 }
 
 /* Modern Buttons */
