@@ -227,14 +227,14 @@ const UserProfile = ({ user: currentUser }) => {
           <div className="lg:col-span-2 space-y-6">
             {/* Basic Info */}
             <Card className="card p-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+              <h2 className="text-2xl font-bold theme-text-h1 mb-6 flex items-center">
                 <User className="h-6 w-6 mr-3 text-red-600" />
                 Kişisel Bilgiler
               </h2>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <Label className="form-label">Ad</Label>
+                  <Label className="form-label theme-text-label">Ad</Label>
                   {isEditing ? (
                     <Input
                       value={editForm.name || ''}
@@ -243,12 +243,12 @@ const UserProfile = ({ user: currentUser }) => {
                       data-testid="edit-name-input"
                     />
                   ) : (
-                    <p className="text-lg text-gray-900" data-testid="display-name">{user.name}</p>
+                    <p className="text-lg theme-text-h1" data-testid="display-name">{user.name}</p>
                   )}
                 </div>
 
                 <div>
-                  <Label className="form-label">Soyad</Label>
+                  <Label className="form-label theme-text-label">Soyad</Label>
                   {isEditing ? (
                     <Input
                       value={editForm.surname || ''}
@@ -257,12 +257,12 @@ const UserProfile = ({ user: currentUser }) => {
                       data-testid="edit-surname-input"
                     />
                   ) : (
-                    <p className="text-lg text-gray-900" data-testid="display-surname">{user.surname}</p>
+                    <p className="text-lg theme-text-h1" data-testid="display-surname">{user.surname}</p>
                   )}
                 </div>
 
                 <div>
-                  <Label className="form-label">E-posta</Label>
+                  <Label className="form-label theme-text-label">E-posta</Label>
                   {isEditing ? (
                     <Input
                       type="email"
@@ -273,12 +273,12 @@ const UserProfile = ({ user: currentUser }) => {
                       data-testid="edit-email"
                     />
                   ) : (
-                    <p className="text-gray-900" data-testid="display-email">{user.email || 'Belirtilmemiş'}</p>
+                    <p className="theme-text-h1" data-testid="display-email">{user.email || 'Belirtilmemiş'}</p>
                   )}
                 </div>
 
                 <div>
-                  <Label className="form-label">Telefon</Label>
+                  <Label className="form-label theme-text-label">Telefon</Label>
                   {isEditing ? (
                     <Input
                       value={editForm.phone || ''}
@@ -288,12 +288,12 @@ const UserProfile = ({ user: currentUser }) => {
                       data-testid="edit-phone-input"
                     />
                   ) : (
-                    <p className="text-lg text-gray-900" data-testid="display-phone">{user.phone || 'Belirtilmemiş'}</p>
+                    <p className="text-lg theme-text-h1" data-testid="display-phone">{user.phone || 'Belirtilmemiş'}</p>
                   )}
                 </div>
 
                 <div>
-                  <Label className="form-label">Doğum Tarihi</Label>
+                  <Label className="form-label theme-text-label">Doğum Tarihi</Label>
                   {isEditing ? (
                     <Input
                       type="date"
@@ -303,14 +303,14 @@ const UserProfile = ({ user: currentUser }) => {
                       data-testid="edit-birthdate-input"
                     />
                   ) : (
-                    <p className="text-lg text-gray-900" data-testid="display-birthdate">
+                    <p className="text-lg theme-text-h1" data-testid="display-birthdate">
                       {user.birth_date ? new Date(user.birth_date).toLocaleDateString('tr-TR') : 'Belirtilmemiş'}
                     </p>
                   )}
                 </div>
 
                 <div>
-                  <Label className="form-label">Boy</Label>
+                  <Label className="form-label theme-text-label">Boy</Label>
                   {isEditing ? (
                     <Input
                       value={editForm.height || ''}
@@ -320,12 +320,12 @@ const UserProfile = ({ user: currentUser }) => {
                       data-testid="edit-height-input"
                     />
                   ) : (
-                    <p className="text-lg text-gray-900" data-testid="display-height">{user.height || 'Belirtilmemiş'}</p>
+                    <p className="text-lg theme-text-h1" data-testid="display-height">{user.height || 'Belirtilmemiş'}</p>
                   )}
                 </div>
 
                 <div>
-                  <Label className="form-label">Kilo</Label>
+                  <Label className="form-label theme-text-label">Kilo</Label>
                   {isEditing ? (
                     <Input
                       value={editForm.weight || ''}
@@ -335,12 +335,12 @@ const UserProfile = ({ user: currentUser }) => {
                       data-testid="edit-weight-input"
                     />
                   ) : (
-                    <p className="text-lg text-gray-900" data-testid="display-weight">{user.weight || 'Belirtilmemiş'}</p>
+                    <p className="text-lg theme-text-h1" data-testid="display-weight">{user.weight || 'Belirtilmemiş'}</p>
                   )}
                 </div>
 
                 <div className="md:col-span-2">
-                  <Label className="form-label">Adres</Label>
+                  <Label className="form-label theme-text-label">Adres</Label>
                   {isEditing ? (
                     <Textarea
                       value={editForm.address || ''}
@@ -351,7 +351,7 @@ const UserProfile = ({ user: currentUser }) => {
                       data-testid="edit-address-input"
                     />
                   ) : (
-                    <p className="text-lg text-gray-900" data-testid="display-address">{user.address || 'Belirtilmemiş'}</p>
+                    <p className="text-lg theme-text-h1" data-testid="display-address">{user.address || 'Belirtilmemiş'}</p>
                   )}
                 </div>
               </div>
@@ -359,14 +359,14 @@ const UserProfile = ({ user: currentUser }) => {
 
             {/* Work Info */}
             <Card className="card p-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+              <h2 className="text-2xl font-bold theme-text-h1 mb-6 flex items-center">
                 <Briefcase className="h-6 w-6 mr-3 text-red-600" />
                 Çalışma Bilgileri
               </h2>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <Label className="form-label">İş Yeri</Label>
+                  <Label className="form-label theme-text-label">İş Yeri</Label>
                   {isEditing ? (
                     <Input
                       value={editForm.workplace || ''}
@@ -376,12 +376,12 @@ const UserProfile = ({ user: currentUser }) => {
                       data-testid="edit-workplace-input"
                     />
                   ) : (
-                    <p className="text-lg text-gray-900" data-testid="display-workplace">{user.workplace || 'Belirtilmemiş'}</p>
+                    <p className="text-lg theme-text-h1" data-testid="display-workplace">{user.workplace || 'Belirtilmemiş'}</p>
                   )}
                 </div>
 
                 <div>
-                  <Label className="form-label">Pozisyon</Label>
+                  <Label className="form-label theme-text-label">Pozisyon</Label>
                   {isEditing ? (
                     <Input
                       value={editForm.job_title || ''}
@@ -391,12 +391,12 @@ const UserProfile = ({ user: currentUser }) => {
                       data-testid="edit-jobtitle-input"
                     />
                   ) : (
-                    <p className="text-lg text-gray-900" data-testid="display-jobtitle">{user.job_title || 'Belirtilmemiş'}</p>
+                    <p className="text-lg theme-text-h1" data-testid="display-jobtitle">{user.job_title || 'Belirtilmemiş'}</p>
                   )}
                 </div>
 
                 <div className="md:col-span-2">
-                  <Label className="form-label">Hobiler</Label>
+                  <Label className="form-label theme-text-label">Hobiler</Label>
                   {isEditing ? (
                     <Textarea
                       value={editForm.hobbies || ''}
@@ -407,12 +407,12 @@ const UserProfile = ({ user: currentUser }) => {
                       data-testid="edit-hobbies-input"
                     />
                   ) : (
-                    <p className="text-lg text-gray-900" data-testid="display-hobbies">{user.hobbies || 'Belirtilmemiş'}</p>
+                    <p className="text-lg theme-text-h1" data-testid="display-hobbies">{user.hobbies || 'Belirtilmemiş'}</p>
                   )}
                 </div>
 
                 <div className="md:col-span-2">
-                  <Label className="form-label">Yetenekler</Label>
+                  <Label className="form-label theme-text-label">Yetenekler</Label>
                   {isEditing ? (
                     <Textarea
                       value={editForm.skills || ''}
@@ -423,7 +423,7 @@ const UserProfile = ({ user: currentUser }) => {
                       data-testid="edit-skills-input"
                     />
                   ) : (
-                    <p className="text-lg text-gray-900" data-testid="display-skills">{user.skills || 'Belirtilmemiş'}</p>
+                    <p className="text-lg theme-text-h1" data-testid="display-skills">{user.skills || 'Belirtilmemiş'}</p>
                   )}
                 </div>
               </div>
@@ -431,7 +431,7 @@ const UserProfile = ({ user: currentUser }) => {
 
             {/* Projects */}
             <Card className="card p-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+              <h2 className="text-2xl font-bold theme-text-h1 mb-6 flex items-center">
                 <Award className="h-6 w-6 mr-3 text-red-600" />
                 Actor Club Projeleri
               </h2>
