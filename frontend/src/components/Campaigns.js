@@ -139,9 +139,9 @@ const Campaigns = ({ user }) => {
         {/* Campaigns Grid */}
         {campaigns.length === 0 ? (
           <Card className="card p-12 text-center">
-            <Gift className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Henüz Kampanya Yok</h3>
-            <p className="text-gray-600">Şu anda aktif kampanya bulunmamaktadır. Yakında yeni kampanyalar eklenecektir.</p>
+            <Gift className="h-16 w-16 theme-text-muted mx-auto mb-4" />
+            <h3 className="text-xl font-semibold theme-text-h1 mb-2">Henüz Kampanya Yok</h3>
+            <p className="theme-text-body">Şu anda aktif kampanya bulunmamaktadır. Yakında yeni kampanyalar eklenecektir.</p>
           </Card>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -164,9 +164,9 @@ const Campaigns = ({ user }) => {
                 {/* Campaign Content */}
                 <div className="space-y-4">
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">{campaign.title}</h3>
+                    <h3 className="text-xl font-bold theme-text-h1 mb-2">{campaign.title}</h3>
                     <p className="text-sm text-blue-600 font-medium mb-2">{campaign.company_name}</p>
-                    <p className="text-gray-600 text-sm">{campaign.description}</p>
+                    <p className="theme-text-body text-sm">{campaign.description}</p>
                   </div>
 
                   {/* Discount Details */}
