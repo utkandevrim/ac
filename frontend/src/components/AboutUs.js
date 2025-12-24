@@ -134,22 +134,22 @@ const AboutUs = ({ user }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-amber-50 to-red-50 flex items-center justify-center">
-        <div className="text-xl font-semibold text-gray-700">Yükleniyor...</div>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--background-gradient)' }}>
+        <div className="text-xl font-semibold theme-text-body">Yükleniyor...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 to-red-50">
+    <div className="min-h-screen" style={{ background: 'var(--background-gradient)' }}>
       <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2" data-testid="about-title">
+            <h1 className="text-4xl font-bold theme-text-h1 mb-2" data-testid="about-title">
               Hakkımızda
             </h1>
-            <p className="text-lg text-gray-600">
+            <p className="text-lg theme-text-body">
               Actor Club ve tiyatro topluluğumuz hakkında
             </p>
           </div>
