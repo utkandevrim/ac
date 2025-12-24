@@ -139,10 +139,17 @@ const MembersList = ({ user }) => {
 
   const handleTeamClick = (teamName) => {
     setBoardMemberFilter(teamName);
+    setSelectedTeamLeader(teamName);
     setSearchTerm('');
     // Show toast with team info
     const teamMembers = members.filter(m => m.board_member === teamName);
     toast.info(`${getTeamDisplayName(teamName)} takımı: ${teamMembers.length} üye`, { duration: 3000 });
+  };
+
+  const handleClearFilter = () => {
+    setBoardMemberFilter('all');
+    setSelectedTeamLeader(null);
+    setSearchTerm('');
   };
 
   if (loading) {
