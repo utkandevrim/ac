@@ -439,7 +439,7 @@ const HomePage = () => {
       </section>
 
       {/* Footer */}
-      <footer style={{ background: 'var(--text-dark)', color: 'white', padding: '60px 0 40px 0' }}>
+      <footer style={{ background: '#111827', color: 'white', padding: '60px 0 40px 0' }}>
         <div className="container-modern text-center">
           <div className="mb-8">
             <img 
