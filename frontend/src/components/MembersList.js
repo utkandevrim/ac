@@ -173,6 +173,57 @@ const MembersList = ({ user }) => {
           </p>
         </div>
 
+        {/* Team Leaders Section */}
+        <div className="mb-8">
+          <h2 className="text-xl font-bold theme-text mb-4 flex items-center">
+            <Award className="h-5 w-5 mr-2 text-amber-500" />
+            Takım Liderleri
+            <span className="text-sm font-normal theme-text-secondary ml-2">(Takımı görmek için tıklayın)</span>
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {teamLeaders.map((leader) => {
+              const teamMemberCount = members.filter(m => m.board_member === leader.team).length;
+              const isSelected = selectedTeamLeader === leader.team;
+              
+              return (
+                <Card 
+                  key={leader.name}
+                  className={`p-4 cursor-pointer transition-all hover:scale-105 hover:shadow-lg ${
+                    isSelected ? 'ring-2 ring-blue-500 shadow-lg' : ''
+                  }`}
+                  onClick={() => handleTeamClick(leader.team)}
+                  data-testid={`team-leader-${leader.team}`}
+                >
+                  <div className="text-center">
+                    <div className={`w-16 h-16 bg-gradient-to-br ${leader.color} rounded-full mx-auto mb-3 flex items-center justify-center text-white text-xl font-bold shadow-lg`}>
+                      {leader.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                    </div>
+                    <h3 className="font-bold theme-text text-sm mb-1">{leader.name}</h3>
+                    <p className="text-xs theme-text-secondary mb-2">{leader.teamName} Takımı</p>
+                    <Badge className="bg-amber-100 text-amber-800">
+                      {teamMemberCount} üye
+                    </Badge>
+                  </div>
+                </Card>
+              );
+            })}
+          </div>
+          
+          {/* Clear Filter Button */}
+          {selectedTeamLeader && (
+            <div className="mt-4 text-center">
+              <Button 
+                variant="outline" 
+                onClick={handleClearFilter}
+                className="text-sm"
+              >
+                <Filter className="h-4 w-4 mr-2" />
+                Filtreyi Temizle - Tüm Üyeleri Göster
+              </Button>
+            </div>
+          )}
+        </div>
+
         {/* Search and Filter */}
         <div className="mb-8 flex flex-col sm:flex-row gap-4">
           <div className="relative flex-1">
