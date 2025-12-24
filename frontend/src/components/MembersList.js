@@ -33,7 +33,16 @@ const MembersList = ({ user }) => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [boardMemberFilter, setBoardMemberFilter] = useState('all');
+  const [selectedTeamLeader, setSelectedTeamLeader] = useState(null);
   const navigate = useNavigate();
+
+  // Team leaders data
+  const teamLeaders = [
+    { name: 'Tuğba Çakı', team: 'Tuğba Çakı', teamName: 'Diyojen', color: 'from-red-500 to-orange-500' },
+    { name: 'Duygu Asker Aksoy', team: 'Duygu Asker Aksoy', teamName: 'Hypatia', color: 'from-purple-500 to-pink-500' },
+    { name: 'Seda Ateş', team: 'Seda Ateş', teamName: 'Artemis', color: 'from-blue-500 to-cyan-500' },
+    { name: 'Utkan Devrim Zeyrek', team: 'Utkan Devrim Zeyrek', teamName: 'Hermes', color: 'from-green-500 to-teal-500' }
+  ];
 
   const boardMembers = [
     'Tuğba Çakı',
