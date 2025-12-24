@@ -159,7 +159,7 @@ const Navbar = ({ user, onLogout }) => {
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-100 animate-slide-up">
+          <div className="md:hidden py-4 animate-slide-up" style={{ borderTop: '1px solid var(--border-color)' }}>
             <div className="flex flex-col space-y-2">
               {navigationItems.map((item) => (
                 <Link
