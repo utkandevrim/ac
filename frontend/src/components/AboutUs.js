@@ -337,41 +337,41 @@ const AboutUs = ({ user }) => {
           <div className="space-y-6">
             {/* Quick Stats */}
             <Card className="card p-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Hızlı Bilgiler</h3>
+              <h3 className="text-lg font-bold theme-text-h2 mb-4">Hızlı Bilgiler</h3>
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
                     <Users className="h-5 w-5 text-red-600 mr-2" />
-                    <span className="text-gray-600">Toplam Üye</span>
+                    <span className="theme-text-body">Toplam Üye</span>
                   </div>
-                  <span className="font-bold text-gray-900">107+</span>
+                  <span className="font-bold theme-text-h1">107+</span>
                 </div>
                 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
                     <Award className="h-5 w-5 text-red-600 mr-2" />
-                    <span className="text-gray-600">Yönetim Kurulu</span>
+                    <span className="theme-text-body">Yönetim Kurulu</span>
                   </div>
-                  <span className="font-bold text-gray-900">5</span>
+                  <span className="font-bold theme-text-h1">5</span>
                 </div>
                 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
                     <Star className="h-5 w-5 text-red-600 mr-2" />
-                    <span className="text-gray-600">Kuruluş</span>
+                    <span className="theme-text-body">Kuruluş</span>
                   </div>
-                  <span className="font-bold text-gray-900">2014</span>
+                  <span className="font-bold theme-text-h1">2014</span>
                 </div>
               </div>
             </Card>
 
             {/* Leadership Highlights */}
             <Card className="card p-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Yönetim Kadrosu</h3>
+              <h3 className="text-lg font-bold theme-text-h2 mb-4">Yönetim Kadrosu</h3>
               <div className="space-y-4">
                 {/* Board Chairman */}
                 {leadership.filter(leader => leader.position.includes('Yönetim Kurulu Başkanı')).map((chairman, index) => (
-                  <div key={`chairman-${index}`} className="text-center p-4 bg-gradient-to-r from-red-50 to-amber-50 rounded-lg">
+                  <div key={`chairman-${index}`} className="text-center p-4 rounded-lg theme-bg-secondary">
                     {chairman.photo ? (
                       <img 
                         src={`${BACKEND_URL}${chairman.photo}`} 
@@ -383,7 +383,7 @@ const AboutUs = ({ user }) => {
                         {chairman.name.split(' ').map(n => n[0]).join('')}
                       </div>
                     )}
-                    <p className="font-semibold text-gray-900">{chairman.name}</p>
+                    <p className="font-semibold theme-text-h1">{chairman.name}</p>
                     <p className="text-sm text-red-600">Yönetim Kurulu Başkanı</p>
                   </div>
                 ))}
@@ -393,7 +393,7 @@ const AboutUs = ({ user }) => {
                   {leadership
                     .filter(leader => leader.position.includes('Yönetim Kurulu Üyesi'))
                     .map((member, index) => (
-                    <div key={`member-${index}`} className="text-center p-3 bg-gray-50 rounded-lg">
+                    <div key={`member-${index}`} className="text-center p-3 rounded-lg theme-bg-secondary">
                       {member.photo ? (
                         <img 
                           src={`${BACKEND_URL}${member.photo}`} 
@@ -405,15 +405,15 @@ const AboutUs = ({ user }) => {
                           {member.name.split(' ').map(n => n[0]).join('')}
                         </div>
                       )}
-                      <p className="text-xs font-medium text-gray-900">{member.name}</p>
-                      <p className="text-xs text-gray-600">YK Üyesi</p>
+                      <p className="text-xs font-medium theme-text-h1">{member.name}</p>
+                      <p className="text-xs theme-text-body">YK Üyesi</p>
                     </div>
                   ))}
                 </div>
                 
                 {/* If no leadership data loaded, show loading or empty state */}
                 {leadership.length === 0 && (
-                  <div className="text-center p-4 text-gray-500">
+                  <div className="text-center p-4 theme-text-muted">
                     <Users className="w-8 h-8 mx-auto mb-2" />
                     <p className="text-sm">Yönetim kadrosu bilgileri yükleniyor...</p>
                   </div>
@@ -423,8 +423,8 @@ const AboutUs = ({ user }) => {
 
             {/* Mission Statement */}
             <Card className="card p-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Misyonumuz</h3>
-              <p className="text-gray-700 text-sm leading-relaxed">
+              <h3 className="text-lg font-bold theme-text-h2 mb-4">Misyonumuz</h3>
+              <p className="theme-text-body text-sm leading-relaxed">
                 {aboutData.mission || 
                   `Actor Club olarak, sanat ve tiyatro severleri bir araya getirerek, 
                   yeteneklerin keşfedilmesi ve geliştirilmesi için güvenli ve destekleyici 
@@ -435,33 +435,33 @@ const AboutUs = ({ user }) => {
 
             {/* Contact Info */}
             <Card className="card p-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">İletişim</h3>
-              <div className="space-y-3 text-sm text-gray-600">
+              <h3 className="text-lg font-bold theme-text-h2 mb-4">İletişim</h3>
+              <div className="space-y-3 text-sm theme-text-body">
                 <div>
-                  <p className="font-medium text-gray-900">Actor Club Portal</p>
+                  <p className="font-medium theme-text-h1">Actor Club Portal</p>
                   <p>Sahne Tozu Tiyatrosu</p>
                 </div>
                 {aboutData.contact?.email && (
                   <div>
-                    <p className="font-medium text-gray-900">E-posta</p>
+                    <p className="font-medium theme-text-h1">E-posta</p>
                     <p>{aboutData.contact.email}</p>
                   </div>
                 )}
                 {aboutData.contact?.phone && (
                   <div>
-                    <p className="font-medium text-gray-900">Telefon</p>
+                    <p className="font-medium theme-text-h1">Telefon</p>
                     <p>{aboutData.contact.phone}</p>
                   </div>
                 )}
                 {aboutData.contact?.address && (
                   <div>
-                    <p className="font-medium text-gray-900">Adres</p>
+                    <p className="font-medium theme-text-h1">Adres</p>
                     <p>{aboutData.contact.address}</p>
                   </div>
                 )}
                 {aboutData.contact?.website && (
                   <div>
-                    <p className="font-medium text-gray-900">Web</p>
+                    <p className="font-medium theme-text-h1">Web</p>
                     <p>{aboutData.contact.website}</p>
                   </div>
                 )}
@@ -469,11 +469,11 @@ const AboutUs = ({ user }) => {
                 {(!aboutData.contact || Object.values(aboutData.contact).every(v => !v)) && (
                   <>
                     <div>
-                      <p className="font-medium text-gray-900">E-posta</p>
+                      <p className="font-medium theme-text-h1">E-posta</p>
                       <p>info@actorclub.com</p>
                     </div>
                     <div>
-                      <p className="font-medium text-gray-900">Web</p>
+                      <p className="font-medium theme-text-h1">Web</p>
                       <p>www.actorclub.com</p>
                     </div>
                   </>
