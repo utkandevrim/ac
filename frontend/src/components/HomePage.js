@@ -331,7 +331,7 @@ const HomePage = () => {
 
               {/* Quote Section Below Cards */}
               <div className="mt-8 text-center">
-                <p className="text-gray-600 text-sm leading-relaxed max-w-2xl mx-auto">
+                <p className="theme-text-body text-sm leading-relaxed max-w-2xl mx-auto">
                   {homepageContent.hero_quote || '"Actor Club, oyunculuk tutkusunu profesyonel becerilerle buluşturan bir platform olarak kurulmuştur. Amacımız, yetenekli bireyleri sanat dünyasında desteklemektir."'}
                 </p>
               </div>
