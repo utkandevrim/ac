@@ -285,8 +285,8 @@ const AboutUs = ({ user }) => {
                   {/* About Content */}
                   {aboutData.content ? (
                     <div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-4">Hakkımızda</h3>
-                      <div className="whitespace-pre-wrap text-gray-700 leading-relaxed" data-testid="about-content">
+                      <h3 className="text-xl font-bold theme-text-h2 mb-4">Hakkımızda</h3>
+                      <div className="whitespace-pre-wrap theme-text-body leading-relaxed" data-testid="about-content">
                         {aboutData.content}
                       </div>
                     </div>
@@ -295,11 +295,11 @@ const AboutUs = ({ user }) => {
                   {/* Mission */}
                   {aboutData.mission ? (
                     <div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                      <h3 className="text-xl font-bold theme-text-h2 mb-4 flex items-center">
                         <Award className="h-5 w-5 mr-2 text-indigo-600" />
                         Misyonumuz
                       </h3>
-                      <div className="whitespace-pre-wrap text-gray-700 leading-relaxed bg-gradient-to-r from-indigo-50 to-purple-50 p-6 rounded-lg" data-testid="mission-content">
+                      <div className="whitespace-pre-wrap theme-text-body leading-relaxed p-6 rounded-lg theme-bg-secondary" data-testid="mission-content">
                         {aboutData.mission}
                       </div>
                     </div>
@@ -308,11 +308,11 @@ const AboutUs = ({ user }) => {
                   {/* Vision */}
                   {aboutData.vision ? (
                     <div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                      <h3 className="text-xl font-bold theme-text-h2 mb-4 flex items-center">
                         <Star className="h-5 w-5 mr-2 text-indigo-600" />
                         Vizyonumuz
                       </h3>
-                      <div className="whitespace-pre-wrap text-gray-700 leading-relaxed bg-gradient-to-r from-amber-50 to-orange-50 p-6 rounded-lg" data-testid="vision-content">
+                      <div className="whitespace-pre-wrap theme-text-body leading-relaxed p-6 rounded-lg theme-bg-secondary" data-testid="vision-content">
                         {aboutData.vision}
                       </div>
                     </div>
@@ -320,7 +320,7 @@ const AboutUs = ({ user }) => {
 
                   {/* Empty state */}
                   {!aboutData.content && !aboutData.mission && !aboutData.vision && (
-                    <div className="text-center py-16 text-gray-500">
+                    <div className="text-center py-16 theme-text-muted">
                       <Info className="h-16 w-16 mx-auto mb-4 opacity-50" />
                       <p className="text-lg">Henüz içerik eklenmemiş</p>
                       <p className="text-sm">Actor Club hakkında bilgi eklemek için yukarıdaki düzenle butonunu kullanın</p>
