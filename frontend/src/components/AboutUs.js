@@ -187,7 +187,7 @@ const AboutUs = ({ user }) => {
           {/* Main Content */}
           <div className="lg:col-span-2">
             <Card className="card p-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+              <h2 className="text-2xl font-bold theme-text-h1 mb-6 flex items-center">
                 <Info className="h-6 w-6 mr-3 text-red-600" />
                 Hakkımızda
               </h2>
