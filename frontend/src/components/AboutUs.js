@@ -179,8 +179,8 @@ const AboutUs = ({ user }) => {
 
         {/* Simple Header */}
         <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Actor Club Portal</h2>
-          <p className="text-lg text-gray-600">Sahne Tozu Tiyatrosu Üye Portalı</p>
+          <h2 className="text-3xl md:text-4xl font-bold theme-text-h1 mb-4">Actor Club Portal</h2>
+          <p className="text-lg theme-text-body">Sahne Tozu Tiyatrosu Üye Portalı</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
