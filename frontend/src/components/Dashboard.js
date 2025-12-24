@@ -176,7 +176,7 @@ const Dashboard = ({ user }) => {
           {/* Quick Actions */}
           <div className="modern-card modern-card-md">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-bold text-gray-900">Hızlı Erişim</h3>
+              <h3 className="text-xl font-bold theme-text-h1">Hızlı Erişim</h3>
               <TrendingUp className="w-5 h-5" style={{ color: 'var(--primary-blue)' }} />
             </div>
             
