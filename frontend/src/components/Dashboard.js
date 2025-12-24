@@ -136,19 +136,19 @@ const Dashboard = ({ user }) => {
           {/* Recent Events */}
           <div className="modern-card modern-card-md">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-bold text-gray-900">Son Etkinlikler</h3>
+              <h3 className="text-xl font-bold theme-text-h1">Son Etkinlikler</h3>
               <Calendar className="w-5 h-5" style={{ color: 'var(--primary-blue)' }} />
             </div>
             
             {recentEvents.length > 0 ? (
               <div className="space-y-4">
                 {recentEvents.map((event) => (
-                  <div key={event.id} className="flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                  <div key={event.id} className="flex items-start space-x-3 p-3 rounded-lg hover:theme-bg-secondary transition-colors">
                     <Calendar className="w-4 h-4 mt-1" style={{ color: 'var(--primary-blue)' }} />
                     <div className="flex-1">
-                      <h4 className="font-semibold text-gray-900">{event.title}</h4>
-                      <p className="text-sm text-gray-600">{event.description}</p>
-                      <p className="text-xs text-gray-500 mt-1">
+                      <h4 className="font-semibold theme-text-h1">{event.title}</h4>
+                      <p className="text-sm theme-text-body">{event.description}</p>
+                      <p className="text-xs theme-text-muted mt-1">
                         {new Date(event.date).toLocaleDateString('tr-TR')}
                       </p>
                     </div>
@@ -156,7 +156,7 @@ const Dashboard = ({ user }) => {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-8 text-gray-500">
+              <div className="text-center py-8 theme-text-muted">
                 <Calendar className="w-12 h-12 mx-auto mb-4 opacity-50" />
                 <p>Henüz etkinlik bulunmuyor</p>
               </div>
