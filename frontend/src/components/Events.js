@@ -327,8 +327,8 @@ const Events = ({ user }) => {
         {/* Past Events */}
         {pastEvents.length > 0 && (
           <section>
-            <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-              <Clock className="h-6 w-6 mr-3 text-gray-600" />
+            <h2 className="text-2xl font-bold theme-text-h1 mb-6 flex items-center">
+              <Clock className="h-6 w-6 mr-3 theme-text-body" />
               Geçmiş Etkinlikler
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
