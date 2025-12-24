@@ -150,6 +150,77 @@ const AdminPanel = ({ user }) => {
     }
   };
 
+  const fetchSiteSettings = async () => {
+    try {
+      const response = await axios.get(`${API}/site-settings`);
+      setSiteSettings(response.data);
+    } catch (error) {
+      console.error('Error fetching site settings:', error);
+    }
+  };
+
+  const handleLogoUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      toast.error('Lütfen sadece resim dosyası seçin');
+      return;
+    }
+
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    if (file.size > maxSize) {
+      toast.error('Dosya boyutu 5MB\'den küçük olmalıdır');
+      return;
+    }
+
+    setLogoUploading(true);
+    try {
+      const token = localStorage.getItem('token');
+      const formData = new FormData();
+      formData.append('file', file);
+
+      // Upload file
+      const uploadResponse = await axios.post(`${API}/upload`, formData, {
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      const logoUrl = `${BACKEND_URL}${uploadResponse.data.file_url}`;
+
+      // Update site settings
+      await axios.put(`${API}/site-settings`, {
+        ...siteSettings,
+        logo_url: logoUrl
+      }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      setSiteSettings({ ...siteSettings, logo_url: logoUrl });
+      toast.success('Logo başarıyla güncellendi! Sayfayı yenileyerek değişikliği görebilirsiniz.');
+    } catch (error) {
+      console.error('Error uploading logo:', error);
+      toast.error('Logo yüklenirken hata oluştu');
+    } finally {
+      setLogoUploading(false);
+    }
+  };
+
+  const handleSaveLogoUrl = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      await axios.put(`${API}/site-settings`, siteSettings, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      toast.success('Site ayarları kaydedildi!');
+    } catch (error) {
+      console.error('Error saving site settings:', error);
+      toast.error('Ayarlar kaydedilirken hata oluştu');
+    }
+  };
+
   const fetchUsers = async (forceRefresh = false) => {
     try {
       const token = localStorage.getItem('token');
