@@ -34,6 +34,7 @@ const MembersList = ({ user }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [boardMemberFilter, setBoardMemberFilter] = useState('all');
   const [selectedTeamLeader, setSelectedTeamLeader] = useState(null);
+  const [leaderPhotos, setLeaderPhotos] = useState({});
   const navigate = useNavigate();
 
   // Team leaders data
@@ -53,11 +54,28 @@ const MembersList = ({ user }) => {
 
   useEffect(() => {
     fetchMembers();
+    fetchLeaderPhotos();
   }, []);
 
   useEffect(() => {
     filterMembers();
   }, [members, searchTerm, boardMemberFilter]);
+
+  const fetchLeaderPhotos = async () => {
+    try {
+      const response = await axios.get(`${API}/leadership`);
+      const photos = {};
+      response.data.forEach(leader => {
+        // Match by name
+        if (leader.photo) {
+          photos[leader.name] = leader.photo;
+        }
+      });
+      setLeaderPhotos(photos);
+    } catch (error) {
+      console.error('Error fetching leader photos:', error);
+    }
+  };
 
   const fetchMembers = async () => {
     try {
