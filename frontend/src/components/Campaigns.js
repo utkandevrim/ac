@@ -243,22 +243,22 @@ const Campaigns = ({ user }) => {
       {/* QR Modal */}
       {qrModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg max-w-md w-full p-6">
+          <div className="rounded-lg max-w-md w-full p-6 theme-card">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-bold text-gray-900">QR Kod</h3>
+              <h3 className="text-lg font-bold theme-text-h1">QR Kod</h3>
               <button
                 onClick={() => setQrModal(null)}
-                className="text-gray-400 hover:text-gray-600 touch-target"
+                className="theme-text-muted hover:theme-text-body touch-target"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
             <div className="text-center space-y-4">
-              <p className="text-sm text-gray-600">{qrModal.campaignTitle}</p>
+              <p className="text-sm theme-text-body">{qrModal.campaignTitle}</p>
               
               {/* QR Code Display */}
-              <div className="bg-gray-100 p-4 rounded-lg">
+              <div className="p-4 rounded-lg theme-bg-secondary">
                 {qrModal.qrImage ? (
                   <img 
                     src={qrModal.qrImage}
@@ -266,8 +266,8 @@ const Campaigns = ({ user }) => {
                     className="w-48 h-48 mx-auto"
                   />
                 ) : (
-                  <div className="w-48 h-48 mx-auto bg-gray-200 rounded flex items-center justify-center">
-                    <p className="text-gray-500">QR kod oluşturuluyor...</p>
+                  <div className="w-48 h-48 mx-auto rounded flex items-center justify-center theme-bg-secondary">
+                    <p className="theme-text-muted">QR kod oluşturuluyor...</p>
                   </div>
                 )}
               </div>
@@ -285,7 +285,7 @@ const Campaigns = ({ user }) => {
                 </p>
               </div>
 
-              <div className="text-xs text-gray-500 mt-4">
+              <div className="text-xs theme-text-muted mt-4">
                 <p>Bu QR kodu kampanya ortağına göstererek indirimden yararlanabilirsiniz.</p>
               </div>
             </div>
