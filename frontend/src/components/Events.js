@@ -413,12 +413,12 @@ const EventCard = ({ event, isUpcoming, isAdmin, onDelete }) => {
         {/* Header with Badge */}
         <div className="flex items-start justify-between mb-4">
           <div className="flex-1">
-            <h3 className="text-xl font-bold text-gray-900 mb-2" data-testid={`event-title-${event.id}`}>
+            <h3 className="text-xl font-bold theme-text-h1 mb-2" data-testid={`event-title-${event.id}`}>
               {event.title}
             </h3>
             <Badge 
               variant={isUpcoming ? "default" : "secondary"}
-              className={isUpcoming ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"}
+              className={isUpcoming ? "bg-green-100 text-green-800" : "theme-bg-secondary theme-text-body"}
             >
               {isUpcoming ? 'Yaklaşan' : 'Geçmiş'}
             </Badge>
@@ -439,7 +439,7 @@ const EventCard = ({ event, isUpcoming, isAdmin, onDelete }) => {
 
         {/* Event Details */}
         <div className="space-y-3 mb-4">
-          <div className="flex items-center text-gray-600">
+          <div className="flex items-center theme-text-body">
             <Calendar className="h-4 w-4 mr-3" />
             <span className="text-sm" data-testid={`event-date-${event.id}`}>
               {formatDate(event.date)}
@@ -447,7 +447,7 @@ const EventCard = ({ event, isUpcoming, isAdmin, onDelete }) => {
           </div>
 
           {event.location && (
-            <div className="flex items-center text-gray-600">
+            <div className="flex items-center theme-text-body">
               <MapPin className="h-4 w-4 mr-3" />
               <span className="text-sm" data-testid={`event-location-${event.id}`}>
                 {event.location}
@@ -457,13 +457,13 @@ const EventCard = ({ event, isUpcoming, isAdmin, onDelete }) => {
         </div>
 
         {/* Description */}
-        <p className="text-gray-700 text-sm leading-relaxed mb-4 line-clamp-3" data-testid={`event-description-${event.id}`}>
+        <p className="theme-text-body text-sm leading-relaxed mb-4 line-clamp-3" data-testid={`event-description-${event.id}`}>
           {event.description}
         </p>
 
         {/* Footer */}
-        <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-          <span className="text-xs text-gray-500" data-testid={`event-created-${event.id}`}>
+        <div className="flex items-center justify-between pt-4 border-t theme-border">
+          <span className="text-xs theme-text-muted" data-testid={`event-created-${event.id}`}>
             Oluşturulma: {new Date(event.created_at).toLocaleDateString('tr-TR')}
           </span>
           
