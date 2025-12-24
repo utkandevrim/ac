@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
 import { Button } from './ui/button';
 import ThemeToggle from './ThemeToggle';
 import {
@@ -21,10 +22,29 @@ import {
   Gift
 } from 'lucide-react';
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const API = `${BACKEND_URL}/api`;
+
 const Navbar = ({ user, onLogout }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [logoUrl, setLogoUrl] = useState('https://customer-assets.emergentagent.com/job_actorclub/artifacts/4gypiwpr_ac%20logo.png');
+
+  useEffect(() => {
+    fetchSiteSettings();
+  }, []);
+
+  const fetchSiteSettings = async () => {
+    try {
+      const response = await axios.get(`${API}/site-settings`);
+      if (response.data.logo_url) {
+        setLogoUrl(response.data.logo_url);
+      }
+    } catch (error) {
+      console.error('Error fetching site settings:', error);
+    }
+  };
 
   const navigationItems = [
     { name: 'Anasayfa', href: '/', icon: Home },
@@ -47,9 +67,12 @@ const Navbar = ({ user, onLogout }) => {
           {/* Logo */}
           <Link to="/" className="flex items-center">
             <img 
-              src="https://customer-assets.emergentagent.com/job_actorclub/artifacts/4gypiwpr_ac%20logo.png" 
+              src={logoUrl}
               alt="Actor Club Logo" 
               className="h-10 w-auto"
+              onError={(e) => {
+                e.target.src = 'https://customer-assets.emergentagent.com/job_actorclub/artifacts/4gypiwpr_ac%20logo.png';
+              }}
             />
             <span className="ml-3 text-xl font-bold" style={{ color: 'var(--text-primary)' }}>
               Actor Club
