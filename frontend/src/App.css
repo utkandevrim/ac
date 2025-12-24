@@ -50,6 +50,7 @@
   --text-primary: #f9fafb;
   --text-secondary: #d1d5db;
   --text-muted: #9ca3af;
+  --text-dark: #f9fafb;
   --border-color: rgba(255, 255, 255, 0.1);
   --border-hover: rgba(255, 255, 255, 0.2);
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
@@ -62,6 +63,11 @@
   --card-bg: #1f2937;
   --input-bg: #374151;
   --input-border: #4b5563;
+  
+  /* Navigation link colors */
+  --nav-link-color: #e5e7eb;
+  --nav-link-hover-bg: rgba(59, 130, 246, 0.2);
+  --nav-link-hover-color: #60a5fa;
 }
 
 /* Global Styles */
