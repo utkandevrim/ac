@@ -98,11 +98,11 @@ const Campaigns = ({ user }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen py-8" style={{ background: 'var(--background-gradient)' }}>
         <div className="container-modern">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Kampanyalar yükleniyor...</p>
+            <p className="mt-4 theme-text-body">Kampanyalar yükleniyor...</p>
           </div>
         </div>
       </div>
@@ -110,7 +110,7 @@ const Campaigns = ({ user }) => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen py-8" style={{ background: 'var(--background-gradient)' }}>
       <div className="container-modern">
         {/* Header */}
         <div className="text-center mb-8">
