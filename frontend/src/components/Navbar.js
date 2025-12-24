@@ -144,7 +144,8 @@ const Navbar = ({ user, onLogout }) => {
 
             {/* Mobile menu button */}
             <button
-              className="md:hidden p-2 rounded-lg hover:bg-gray-100"
+              className="md:hidden p-2 rounded-lg transition-colors"
+              style={{ color: 'var(--text-primary)' }}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               {isMobileMenuOpen ? (
