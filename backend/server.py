@@ -946,6 +946,37 @@ async def update_homepage_content(content_data: dict, current_user: User = Depen
     
     return {"message": "Homepage content updated successfully"}
 
+# Site Settings routes
+@api_router.get("/site-settings")
+async def get_site_settings():
+    settings = await db.site_settings.find_one()
+    if settings:
+        settings.pop('_id', None)
+        return settings
+    # Return default values if no settings exist
+    default_settings = SiteSettings()
+    return default_settings.dict()
+
+@api_router.put("/site-settings")
+async def update_site_settings(settings_data: dict, current_user: User = Depends(get_admin_user)):
+    # Ensure we have default values for required fields
+    if not settings_data.get("id"):
+        settings_data["id"] = str(uuid.uuid4())
+    
+    settings_data["last_updated"] = datetime.now(timezone.utc)
+    
+    # Update or create site settings
+    existing = await db.site_settings.find_one()
+    if existing:
+        await db.site_settings.update_one(
+            {"id": existing.get("id", settings_data["id"])},
+            {"$set": settings_data}
+        )
+    else:
+        await db.site_settings.insert_one(settings_data)
+    
+    return {"message": "Site settings updated successfully"}
+
 # About Us routes
 @api_router.get("/about")
 async def get_about():
