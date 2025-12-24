@@ -348,9 +348,9 @@ const Events = ({ user }) => {
         {/* Empty State */}
         {events.length === 0 && (
           <div className="text-center py-16">
-            <Calendar className="h-24 w-24 mx-auto text-gray-300 mb-4" />
-            <h3 className="text-xl font-semibold text-gray-700 mb-2">Henüz etkinlik yok</h3>
-            <p className="text-gray-500 mb-6">
+            <Calendar className="h-24 w-24 mx-auto theme-text-muted mb-4" />
+            <h3 className="text-xl font-semibold theme-text-body mb-2">Henüz etkinlik yok</h3>
+            <p className="theme-text-muted mb-6">
               İlk etkinliği oluşturmak için yukarıdaki butonu kullanın
             </p>
             {user?.is_admin && (
