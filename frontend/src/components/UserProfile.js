@@ -457,10 +457,10 @@ const UserProfile = ({ user: currentUser }) => {
               <div className="space-y-3">
                 {(editForm.projects || user.projects || []).length > 0 ? (
                   (editForm.projects || user.projects || []).map((project, index) => (
-                    <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg" data-testid={`project-${index}`}>
+                    <div key={index} className="flex items-center justify-between p-4 rounded-lg theme-bg-secondary" data-testid={`project-${index}`}>
                       <div className="flex items-center">
                         <Award className="h-5 w-5 text-red-600 mr-3" />
-                        <span className="text-gray-900">{project}</span>
+                        <span className="theme-text-h1">{project}</span>
                       </div>
                       {isEditing && (
                         <Button 
@@ -476,7 +476,7 @@ const UserProfile = ({ user: currentUser }) => {
                     </div>
                   ))
                 ) : (
-                  <div className="text-center py-8 text-gray-500">
+                  <div className="text-center py-8 theme-text-muted">
                     <Award className="h-12 w-12 mx-auto mb-4 opacity-50" />
                     <p>Henüz proje bulunmuyor</p>
                   </div>
@@ -501,7 +501,7 @@ const UserProfile = ({ user: currentUser }) => {
                   {user.name?.[0]}{user.surname?.[0]}
                 </div>
               )}
-              <h3 className="text-xl font-bold text-gray-900 mb-2" data-testid="profile-name">
+              <h3 className="text-xl font-bold theme-text-h1 mb-2" data-testid="profile-name">
                 {user.name} {user.surname}
               </h3>
               <Badge variant="secondary" className="mb-4">
@@ -516,17 +516,17 @@ const UserProfile = ({ user: currentUser }) => {
 
             {/* Member Status */}
             <Card className="card p-6">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Üyelik Durumu</h3>
+              <h3 className="text-lg font-bold theme-text-h1 mb-4">Üyelik Durumu</h3>
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-600">Durum</span>
+                  <span className="theme-text-body">Durum</span>
                   <Badge className={user.is_approved ? "status-approved" : "status-pending"}>
                     {user.is_approved ? 'Onaylı' : 'Beklemede'}
                   </Badge>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-600">Üyelik Tarihi</span>
-                  <span className="text-gray-900">
+                  <span className="theme-text-body">Üyelik Tarihi</span>
+                  <span className="theme-text-h1">
                     {new Date(user.created_at).toLocaleDateString('tr-TR')}
                   </span>
                 </div>
@@ -536,7 +536,7 @@ const UserProfile = ({ user: currentUser }) => {
             {/* Dues Summary - Only for own profile */}
             {isOwnProfile && (
               <Card className="card p-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                <h3 className="text-lg font-bold theme-text-h1 mb-4 flex items-center">
                   <CreditCard className="h-5 w-5 mr-2 text-red-600" />
                   Aidat Özeti
                 </h3>
@@ -553,8 +553,8 @@ const UserProfile = ({ user: currentUser }) => {
                       data-testid={`sidebar-due-${due.month.toLowerCase()}`}
                     >
                       <div>
-                        <p className="font-medium text-sm text-gray-900">{due.month}</p>
-                        <p className="text-xs text-gray-600">{due.amount} TL</p>
+                        <p className="font-medium text-sm theme-text-h1">{due.month}</p>
+                        <p className="text-xs theme-text-body">{due.amount} TL</p>
                       </div>
                       <Badge 
                         variant={due.is_paid ? "default" : "destructive"}
