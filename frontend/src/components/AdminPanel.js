@@ -1003,6 +1003,82 @@ const AdminPanel = ({ user }) => {
           {/* Settings Tab */}
           <TabsContent value="settings" className="mt-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Logo Management */}
+              <Card className="card p-6">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                  <Image className="h-6 w-6 mr-2 text-blue-600" />
+                  Logo Yönetimi
+                </h2>
+                
+                <div className="space-y-6">
+                  {/* Current Logo Preview */}
+                  <div className="text-center p-6 border-2 border-dashed border-gray-300 rounded-lg">
+                    <p className="text-sm text-gray-500 mb-4">Mevcut Logo</p>
+                    {siteSettings.logo_url ? (
+                      <img 
+                        src={siteSettings.logo_url}
+                        alt="Site Logo"
+                        className="h-20 mx-auto object-contain"
+                        onError={(e) => {
+                          e.target.src = 'https://customer-assets.emergentagent.com/job_actorclub/artifacts/4gypiwpr_ac%20logo.png';
+                        }}
+                      />
+                    ) : (
+                      <div className="h-20 flex items-center justify-center text-gray-400">
+                        <Image className="h-12 w-12" />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Upload New Logo */}
+                  <div>
+                    <Label htmlFor="logo-upload" className="block mb-2">Yeni Logo Yükle</Label>
+                    <div className="flex gap-2">
+                      <Label htmlFor="logo-upload" className="flex-1">
+                        <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 hover:border-blue-500 cursor-pointer transition-colors text-center">
+                          <Upload className="h-6 w-6 mx-auto mb-2 text-gray-400" />
+                          <p className="text-sm text-gray-600">
+                            {logoUploading ? 'Yükleniyor...' : 'Resim seçmek için tıklayın'}
+                          </p>
+                          <p className="text-xs text-gray-400 mt-1">PNG, JPG, GIF (Maks. 5MB)</p>
+                        </div>
+                      </Label>
+                      <Input
+                        id="logo-upload"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleLogoUpload}
+                        className="hidden"
+                        disabled={logoUploading}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Or Enter URL */}
+                  <div>
+                    <Label htmlFor="logo-url">veya Logo URL'si Girin</Label>
+                    <div className="flex gap-2 mt-2">
+                      <Input
+                        id="logo-url"
+                        type="url"
+                        value={siteSettings.logo_url || ''}
+                        onChange={(e) => setSiteSettings({ ...siteSettings, logo_url: e.target.value })}
+                        placeholder="https://example.com/logo.png"
+                        className="flex-1"
+                      />
+                      <Button 
+                        onClick={handleSaveLogoUrl}
+                        className="btn-primary"
+                      >
+                        <Save className="h-4 w-4 mr-1" />
+                        Kaydet
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+
+              {/* System Info */}
               <Card className="card p-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">Sistem Bilgileri</h2>
                 <div className="space-y-4">
