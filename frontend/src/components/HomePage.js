@@ -406,7 +406,7 @@ const HomePage = () => {
                   ET
                 </div>
               )}
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">
+              <h3 className="text-2xl font-bold theme-text-h1 mb-2">
                 {chairman ? chairman.name : 'Emre Turgut'}
               </h3>
               <p className="font-semibold" style={{ color: 'var(--primary-blue)' }}>Yönetim Kurulu Başkanı</p>
@@ -428,7 +428,7 @@ const HomePage = () => {
                     {member.name.split(' ').map(n => n[0]).join('')}
                   </div>
                 )}
-                <h4 className="text-lg font-bold text-gray-900 mt-4 mb-1">{member.name}</h4>
+                <h4 className="text-lg font-bold theme-text-h1 mt-4 mb-1">{member.name}</h4>
                 <p className="font-semibold text-sm mb-3" style={{ color: 'var(--primary-blue)' }}>
                   Yönetim Kurulu Üyesi
                 </p>
