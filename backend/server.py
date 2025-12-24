@@ -193,6 +193,12 @@ class HomepageContent(BaseModel):
     management_section_subtitle: str = "Actor Club'ın geleceğini şekillendiren deneyimli yöneticilerimiz"
     last_updated: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
+class SiteSettings(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    logo_url: str = "https://customer-assets.emergentagent.com/job_actorclub/artifacts/4gypiwpr_ac%20logo.png"
+    site_name: str = "Actor Club"
+    last_updated: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
 class Campaign(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     title: str
