@@ -91,10 +91,10 @@ const Navbar = ({ user, onLogout }) => {
                 {/* User Dropdown */}
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <button className="flex items-center space-x-3 p-2 rounded-xl hover:bg-gray-50 transition-colors">
+                    <button className="flex items-center space-x-3 p-2 rounded-xl transition-colors" style={{ background: 'transparent' }}>
                       <div className="text-right">
-                        <p className="text-sm font-semibold text-gray-900">{user.name} {user.surname}</p>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>{user.name} {user.surname}</p>
+                        <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
                           {user.is_admin ? 'Yönetici' : 'Üye'}
                         </p>
                       </div>
@@ -113,8 +113,8 @@ const Navbar = ({ user, onLogout }) => {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-56">
                     <div className="px-3 py-2">
-                      <p className="text-sm font-medium text-gray-900">{user.name} {user.surname}</p>
-                      <p className="text-xs text-gray-500">{user.email}</p>
+                      <p className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>{user.name} {user.surname}</p>
+                      <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>{user.email}</p>
                     </div>
                     <DropdownMenuItem onClick={() => navigate('/profile')}>
                       <User className="mr-2 h-4 w-4" />
