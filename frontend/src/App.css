@@ -1226,3 +1226,226 @@ html, body {
     border-color: rgba(255, 255, 255, 0.1);
   }
 }
+
+/* ===========================================
+   THEME-AWARE TEXT AND BACKGROUND CLASSES
+   ========================================== */
+
+/* Theme-aware heading styles */
+.theme-text-h1 {
+  color: var(--text-primary);
+}
+
+.theme-text-h2 {
+  color: var(--text-primary);
+}
+
+.theme-text-h3 {
+  color: var(--text-primary);
+}
+
+.theme-text-body {
+  color: var(--text-secondary);
+}
+
+.theme-text-label {
+  color: var(--text-secondary);
+}
+
+/* Theme-aware background gradients */
+.theme-bg-gradient {
+  background: var(--background-gradient);
+}
+
+/* Light mode gradient */
+:root,
+[data-theme="light"] {
+  --background-gradient: linear-gradient(to bottom right, #FFFBEB, #FEF2F2);
+  --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  --hover-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  --text-dark: #1f2937;
+  --text-light: #6b7280;
+}
+
+/* Dark mode gradient */
+[data-theme="dark"] {
+  --background-gradient: linear-gradient(to bottom right, #1f2937, #111827);
+  --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  --hover-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  --text-dark: #f9fafb;
+  --text-light: #d1d5db;
+}
+
+/* Force theme colors on specific Tailwind classes when in dark mode */
+[data-theme="dark"] .text-gray-900 {
+  color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .text-gray-800 {
+  color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .text-gray-700 {
+  color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .text-gray-600 {
+  color: var(--text-secondary) !important;
+}
+
+[data-theme="dark"] .text-gray-500 {
+  color: var(--text-muted) !important;
+}
+
+[data-theme="dark"] .bg-white {
+  background-color: var(--bg-primary) !important;
+}
+
+[data-theme="dark"] .bg-gray-50 {
+  background-color: var(--bg-secondary) !important;
+}
+
+[data-theme="dark"] .bg-gray-100 {
+  background-color: var(--bg-tertiary) !important;
+}
+
+[data-theme="dark"] .border-gray-100,
+[data-theme="dark"] .border-gray-200,
+[data-theme="dark"] .border-gray-300 {
+  border-color: var(--border-color) !important;
+}
+
+/* Dark mode gradient backgrounds */
+[data-theme="dark"] .bg-gradient-to-br.from-amber-50.to-red-50 {
+  background: var(--background-gradient) !important;
+}
+
+[data-theme="dark"] .bg-gradient-to-r.from-indigo-50.to-purple-50,
+[data-theme="dark"] .bg-gradient-to-r.from-amber-50.to-orange-50,
+[data-theme="dark"] .bg-gradient-to-r.from-red-50.to-amber-50 {
+  background: var(--bg-secondary) !important;
+}
+
+/* Dark mode stat cards */
+[data-theme="dark"] .stat-card-modern {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .stat-label {
+  color: var(--text-secondary);
+}
+
+/* Dark mode person cards */
+[data-theme="dark"] .person-card-modern {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .person-card-modern h3,
+[data-theme="dark"] .person-card-modern h4 {
+  color: var(--text-primary);
+}
+
+/* Dark mode card component */
+[data-theme="dark"] .card {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+}
+
+/* Dark mode title styles */
+[data-theme="dark"] .title-hero {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .title-section {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .subtitle,
+[data-theme="dark"] .subtitle-section {
+  color: var(--text-secondary);
+}
+
+/* Dark mode info boxes */
+[data-theme="dark"] .bg-blue-50 {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+}
+
+[data-theme="dark"] .bg-green-50 {
+  background-color: rgba(34, 197, 94, 0.1) !important;
+}
+
+[data-theme="dark"] .bg-orange-50 {
+  background-color: rgba(249, 115, 22, 0.1) !important;
+}
+
+[data-theme="dark"] .bg-red-50 {
+  background-color: rgba(239, 68, 68, 0.1) !important;
+}
+
+[data-theme="dark"] .text-blue-900,
+[data-theme="dark"] .text-blue-800 {
+  color: #93c5fd !important;
+}
+
+[data-theme="dark"] .text-green-800 {
+  color: #86efac !important;
+}
+
+[data-theme="dark"] .text-orange-800,
+[data-theme="dark"] .text-orange-700 {
+  color: #fdba74 !important;
+}
+
+/* Dark mode form labels */
+[data-theme="dark"] .form-label {
+  color: var(--text-secondary);
+}
+
+/* Dark mode hover states */
+[data-theme="dark"] .hover\:bg-gray-50:hover {
+  background-color: var(--bg-secondary) !important;
+}
+
+[data-theme="dark"] .hover\:bg-gray-100:hover {
+  background-color: var(--bg-tertiary) !important;
+}
+
+/* Dark mode loading state */
+[data-theme="dark"] .loading-modern {
+  color: var(--text-secondary);
+}
+
+/* Dark mode dropdown menu */
+[data-theme="dark"] [role="menu"],
+[data-theme="dark"] [data-radix-menu-content] {
+  background-color: var(--bg-primary) !important;
+  border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] [role="menuitem"] {
+  color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] [role="menuitem"]:hover {
+  background-color: var(--bg-secondary) !important;
+}
+
+/* Dark mode dialog */
+[data-theme="dark"] [role="dialog"] {
+  background-color: var(--bg-primary) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* Dark mode empty states */
+[data-theme="dark"] .text-center.py-16 .text-gray-700,
+[data-theme="dark"] .text-center.py-8 .text-gray-700 {
+  color: var(--text-secondary) !important;
+}
+
+/* Dark mode badges */
+[data-theme="dark"] .bg-gray-100.text-gray-800 {
+  background-color: var(--bg-tertiary) !important;
+  color: var(--text-primary) !important;
+}
