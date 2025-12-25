@@ -574,57 +574,60 @@ const UserProfile = ({ user: currentUser }) => {
       {/* Password Change Modal */}
       {showPasswordChange && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg max-w-md w-full p-4 sm:p-6">
-            <h2 className="text-xl font-bold mb-4">Şifre Değiştir</h2>
+          <div className="card rounded-lg max-w-md w-full p-4 sm:p-6">
+            <h2 className="text-xl font-bold mb-4 theme-text-h1">Şifre Değiştir</h2>
             
             <form onSubmit={handlePasswordChange} className="space-y-4">
               <div>
-                <Label htmlFor="oldPassword">Mevcut Şifre</Label>
+                <Label htmlFor="oldPassword" className="theme-text-label">Mevcut Şifre</Label>
                 <Input
                   id="oldPassword"
                   type="password"
                   value={passwordForm.oldPassword}
                   onChange={(e) => setPasswordForm({...passwordForm, oldPassword: e.target.value})}
                   required
+                  className="form-input"
                   data-testid="old-password-input"
                 />
               </div>
 
               <div>
-                <Label htmlFor="newPassword">Yeni Şifre</Label>
+                <Label htmlFor="newPassword" className="theme-text-label">Yeni Şifre</Label>
                 <Input
                   id="newPassword"
                   type="password"
                   value={passwordForm.newPassword}
                   onChange={(e) => setPasswordForm({...passwordForm, newPassword: e.target.value})}
                   required
+                  className="form-input"
                   data-testid="new-password-input"
                 />
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs theme-text-muted mt-1">
                   8-16 karakter, en az 1 harf ve 1 özel karakter içermeli
                 </p>
               </div>
 
               <div>
-                <Label htmlFor="confirmPassword">Yeni Şifre Tekrar</Label>
+                <Label htmlFor="confirmPassword" className="theme-text-label">Yeni Şifre Tekrar</Label>
                 <Input
                   id="confirmPassword"
                   type="password"
                   value={passwordForm.confirmPassword}
                   onChange={(e) => setPasswordForm({...passwordForm, confirmPassword: e.target.value})}
                   required
+                  className="form-input"
                   data-testid="confirm-password-input"
                 />
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3 pt-4">
-                <Button type="submit" className="flex-1 text-sm sm:text-base" data-testid="submit-password-change">
+                <Button type="submit" className="flex-1 text-sm sm:text-base btn-primary" data-testid="submit-password-change">
                   Şifre Değiştir
                 </Button>
                 <Button 
                   type="button" 
                   variant="outline" 
-                  className="flex-1 text-sm sm:text-base"
+                  className="flex-1 text-sm sm:text-base btn-outline"
                   onClick={() => {
                     setShowPasswordChange(false);
                     setPasswordForm({
