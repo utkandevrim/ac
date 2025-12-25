@@ -370,7 +370,7 @@ const MembersList = ({ user }) => {
 
               {/* Badges */}
               <div className="flex flex-wrap gap-2 mb-4">
-                <Badge variant={member.is_admin ? "default" : "secondary"} className={member.is_admin ? "bg-red-500 text-white" : "bg-gray-600 text-white"}>
+                <Badge variant={member.is_admin ? "default" : "secondary"} className={member.is_admin ? "bg-red-500 text-white" : "member-role-badge"}>
                   {member.is_admin ? 'Yönetici' : 'Üye'}
                 </Badge>
                 {member.board_member && (
@@ -385,7 +385,7 @@ const MembersList = ({ user }) => {
                     {getTeamDisplayName(member.board_member)}
                   </Badge>
                 )}
-                <Badge variant="outline" className={member.is_approved ? "bg-green-500 text-white border-green-500" : "bg-orange-500 text-white border-orange-500"}>
+                <Badge variant="outline" className={member.is_approved ? "member-status-approved" : "member-status-pending"}>
                   {member.is_approved ? 'Onaylı' : 'Beklemede'}
                 </Badge>
               </div>
@@ -415,15 +415,15 @@ const MembersList = ({ user }) => {
 
                 {member.projects && member.projects.length > 0 && (
                   <div className="mt-3">
-                    <p className="font-medium text-gray-700 mb-1">Projeler:</p>
+                    <p className="font-medium theme-text-secondary mb-1">Projeler:</p>
                     <div className="flex flex-wrap gap-1">
                       {member.projects.slice(0, 2).map((project, index) => (
-                        <span key={index} className="inline-block bg-red-100 text-red-800 text-xs px-2 py-1 rounded" data-testid={`member-project-${member.id}-${index}`}>
+                        <span key={index} className="inline-block member-project-badge text-xs px-2 py-1 rounded" data-testid={`member-project-${member.id}-${index}`}>
                           {project}
                         </span>
                       ))}
                       {member.projects.length > 2 && (
-                        <span className="inline-block bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded">
+                        <span className="inline-block member-project-more text-xs px-2 py-1 rounded">
                           +{member.projects.length - 2} daha
                         </span>
                       )}
