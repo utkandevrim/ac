@@ -1206,6 +1206,27 @@ html, body {
    MOBILE ACCESSIBILITY IMPROVEMENTS
    ========================================== */
 
+/* Team badge - visible in both light and dark mode */
+.team-badge {
+  background-color: #f59e0b !important;
+  color: #1f2937 !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease;
+}
+
+.team-badge:hover {
+  background-color: #d97706 !important;
+}
+
+[data-theme="dark"] .team-badge {
+  background-color: #fbbf24 !important;
+  color: #1f2937 !important;
+}
+
+[data-theme="dark"] .team-badge:hover {
+  background-color: #f59e0b !important;
+}
+
 @media (max-width: 768px) {
   /* Focus indicators for mobile */
   button:focus, input:focus, textarea:focus, select:focus, 
