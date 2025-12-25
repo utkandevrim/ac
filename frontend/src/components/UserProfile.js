@@ -504,11 +504,11 @@ const UserProfile = ({ user: currentUser }) => {
               <h3 className="text-xl font-bold theme-text-h1 mb-2" data-testid="profile-name">
                 {user.name} {user.surname}
               </h3>
-              <Badge variant="secondary" className="mb-4">
+              <Badge variant="secondary" className="mb-4 profile-role-badge">
                 {user.is_admin ? 'Yönetici' : 'Üye'}
               </Badge>
               {user.board_member && (
-                <Badge className="bg-red-100 text-red-800">
+                <Badge className="profile-board-badge ml-2">
                   {user.board_member}
                 </Badge>
               )}
