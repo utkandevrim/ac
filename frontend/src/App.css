@@ -70,6 +70,36 @@
   --nav-link-hover-color: #93c5fd;
 }
 
+/* Cihaz/Sistem karanlık modu - prefers-color-scheme */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #111827;
+    --bg-secondary: #1f2937;
+    --bg-tertiary: #374151;
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --text-muted: #9ca3af;
+    --text-dark: #f9fafb;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --border-hover: rgba(255, 255, 255, 0.2);
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+    
+    /* Actor Club specific */
+    --navbar-bg: rgba(17, 24, 39, 0.95);
+    --card-bg: #1f2937;
+    --input-bg: #374151;
+    --input-border: #4b5563;
+    
+    /* Navigation link colors */
+    --nav-link-color: #f3f4f6;
+    --nav-link-hover-bg: rgba(59, 130, 246, 0.3);
+    --nav-link-hover-color: #93c5fd;
+  }
+}
+
 /* Global Styles */
 * {
   box-sizing: border-box;
