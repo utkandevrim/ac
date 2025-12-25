@@ -225,9 +225,9 @@ const MembersList = ({ user }) => {
                         {leader.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
                       </div>
                     )}
-                    <h3 className="font-bold theme-text text-sm mb-1">{leader.name}</h3>
-                    <p className="text-xs theme-text-secondary mb-2">{leader.teamName} Takımı</p>
-                    <Badge className="bg-amber-100 text-amber-800">
+                    <h3 className="font-bold text-white text-sm mb-1">{leader.name}</h3>
+                    <p className="text-xs text-gray-300 mb-2">{leader.teamName} Takımı</p>
+                    <Badge className="bg-blue-500 text-white font-semibold">
                       {teamMemberCount} üye
                     </Badge>
                   </div>
