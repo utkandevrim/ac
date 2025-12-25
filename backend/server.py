@@ -1424,6 +1424,76 @@ async def cleanup_and_recreate_members(current_user: User = Depends(get_admin_us
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Cleanup failed: {str(e)}")
 
+# Team assignments - FINAL VERSION
+TEAM_LEADER_MEMBERS = {
+    "Tuğba Çakı": [
+        "İkbal Karatepe", "Deniz Duygulu", "Nazlı Sena Eser", "Ergun Acar",
+        "Hatice Dilan Genç", "Banu Gümüşkaynak", "Ebru Ateşdağlı", "Hasan Ali Erk",
+        "Mustafa Deniz Özer", "Hüseyin Ertan Sezgin", "Afet Bakay", "Cengiz Karakuzu",
+        "Nadir Şimşek", "Melih Ülgentay", "Elif Alıveren", "Buğra Han Acar",
+        "Bekir Berk Altınay", "Ceyda Çınar", "Ahmet İşleyen", "Abdullah Baş",
+        "Alev Atam", "İzem Karslı", "Özkan Çiğdem", "Berkant Oman",
+        "Beren Karamustafaoğlu", "Demet Aslan", "Ece Kılıç", "Hazal Aktaş"
+    ],
+    "Duygu Asker Aksoy": [
+        "Sultan Güleryüz", "Dilek Şahin Taş", "Merve Dür", "Sinan Telli",
+        "Ebru Polat", "Fatma Neva Şen", "Meltem Sözüer", "Fethiye Turgut",
+        "Şahin Kul", "Ertuğrul Ceyhan", "İbrahim Şanlı", "İpek Apaydın",
+        "Aslı Cindaruk", "Yadigar Külice", "Volkan Arslan", "Mahir Taşpulat",
+        "Gözde Karadağ", "Rumeysa Nur Öztürk", "Nafiz Selvi", "Elif Kesikçiler",
+        "Özge Türkoğlu", "Damla Ongün", "Simay Cihan", "Ece Arısoy",
+        "Şevval Karaboğa", "Mehmet Emrah Güven", "Hatice Avcı", "Metin Celil Kuşsever"
+    ],
+    "Seda Ateş": [
+        "Gürhan Aksu", "Hulusi Karabil", "Kökten Ulaş Birant", "Elif Gazel",
+        "Tayyibe Alpay Uyanıker", "Eren Özgül", "Gaye Eren", "Şafak Sipahi",
+        "Anıl Özçelik", "Çağla Beril Karayel", "Oğuz Serdar Zal", "Sabri Hakan Dokurlar",
+        "Ahmet Rasim Burhanoğlu", "İrem Baysoy", "Abdülmetin Ürünveren", "Pelin Baki",
+        "Esra Tür", "Leman Atiker", "Rabia Demir Köse", "Naci Çobanoğlu",
+        "Özlem Demir", "Rahime Gözde Narin"
+    ],
+    "Utkan Devrim Zeyrek": [
+        "Saray Kaya", "Ulaş Kesikçiler", "Elif Tortop Doğan", "Zeynep Ermeç",
+        "Gül Nacaroğlu", "İrem Ayas", "Kemal Erkilmen", "Senem Ünal",
+        "Serkan Salgın", "Didem Karabil", "Ayşe Tumba", "Nur Ayça Öztürk",
+        "Tamer Güleryüz", "Bülent Erdağı", "Ümit Peşeli", "Aybike Asena Karakaya",
+        "Deniz Genç", "Azad Burak Süne", "Erdem Kocabay", "Rıdvan Baş",
+        "Fulya Ersayan", "Rasim Can Birol", "Dilan Kart", "Sıla Timur",
+        "Amir Karabuğday", "Sude Kahraman", "Samet Salık", "Erem Kılıç", "Seda Baykut"
+    ]
+}
+
+def normalize_for_match(name):
+    """Normalize name for matching"""
+    return name.lower().strip().replace(".", "").replace("  ", " ")
+
+async def ensure_team_assignments():
+    """Ensure all team members are assigned to their leaders"""
+    try:
+        users = await db.users.find({}).to_list(None)
+        if not users:
+            return
+        
+        for team_leader, members in TEAM_LEADER_MEMBERS.items():
+            for member_name in members:
+                member_norm = normalize_for_match(member_name)
+                
+                for user in users:
+                    full_name = f"{user.get('name', '')} {user.get('surname', '')}".strip()
+                    user_norm = normalize_for_match(full_name)
+                    
+                    # Match if names are similar
+                    if member_norm in user_norm or user_norm in member_norm:
+                        # Update if not already assigned
+                        if user.get('board_member') != team_leader:
+                            await db.users.update_one(
+                                {"id": user["id"]},
+                                {"$set": {"board_member": team_leader}}
+                            )
+                        break
+    except Exception as e:
+        print(f"Team assignment error: {e}")
+
 @api_router.get("/")
 async def root():
     return {"message": "Actor Club Portal API"}
