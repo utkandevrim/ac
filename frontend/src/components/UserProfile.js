@@ -546,15 +546,15 @@ const UserProfile = ({ user: currentUser }) => {
                       key={due.id}
                       className={`flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-all ${
                         due.is_paid
-                          ? 'bg-green-50 border-green-200'
-                          : 'bg-red-50 border-red-200 hover:bg-red-100'
+                          ? 'dues-card-paid'
+                          : 'dues-card-unpaid'
                       } ${!due.is_paid ? 'pulse-dues' : ''}`}
                       onClick={() => handleDuesClick(due)}
                       data-testid={`sidebar-due-${due.month.toLowerCase()}`}
                     >
                       <div>
-                        <p className="font-medium text-sm theme-text-h1">{due.month}</p>
-                        <p className="text-xs theme-text-body">{due.amount} TL</p>
+                        <p className="font-medium text-sm dues-card-title">{due.month}</p>
+                        <p className="text-xs dues-card-amount">{due.amount} TL</p>
                       </div>
                       <Badge 
                         variant={due.is_paid ? "default" : "destructive"}
