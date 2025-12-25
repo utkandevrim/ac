@@ -1425,6 +1425,91 @@ async def cleanup_and_recreate_members(current_user: User = Depends(get_admin_us
 async def root():
     return {"message": "Actor Club Portal API"}
 
+# Team assignments data
+TEAM_ASSIGNMENTS = {
+    "Tuğba Çakı": [
+        "İkbal Karatepe", "Deniz Duygulu", "Nazlı Sena Eser", "Ergun Acar",
+        "Hatice Dilan Genç", "Banu Gümüşkaynak", "Ebru Ateşdağlı", "Hasan Ali Erk",
+        "Mustafa Deniz Özer", "Hüseyin Ertan Sezgin", "Afet Bakay", "Cengiz Karakuzu",
+        "Nadir Şimşek", "Melih Ülgentay", "Elif Alıveren", "Buğra Han Acar",
+        "Bekir Berk Altınay", "Ceyda Çınar", "Ahmet İşleyen", "Abdullah Baş",
+        "Alev Atam", "İzem Karslı", "Özkan Çiğdem", "Berkant Oman",
+        "Beren Karamustafaoğlu", "Demet Aslan", "Ece Kılıç", "Hazal Aktaş"
+    ],
+    "Duygu Asker Aksoy": [
+        "Sultan Güleryüz", "Dilek Şahin Taş", "Merve Dür", "Sinan Telli",
+        "Ebru Polat", "Fatma Neva Şen", "Meltem Sözüer", "Fethiye Turgut",
+        "Şahin Kul O.", "Ertuğrul Ceyhan", "İbrahim Şanlı", "İpek Apaydın",
+        "Aslı Cindaruk", "Yadigar Külice", "Volkan Arslan", "Mahir Taşpulat",
+        "Gözde Karadağ", "Rumeysa Nur Öztürk", "Nafiz Selvi", "Elif Kesikçiler",
+        "Özge Türkoğlu", "Damla Ongün", "Simay Cihan", "Ece Arısoy",
+        "Şevval Karaboğa", "Mehmet Emrah Güven", "Hatice Avcı", "Metin Celil Kuşsever"
+    ],
+    "Seda Ateş": [
+        "Gürhan Aksu", "Hulusi Karabil", "Kökten Ulaş Birant", "Elif Gazel",
+        "Tayyibe Alpay Uyanıker", "Eren Özgül", "Gaye Eren", "Şafak Sipahi",
+        "Anıl Özçelik", "Çağla Beril Karayel", "Oğuz Serdar Zal", "Sabri Hakan Dokurlar",
+        "Ahmet Rasim Burhanoğlu", "İrem Baysoy", "Abdülmetin Ürünveren", "Pelin Baki",
+        "Esra Tür", "Leman Atiker", "Rabia Demir Köse", "Naci Çobanoğlu",
+        "Özlem Demir", "Rahime Gözde Narin"
+    ],
+    "Utkan Devrim Zeyrek": [
+        "Saray Kaya", "Ulaş Kesikçiler", "Elif Tortop Doğan", "Zeynep Ermeç",
+        "Gül Nacaroğlu", "İrem Ayas", "Kemal Erkilmen", "Senem Ünal",
+        "Serkan Salgın", "Didem Karabil", "Ayşe Tumba", "Nur Ayça Öztürk",
+        "Tamer Güleryüz", "Bülent Erdağı", "Ümit Peşeli", "Aybike Asena Karakaya",
+        "Deniz Genç", "Azad Burak Süne", "Erdem Kocabay", "Rıdvan Baş",
+        "Fulya Ersayan", "Rasim Can Birol", "Dilan Kart", "Sıla Timur",
+        "Amir Karabuğday", "Sude Kahraman", "Samet Salık", "Erem Kılıç", "Seda Baykut"
+    ]
+}
+
+def normalize_name(name):
+    """Normalize name for comparison"""
+    return name.lower().strip().replace(".", "").replace("  ", " ")
+
+async def assign_teams_on_startup():
+    """Assign team members to their leaders on server startup"""
+    try:
+        logging.info("Starting team assignment check...")
+        
+        # Get all users
+        users = await db.users.find({}).to_list(None)
+        if not users:
+            logging.info("No users found, skipping team assignment")
+            return
+        
+        updates = 0
+        for team_leader, members in TEAM_ASSIGNMENTS.items():
+            for member_name in members:
+                member_normalized = normalize_name(member_name)
+                
+                for user in users:
+                    full_name = f"{user.get('name', '')} {user.get('surname', '')}".strip()
+                    user_normalized = normalize_name(full_name)
+                    
+                    # Check if names match
+                    if member_normalized in user_normalized or user_normalized in member_normalized:
+                        # Only update if not already assigned to this team
+                        current_team = user.get('board_member', '')
+                        if current_team != team_leader:
+                            await db.users.update_one(
+                                {"id": user["id"]},
+                                {"$set": {"board_member": team_leader}}
+                            )
+                            updates += 1
+                        break
+        
+        # Log results
+        for leader in TEAM_ASSIGNMENTS.keys():
+            count = await db.users.count_documents({"board_member": leader})
+            logging.info(f"Team {leader}: {count} members")
+        
+        logging.info(f"Team assignment complete. {updates} users updated.")
+        
+    except Exception as e:
+        logging.error(f"Error during team assignment: {e}")
+
 # Include the router in the main app
 app.include_router(api_router)
 
@@ -1449,12 +1534,16 @@ logger = logging.getLogger(__name__)
 
 @app.on_event("startup")
 async def startup_event():
+    logging.info("Server starting up...")
     try:
         await initialize_default_data()
+        # Run team assignment on startup
+        await assign_teams_on_startup()
     except Exception as e:
         # Log initialization errors but don't crash the server
         print(f"Warning: Initialization error (likely duplicate data): {e}")
         pass
+    logging.info("Startup complete.")
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
