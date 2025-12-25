@@ -1810,6 +1810,75 @@ html, body {
     border-color: #4b5563 !important;
     color: #f9fafb !important;
   }
+
+
+/* ===========================================
+   ÜYE LİSTESİ BADGE'LERİ - KARANLIK MOD UYUMLU
+   ========================================== */
+
+/* Üye rol badge'i */
+.member-role-badge {
+  background-color: rgba(107, 114, 128, 0.4) !important;
+  color: #e5e7eb !important;
+  border: 1px solid rgba(107, 114, 128, 0.5) !important;
+}
+
+/* Üye onaylı durumu */
+.member-status-approved {
+  background-color: rgba(34, 197, 94, 0.3) !important;
+  color: #4ade80 !important;
+  border: 1px solid rgba(34, 197, 94, 0.5) !important;
+}
+
+/* Üye beklemede durumu */
+.member-status-pending {
+  background-color: rgba(245, 158, 11, 0.3) !important;
+  color: #fbbf24 !important;
+  border: 1px solid rgba(245, 158, 11, 0.5) !important;
+}
+
+/* Proje badge'leri */
+.member-project-badge {
+  background-color: rgba(220, 38, 38, 0.2) !important;
+  color: #fca5a5 !important;
+}
+
+.member-project-more {
+  background-color: rgba(107, 114, 128, 0.3) !important;
+  color: #d1d5db !important;
+}
+
+/* Cihaz karanlık modu için üye badge'leri */
+@media (prefers-color-scheme: dark) {
+  .member-role-badge {
+    background-color: rgba(107, 114, 128, 0.4) !important;
+    color: #f3f4f6 !important;
+    border: 1px solid rgba(107, 114, 128, 0.6) !important;
+  }
+  
+  .member-status-approved {
+    background-color: rgba(34, 197, 94, 0.35) !important;
+    color: #86efac !important;
+    border: 1px solid rgba(34, 197, 94, 0.6) !important;
+  }
+  
+  .member-status-pending {
+    background-color: rgba(245, 158, 11, 0.35) !important;
+    color: #fcd34d !important;
+    border: 1px solid rgba(245, 158, 11, 0.6) !important;
+  }
+  
+  .member-project-badge {
+    background-color: rgba(220, 38, 38, 0.25) !important;
+    color: #fecaca !important;
+  }
+  
+  .member-project-more {
+    background-color: rgba(107, 114, 128, 0.35) !important;
+    color: #e5e7eb !important;
+  }
+}
+
   
   .form-input::placeholder {
     color: #9ca3af !important;
