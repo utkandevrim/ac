@@ -1425,6 +1425,49 @@ async def cleanup_and_recreate_members(current_user: User = Depends(get_admin_us
 async def root():
     return {"message": "Actor Club Portal API"}
 
+# API endpoint to manually trigger team assignments (for production)
+@api_router.post("/admin/assign-teams")
+async def assign_teams_endpoint(current_user: User = Depends(get_admin_user)):
+    """Manually trigger team assignments - Admin only"""
+    try:
+        users = await db.users.find({}).to_list(None)
+        if not users:
+            return {"message": "No users found", "updates": 0}
+        
+        updates = 0
+        for team_leader, members in TEAM_ASSIGNMENTS.items():
+            for member_name in members:
+                member_normalized = normalize_name(member_name)
+                
+                for user in users:
+                    full_name = f"{user.get('name', '')} {user.get('surname', '')}".strip()
+                    user_normalized = normalize_name(full_name)
+                    
+                    if member_normalized in user_normalized or user_normalized in member_normalized:
+                        current_team = user.get('board_member', '')
+                        if current_team != team_leader:
+                            await db.users.update_one(
+                                {"id": user["id"]},
+                                {"$set": {"board_member": team_leader}}
+                            )
+                            updates += 1
+                        break
+        
+        # Get final counts
+        team_counts = {}
+        for leader in TEAM_ASSIGNMENTS.keys():
+            count = await db.users.count_documents({"board_member": leader})
+            team_counts[leader] = count
+        
+        return {
+            "message": "Team assignments completed",
+            "updates": updates,
+            "team_counts": team_counts
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Team assignment failed: {str(e)}")
+
 # Team assignments data
 TEAM_ASSIGNMENTS = {
     "Tuğba Çakı": [
