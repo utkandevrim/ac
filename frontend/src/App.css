@@ -1663,4 +1663,126 @@ html, body {
   color: var(--text-primary) !important;
 }
 
+/* ===========================================
+   CİHAZ KARANLIK MODU DESTEĞİ (prefers-color-scheme)
+   ========================================== */
+
+/* Cihaz karanlık modunda profil sayfası stilleri */
+@media (prefers-color-scheme: dark) {
+  /* Profil sayfası metin renkleri */
+  .theme-text-h1 {
+    color: #f9fafb !important;
+  }
+  
+  .theme-text-body {
+    color: #d1d5db !important;
+  }
+  
+  .theme-text-muted {
+    color: #9ca3af !important;
+  }
+  
+  .theme-text-label {
+    color: #d1d5db !important;
+  }
+  
+  /* Profil kartları */
+  .card {
+    background-color: #1f2937 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  /* Profil rol badge'i - Üye/Yönetici */
+  .profile-role-badge {
+    background-color: rgba(156, 163, 175, 0.3) !important;
+    color: #f3f4f6 !important;
+    border: 1px solid rgba(156, 163, 175, 0.5) !important;
+  }
+  
+  /* Yönetim kurulu badge'i */
+  .profile-board-badge {
+    background-color: rgba(220, 38, 38, 0.25) !important;
+    color: #fecaca !important;
+    border: 1px solid rgba(220, 38, 38, 0.5) !important;
+  }
+  
+  /* Onaylı/Beklemede durumu */
+  .status-approved {
+    background-color: rgba(34, 197, 94, 0.25) !important;
+    color: #86efac !important;
+    border: 1px solid rgba(34, 197, 94, 0.4) !important;
+  }
+  
+  .status-pending {
+    background-color: rgba(245, 158, 11, 0.25) !important;
+    color: #fcd34d !important;
+    border: 1px solid rgba(245, 158, 11, 0.4) !important;
+  }
+  
+  /* Aidat kartları - Ödendi */
+  .dues-card-paid {
+    background-color: rgba(34, 197, 94, 0.2) !important;
+    border-color: rgba(34, 197, 94, 0.5) !important;
+  }
+  
+  .dues-card-paid .dues-card-title {
+    color: #86efac !important;
+  }
+  
+  .dues-card-paid .dues-card-amount {
+    color: #4ade80 !important;
+  }
+  
+  /* Aidat kartları - Ödenmedi */
+  .dues-card-unpaid {
+    background-color: rgba(239, 68, 68, 0.2) !important;
+    border-color: rgba(239, 68, 68, 0.5) !important;
+  }
+  
+  .dues-card-unpaid .dues-card-title {
+    color: #fca5a5 !important;
+  }
+  
+  .dues-card-unpaid .dues-card-amount {
+    color: #f87171 !important;
+  }
+  
+  /* Status badge'leri */
+  .status-paid {
+    background-color: rgba(34, 197, 94, 0.35) !important;
+    color: #4ade80 !important;
+  }
+  
+  .status-unpaid {
+    background-color: rgba(239, 68, 68, 0.35) !important;
+    color: #f87171 !important;
+  }
+  
+  /* Shadcn Badge secondary */
+  [data-slot="badge"][data-variant="secondary"],
+  .bg-secondary {
+    background-color: rgba(107, 114, 128, 0.3) !important;
+    color: #e5e7eb !important;
+  }
+  
+  /* Form inputları */
+  .form-input {
+    background-color: #374151 !important;
+    border-color: #4b5563 !important;
+    color: #f9fafb !important;
+  }
+  
+  .form-input::placeholder {
+    color: #9ca3af !important;
+  }
+  
+  /* Proje kartları arka planı */
+  .theme-bg-secondary {
+    background-color: #374151 !important;
+  }
+  
+  /* Profil fotoğrafı kenarlığı */
+  .border-red-200 {
+    border-color: rgba(220, 38, 38, 0.5) !important;
+  }
 }
