@@ -153,7 +153,7 @@ const UserProfile = ({ user: currentUser }) => {
             <p><strong>Tutar:</strong> {due.amount} TL</p>
             <p><strong>Ay:</strong> {due.month} {due.year}</p>
             <p className="text-gray-600 italic mt-2">
-              Açıklama: "Actor Club aidatı içindir"
+              Açıklama: &quot;Actor Club aidatı içindir&quot;
             </p>
           </div>
         </div>,
