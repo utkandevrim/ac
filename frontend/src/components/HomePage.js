@@ -223,9 +223,6 @@ const HomePage = () => {
           </div>
           
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* Theme Toggle */}
-            <ThemeToggle size="default" className="flex-shrink-0" />
-            
             {/* Login Button / User Info */}
             {user ? (
               <div className="flex flex-col sm:flex-row items-end sm:items-center gap-1 sm:gap-3">
