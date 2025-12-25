@@ -370,7 +370,7 @@ const MembersList = ({ user }) => {
 
               {/* Badges */}
               <div className="flex flex-wrap gap-2 mb-4">
-                <Badge variant={member.is_admin ? "default" : "secondary"} className={member.is_admin ? "bg-red-100 text-red-800" : ""}>
+                <Badge variant={member.is_admin ? "default" : "secondary"} className={member.is_admin ? "bg-red-500 text-white" : "bg-gray-600 text-white"}>
                   {member.is_admin ? 'Yönetici' : 'Üye'}
                 </Badge>
                 {member.board_member && (
@@ -385,7 +385,7 @@ const MembersList = ({ user }) => {
                     {getTeamDisplayName(member.board_member)}
                   </Badge>
                 )}
-                <Badge variant="outline" className={member.is_approved ? "text-green-600 border-green-300" : "text-orange-600 border-orange-300"}>
+                <Badge variant="outline" className={member.is_approved ? "bg-green-500 text-white border-green-500" : "bg-orange-500 text-white border-orange-500"}>
                   {member.is_approved ? 'Onaylı' : 'Beklemede'}
                 </Badge>
               </div>
