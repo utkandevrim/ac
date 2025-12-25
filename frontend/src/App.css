@@ -1716,6 +1716,15 @@ html, body {
     color: #d1d5db !important;
   }
   
+  /* Üye listesi metin renkleri */
+  .theme-text {
+    color: #f9fafb !important;
+  }
+  
+  .theme-text-secondary {
+    color: #d1d5db !important;
+  }
+  
   /* Profil kartları */
   .card {
     background-color: #1f2937 !important;
