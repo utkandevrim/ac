@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 
 const ThemeContext = createContext();
 
@@ -11,39 +11,23 @@ export const useTheme = () => {
 };
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState(() => {
-    // Check localStorage first, then system preference
-    const savedTheme = localStorage.getItem('actor-club-theme');
-    if (savedTheme) {
-      return savedTheme;
-    }
-    
-    // Check system preference
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
-    }
-    
-    return 'light';
-  });
+  // Always use dark theme
+  const theme = 'dark';
 
   useEffect(() => {
-    // Apply theme to document
-    document.documentElement.setAttribute('data-theme', theme);
-    document.documentElement.className = theme;
+    // Apply dark theme to document
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.documentElement.className = 'dark';
     
     // Save to localStorage
-    localStorage.setItem('actor-club-theme', theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
-  };
+    localStorage.setItem('actor-club-theme', 'dark');
+  }, []);
 
   const value = {
     theme,
-    toggleTheme,
-    isLight: theme === 'light',
-    isDark: theme === 'dark'
+    toggleTheme: () => {}, // No-op since we only use dark mode
+    isLight: false,
+    isDark: true
   };
 
   return (
