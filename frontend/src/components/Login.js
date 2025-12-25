@@ -49,11 +49,6 @@ const Login = ({ onLogin }) => {
         backgroundPosition: 'center'
       }}
     >
-      {/* Theme Toggle - Top Right */}
-      <div className="fixed top-4 right-4 z-50">
-        <ThemeToggle size="default" />
-      </div>
-
       <div className="max-w-md w-full space-y-6 sm:space-y-8">
         <div className="text-center">
           <img 
