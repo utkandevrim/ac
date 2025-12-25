@@ -1526,4 +1526,90 @@ html, body {
 [data-theme="dark"] .bg-gray-100.text-gray-800 {
   background-color: var(--bg-tertiary) !important;
   color: var(--text-primary) !important;
+
+
+/* ===========================================
+   PROFILE PAGE - DARK MODE FIXES
+   ========================================== */
+
+/* Profile Badge Styles */
+.status-approved {
+  background-color: rgba(34, 197, 94, 0.2) !important;
+  color: #4ade80 !important;
+  border: 1px solid rgba(34, 197, 94, 0.3) !important;
+}
+
+.status-pending {
+  background-color: rgba(245, 158, 11, 0.2) !important;
+  color: #fbbf24 !important;
+  border: 1px solid rgba(245, 158, 11, 0.3) !important;
+}
+
+.status-paid {
+  background-color: rgba(34, 197, 94, 0.3) !important;
+  color: #22c55e !important;
+}
+
+.status-unpaid {
+  background-color: rgba(239, 68, 68, 0.3) !important;
+  color: #ef4444 !important;
+}
+
+/* Profile Dues Card Dark Mode */
+[data-theme="dark"] .bg-green-50 {
+  background-color: rgba(34, 197, 94, 0.15) !important;
+}
+
+[data-theme="dark"] .bg-green-50 .theme-text-h1,
+[data-theme="dark"] .bg-green-50 p {
+  color: #86efac !important;
+}
+
+[data-theme="dark"] .border-green-200 {
+  border-color: rgba(34, 197, 94, 0.4) !important;
+}
+
+[data-theme="dark"] .bg-red-50 {
+  background-color: rgba(239, 68, 68, 0.15) !important;
+}
+
+[data-theme="dark"] .bg-red-50 .theme-text-h1,
+[data-theme="dark"] .bg-red-50 p,
+[data-theme="dark"] .bg-red-50 .theme-text-body {
+  color: #fca5a5 !important;
+}
+
+[data-theme="dark"] .border-red-200 {
+  border-color: rgba(239, 68, 68, 0.4) !important;
+}
+
+[data-theme="dark"] .hover\:bg-red-100:hover {
+  background-color: rgba(239, 68, 68, 0.25) !important;
+}
+
+/* Profile Sidebar Badge Fix */
+[data-theme="dark"] .bg-red-100.text-red-800 {
+  background-color: rgba(239, 68, 68, 0.2) !important;
+  color: #fca5a5 !important;
+}
+
+/* General Badge in Dark Mode - Make more visible */
+[data-theme="dark"] [class*="Badge"],
+[data-theme="dark"] .inline-flex.items-center.rounded-full {
+  color: var(--text-primary) !important;
+}
+
+/* Shadcn Badge secondary variant */
+[data-theme="dark"] [data-slot="badge"][data-variant="secondary"],
+[data-theme="dark"] .bg-secondary {
+  background-color: rgba(156, 163, 175, 0.2) !important;
+  color: #e5e7eb !important;
+}
+
+/* Profile Card Text Fix */
+[data-theme="dark"] .card .text-center h3,
+[data-theme="dark"] .card .text-center .text-xl {
+  color: var(--text-primary) !important;
+}
+
 }
