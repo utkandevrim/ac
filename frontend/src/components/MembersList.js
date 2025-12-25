@@ -375,7 +375,7 @@ const MembersList = ({ user }) => {
                 </Badge>
                 {member.board_member && (
                   <Badge 
-                    className="bg-amber-100 text-amber-800 cursor-pointer hover:bg-amber-200" 
+                    className="team-badge cursor-pointer" 
                     data-testid={`member-board-${member.id}`}
                     onClick={(e) => {
                       e.stopPropagation();
