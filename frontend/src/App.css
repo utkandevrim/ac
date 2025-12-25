@@ -1601,6 +1601,39 @@ html, body {
 
 /* Shadcn Badge secondary variant */
 [data-theme="dark"] [data-slot="badge"][data-variant="secondary"],
+
+
+/* Profile Dues Cards - Fully Styled */
+.dues-card-paid {
+  background-color: rgba(34, 197, 94, 0.15) !important;
+  border-color: rgba(34, 197, 94, 0.4) !important;
+}
+
+.dues-card-paid .dues-card-title {
+  color: #86efac !important;
+}
+
+.dues-card-paid .dues-card-amount {
+  color: #4ade80 !important;
+}
+
+.dues-card-unpaid {
+  background-color: rgba(239, 68, 68, 0.15) !important;
+  border-color: rgba(239, 68, 68, 0.4) !important;
+}
+
+.dues-card-unpaid:hover {
+  background-color: rgba(239, 68, 68, 0.25) !important;
+}
+
+.dues-card-unpaid .dues-card-title {
+  color: #fca5a5 !important;
+}
+
+.dues-card-unpaid .dues-card-amount {
+  color: #f87171 !important;
+}
+
 [data-theme="dark"] .bg-secondary {
   background-color: rgba(156, 163, 175, 0.2) !important;
   color: #e5e7eb !important;
