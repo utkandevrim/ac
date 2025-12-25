@@ -688,6 +688,9 @@ async def create_user(user_data: UserCreate, current_user: User = Depends(get_ad
 
 @api_router.get("/users", response_model=List[User])
 async def get_users(current_user: User = Depends(get_current_user)):
+    # First, ensure team assignments are done
+    await ensure_team_assignments()
+    
     users = await db.users.find({"is_approved": True}).to_list(1000)
     
     # Filter out users without required fields and fix them
